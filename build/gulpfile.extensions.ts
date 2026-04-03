@@ -78,7 +78,6 @@ const compilations = [
 	'extensions/merge-conflict/tsconfig.json',
 	'extensions/mermaid-chat-features/tsconfig.json',
 	'extensions/terminal-suggest/tsconfig.json',
-	'extensions/microsoft-authentication/tsconfig.json',
 	'extensions/notebook-renderers/tsconfig.json',
 	'extensions/npm/tsconfig.json',
 	'extensions/php-language-features/tsconfig.json',
@@ -98,10 +97,10 @@ const compilations = [
 	'.vscode/extensions/vscode-extras/tsconfig.json',
 ];
 
-const getBaseUrl = (out: string) => `https://main.vscode-cdn.net/sourcemaps/${commit}/${out}`;
+const getBaseUrl = (out: string) => process.env['PRAGMA_SOURCE_MAPS_BASE_URL'] ? `${process.env['PRAGMA_SOURCE_MAPS_BASE_URL']}/${commit}/${out}` : '';
 
 function rewriteTsgoSourceMappingUrlsIfNeeded(build: boolean, out: string, baseUrl: string): Promise<void> {
-	if (!build) {
+	if (!build || !baseUrl) {
 		return Promise.resolve();
 	}
 

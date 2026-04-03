@@ -1,10 +1,10 @@
 name: @@NAME@@
 version: '@@VERSION@@'
-summary: Code editing. Redefined.
+summary: Pragma code editor
 description: |
-  Visual Studio Code is a new choice of tool that combines the
-  simplicity of a code editor with what developers need for the core
-  edit-build-debug cycle.
+  Pragma is a Pragma-branded code editor with Open VSX extension
+  discovery and Microsoft-hosted sync and telemetry disabled by
+  default.
 
 architectures:
   - build-on: amd64

@@ -37,6 +37,10 @@ function main() {
 	log(`Mixing in distro quality...`);
 
 	const basePath = `.build/distro/mixin/${quality}`;
+	if (!fs.existsSync(basePath)) {
+		log(`Skipping distro quality mixin: ${basePath} (missing)`);
+		return;
+	}
 
 	for (const name of fs.readdirSync(basePath)) {
 		const distroPath = path.join(basePath, name);
