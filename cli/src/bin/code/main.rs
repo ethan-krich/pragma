@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 mod legacy_args;
@@ -8,12 +8,12 @@ use std::process::Command;
 
 use clap::Parser;
 use cli::{
-	commands::{agent_host, args, serve_web, tunnels, update, version, CommandContext},
+	commands::{agent_host, args, serve_web, update, version, CommandContext},
 	constants::get_default_user_agent,
 	desktop, log,
 	state::LauncherPaths,
 	util::{
-		errors::{wrap, AnyError},
+		errors::{wrap, AnyError, CodeError},
 		is_integrated_cli,
 		prereqs::PreReqChecker,
 	},
@@ -96,7 +96,7 @@ async fn main() -> Result<(), std::convert::Infallible> {
 			},
 
 			Some(args::Commands::CommandShell(cs_args)) => {
-				tunnels::command_shell(context!(), cs_args).await
+				command_shell_disabled(cs_args)
 			}
 
 			Some(args::Commands::ServeWeb(sw_args)) => {
@@ -108,24 +108,7 @@ async fn main() -> Result<(), std::convert::Infallible> {
 			}
 
 			Some(args::Commands::Tunnel(mut tunnel_args)) => match tunnel_args.subcommand.take() {
-				Some(args::TunnelSubcommand::Prune) => tunnels::prune(context!()).await,
-				Some(args::TunnelSubcommand::Unregister) => tunnels::unregister(context!()).await,
-				Some(args::TunnelSubcommand::Kill) => tunnels::kill(context!()).await,
-				Some(args::TunnelSubcommand::Restart) => tunnels::restart(context!()).await,
-				Some(args::TunnelSubcommand::Status) => tunnels::status(context!()).await,
-				Some(args::TunnelSubcommand::Rename(rename_args)) => {
-					tunnels::rename(context!(), rename_args).await
-				}
-				Some(args::TunnelSubcommand::User(user_command)) => {
-					tunnels::user(context!(), user_command).await
-				}
-				Some(args::TunnelSubcommand::Service(service_args)) => {
-					tunnels::service(context_no_logger(), tunnel_args, service_args).await
-				}
-				Some(args::TunnelSubcommand::ForwardInternal(forward_args)) => {
-					tunnels::forward(context_no_logger(), forward_args).await
-				}
-				None => tunnels::serve(context_no_logger(), tunnel_args.serve_args).await,
+				_ => tunnel_disabled(),
 			},
 		},
 	};
@@ -143,7 +126,7 @@ fn make_logger(core: &args::CliCore) -> log::Logger {
 		core.global_options.log.unwrap_or(log::Level::Info)
 	};
 
-	let tracer = SdkTracerProvider::builder().build().tracer("codecli");
+	let tracer = SdkTracerProvider::builder().build().tracer("pragmacli");
 	let mut log = log::Logger::new(tracer, log_level);
 	if let Some(f) = &core.global_options.log_to_file {
 		log = log
@@ -188,4 +171,12 @@ async fn start_code(context: CommandContext, args: Vec<String>) -> Result<i32, A
 		.map_err(|e| wrap(e, format!("error running editor from {}", binary.display())))?;
 
 	Ok(code)
+}
+
+fn tunnel_disabled() -> Result<i32, AnyError> {
+	Err(CodeError::RemoteTunnelsDisabled.into())
+}
+
+fn command_shell_disabled(_: args::CommandShellArgs) -> Result<i32, AnyError> {
+	tunnel_disabled()
 }

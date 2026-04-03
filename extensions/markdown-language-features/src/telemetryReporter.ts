@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { default as VSCodeTelemetryReporter } from '@vscode/extension-telemetry';
@@ -48,7 +48,7 @@ export function loadDefaultTelemetryReporter(): TelemetryReporter {
 }
 
 function getPackageInfo(): IPackageInfo | null {
-	const extension = vscode.extensions.getExtension('Microsoft.vscode-markdown');
+	const extension = vscode.extensions.getExtension('Ethan Krich.vscode-markdown');
 	if (extension?.packageJSON) {
 		return {
 			name: extension.packageJSON.name,

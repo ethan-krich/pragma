@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -50,7 +50,7 @@ export const NATIVE_CLI_COMMANDS = ['tunnel', 'serve-web', 'agent-host'] as cons
 export const OPTIONS: OptionDescriptions<Required<NativeParsedArgs>> = {
 	'chat': {
 		type: 'subcommand',
-		description: 'Pass in a prompt to run in a chat session in the current working directory.',
+		description: 'AI chat features are disabled in Pragma.',
 		options: {
 			'_': { type: 'string[]', description: localize('prompt', "The prompt to use as chat.") },
 			'mode': { type: 'string', cat: 'o', alias: 'm', args: 'mode', description: localize('chatMode', "The mode to use for the chat session. Available options: 'ask', 'edit', 'agent', or the identifier of a custom mode. Defaults to 'agent'.") },
@@ -82,7 +82,7 @@ export const OPTIONS: OptionDescriptions<Required<NativeParsedArgs>> = {
 	},
 	'tunnel': {
 		type: 'subcommand',
-		description: 'Make the current machine accessible from vscode.dev or other machines through a secure tunnel.',
+		description: 'Remote tunnels are disabled in Pragma.',
 		options: {
 			'cli-data-dir': { type: 'string', args: 'dir', description: localize('cliDataDir', "Directory where CLI metadata should be stored.") },
 			'disable-telemetry': { type: 'boolean' },

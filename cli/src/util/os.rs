@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -12,7 +12,7 @@ pub fn os_release() -> Result<String, std::io::Error> {
 	use winreg::{enums::HKEY_LOCAL_MACHINE, RegKey};
 
 	let key = RegKey::predef(HKEY_LOCAL_MACHINE)
-		.open_subkey(r"SOFTWARE\Microsoft\Windows NT\CurrentVersion")?;
+		.open_subkey(r"SOFTWARE\Ethan Krich\Windows NT\CurrentVersion")?;
 
 	let major: u32 = key.get_value("CurrentMajorVersionNumber")?;
 	let minor: u32 = key.get_value("CurrentMinorVersionNumber")?;

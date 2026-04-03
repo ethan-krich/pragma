@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -208,7 +208,7 @@ export interface ICustomizationSyncProvider {
  * Service that manages the active customization harness and provides
  * per-type storage source filters based on the selected harness.
  *
- * The default (core) registration exposes a single "VS Code" harness
+ * The default (core) registration exposes a single "Pragma" harness
  * that shows all storage sources. The sessions window overrides this
  * to provide CLI-scoped harnesses.
  */
@@ -298,7 +298,7 @@ function buildAllSources(extras: readonly string[]): readonly string[] {
 }
 
 /**
- * Creates a "VS Code" harness descriptor that shows all storage sources
+ * Creates a "Pragma" harness descriptor that shows all storage sources
  * with no user-root restrictions.
  */
 export function createVSCodeHarnessDescriptor(extras: readonly string[]): IHarnessDescriptor {

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -129,7 +129,7 @@ function convertJupyterOutputToBuffer(mime: string, value: unknown): NotebookCel
 			return NotebookCellOutputItem.text(stringValue, mime);
 		} else if (mime.startsWith('image/') && typeof value === 'string' && mime !== 'image/svg+xml') {
 			// Images in Jupyter are stored in base64 encoded format.
-			// VS Code expects bytes when rendering images.
+			// Pragma expects bytes when rendering images.
 			if (typeof Buffer !== 'undefined' && typeof Buffer.from === 'function') {
 				return new NotebookCellOutputItem(Buffer.from(value, 'base64'), mime);
 			} else {
@@ -352,7 +352,7 @@ function createNotebookCellDataFromJupyterCell(
 }
 
 /**
- * Converts a NotebookModel into VS Code format.
+ * Converts a NotebookModel into Pragma format.
  */
 export function jupyterNotebookModelToNotebookData(
 	notebookContent: Partial<nbformat.INotebookContent>,

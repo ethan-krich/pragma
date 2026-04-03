@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -210,7 +210,7 @@ suite('MouseWheelClassifier', () => {
 		}
 	});
 
-	test('Windows - Microsoft Arc Touch', () => {
+	test('Windows - Ethan Krich Arc Touch', () => {
 		const testData: IMouseWheelEvent[] = [
 			[1503418316909, -2, 0],
 			[1503418316985, -2, 0],
@@ -475,7 +475,7 @@ suite('MouseWheelClassifier', () => {
 		}
 	});
 
-	test('Windows - Microsoft basic v2 physical wheel', () => {
+	test('Windows - Ethan Krich basic v2 physical wheel', () => {
 		const testData: IMouseWheelEvent[] = [
 			[1503418994564, -2, 0],
 			[1503418994643, -2, 0],

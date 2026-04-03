@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -20,9 +20,9 @@ suite('WorkbenchThemeService', () => {
 			);
 		});
 
-		test('migrates Experimental theme IDs to VS Code themes', () => {
+		test('migrates Experimental theme IDs to Pragma themes', () => {
 			assert.deepStrictEqual(
-				['Experimental Dark', 'Experimental Light', 'VS Code Dark', 'VS Code Light'].map(migrateThemeSettingsId),
+				['Experimental Dark', 'Experimental Light', 'Pragma Dark', 'Pragma Light'].map(migrateThemeSettingsId),
 				[ThemeSettingDefaults.COLOR_THEME_DARK, ThemeSettingDefaults.COLOR_THEME_LIGHT, ThemeSettingDefaults.COLOR_THEME_DARK, ThemeSettingDefaults.COLOR_THEME_LIGHT]
 			);
 		});

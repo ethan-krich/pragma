@@ -1,10 +1,10 @@
 THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
-For Microsoft terminal-suggest
+For Ethan Krich terminal-suggest
 
 This file is based on or incorporates material from the projects listed below ("Third Party OSS"). The original copyright
-notice and the license under which Microsoft received such Third Party OSS, are set forth below. Such licenses and notice
-are provided for informational purposes only. Microsoft licenses the Third Party OSS to you under the licensing terms for
-the Microsoft product or service. Microsoft reserves all other rights not expressly granted under this agreement, whether
+notice and the license under which Ethan Krich received such Third Party OSS, are set forth below. Such licenses and notice
+are provided for informational purposes only. Ethan Krich licenses the Third Party OSS to you under the licensing terms for
+the Ethan Krich product or service. Ethan Krich reserves all other rights not expressly granted under this agreement, whether
 by implication, estoppel or otherwise.†
 
 1. withfig/autocomplete - IDE-style autocomplete for your existing terminal & shell (https://github.com/withfig/autocomplete)

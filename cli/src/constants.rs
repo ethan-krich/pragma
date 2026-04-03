@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -55,7 +55,7 @@ pub const APPLICATION_NAME: &str = match option_env!("VSCODE_CLI_APPLICATION_NAM
 /// Full name of the product with its version.
 pub const PRODUCT_NAME_LONG: &str = match option_env!("VSCODE_CLI_NAME_LONG") {
 	Some(n) => n,
-	None => "Code - OSS",
+	None => "Pragma",
 };
 
 /// Name of the application without quality information.
@@ -73,7 +73,7 @@ pub const QUALITY: &str = match VSCODE_CLI_QUALITY {
 	_ => "oss",
 };
 
-/// Web URL the editor is hosted at. For VS Code, this is vscode.dev.
+/// Web URL the editor is hosted at. For Pragma, this is vscode.dev.
 pub const EDITOR_WEB_URL: Option<&'static str> = option_env!("VSCODE_CLI_TUNNEL_EDITOR_WEB_URL");
 
 /// Name shown in places where we need to tell a user what a process is, e.g. in sleep inhibition.

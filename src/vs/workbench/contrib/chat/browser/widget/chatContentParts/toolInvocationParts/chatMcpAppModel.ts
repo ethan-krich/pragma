@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -451,7 +451,7 @@ export class ChatMcpAppModel extends Disposable {
 					break;
 
 				case 'ui/request-display-mode':
-					// VS Code only supports inline display mode
+					// Pragma only supports inline display mode
 					result = { mode: 'inline' } satisfies McpApps.McpUiRequestDisplayModeResult;
 					break;
 

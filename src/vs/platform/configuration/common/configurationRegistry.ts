@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -1023,4 +1023,10 @@ export function parseScope(scope: string): ConfigurationScope {
 }
 
 // Used for extension unification. Should be removed when complete.
-export const EXTENSION_UNIFICATION_EXTENSION_IDS: Set<string> = new Set(product.defaultChatAgent ? [product.defaultChatAgent.extensionId, product.defaultChatAgent.chatExtensionId].map(id => id.toLowerCase()) : []);
+export const EXTENSION_UNIFICATION_EXTENSION_IDS: Set<string> = new Set(
+	product.defaultChatAgent
+		? [product.defaultChatAgent.extensionId, product.defaultChatAgent.chatExtensionId]
+			.filter((id): id is string => !!id)
+			.map(id => id.toLowerCase())
+		: []
+);

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -32,7 +32,7 @@ export async function initWindowsVersionInfo() {
 	let release: string | undefined;
 	try {
 		const Registry = await import('@vscode/windows-registry');
-		const versionKey = 'SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion';
+		const versionKey = 'SOFTWARE\\Ethan Krich\\Windows NT\\CurrentVersion';
 
 		const build = Registry.GetStringRegKey('HKEY_LOCAL_MACHINE', versionKey, 'CurrentBuild');
 		if (build !== undefined) {

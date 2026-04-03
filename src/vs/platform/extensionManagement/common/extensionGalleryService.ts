@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -1160,10 +1160,11 @@ export abstract class AbstractExtensionGalleryService implements IExtensionGalle
 
 			const result: IGalleryExtension[] = [];
 			let defaultChatAgentExtension: IGalleryExtension | undefined;
+			const defaultChatExtensionId = this.productService.defaultChatAgent?.extensionId;
 			for (let index = 0; index < extensions.length; index++) {
 				const extension = extensions[index];
 				setTelemetry(extension, ((query.pageNumber - 1) * query.pageSize) + index, options.source);
-				if (areSameExtensions(extension.identifier, { id: this.productService.defaultChatAgent.extensionId, })) {
+				if (defaultChatExtensionId && areSameExtensions(extension.identifier, { id: defaultChatExtensionId })) {
 					defaultChatAgentExtension = extension;
 				} else {
 					result.push(extension);
@@ -1995,15 +1996,19 @@ export abstract class AbstractExtensionGalleryService implements IExtensionGalle
 			}
 		}
 
-		deprecated[this.productService.defaultChatAgent.extensionId.toLowerCase()] = {
-			disallowInstall: true,
-			extension: {
-				id: this.productService.defaultChatAgent.chatExtensionId,
-				displayName: 'GitHub Copilot Chat',
-				autoMigrate: { storage: false, donotDisable: true },
-				preRelease: this.productService.quality !== 'stable'
-			}
-		};
+		const defaultChatExtensionId = this.productService.defaultChatAgent?.extensionId;
+		const defaultChatChatExtensionId = this.productService.defaultChatAgent?.chatExtensionId;
+		if (defaultChatExtensionId && defaultChatChatExtensionId) {
+			deprecated[defaultChatExtensionId.toLowerCase()] = {
+				disallowInstall: true,
+				extension: {
+					id: defaultChatChatExtensionId,
+					displayName: 'GitHub Copilot Chat',
+					autoMigrate: { storage: false, donotDisable: true },
+					preRelease: this.productService.quality !== 'stable'
+				}
+			};
+		}
 
 		return { malicious, deprecated, search, autoUpdate };
 	}

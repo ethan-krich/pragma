@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -78,14 +78,12 @@ const compilations = [
 	'extensions/merge-conflict/tsconfig.json',
 	'extensions/mermaid-chat-features/tsconfig.json',
 	'extensions/terminal-suggest/tsconfig.json',
-	'extensions/microsoft-authentication/tsconfig.json',
 	'extensions/notebook-renderers/tsconfig.json',
 	'extensions/npm/tsconfig.json',
 	'extensions/php-language-features/tsconfig.json',
 	'extensions/references-view/tsconfig.json',
 	'extensions/search-result/tsconfig.json',
 	'extensions/simple-browser/tsconfig.json',
-	'extensions/tunnel-forwarding/tsconfig.json',
 	'extensions/typescript-language-features/web/tsconfig.json',
 	'extensions/typescript-language-features/tsconfig.json',
 	'extensions/vscode-api-tests/tsconfig.json',
@@ -98,10 +96,10 @@ const compilations = [
 	'.vscode/extensions/vscode-extras/tsconfig.json',
 ];
 
-const getBaseUrl = (out: string) => `https://main.vscode-cdn.net/sourcemaps/${commit}/${out}`;
+const getBaseUrl = (out: string) => process.env['PRAGMA_SOURCE_MAPS_BASE_URL'] ? `${process.env['PRAGMA_SOURCE_MAPS_BASE_URL']}/${commit}/${out}` : '';
 
 function rewriteTsgoSourceMappingUrlsIfNeeded(build: boolean, out: string, baseUrl: string): Promise<void> {
-	if (!build) {
+	if (!build || !baseUrl) {
 		return Promise.resolve();
 	}
 

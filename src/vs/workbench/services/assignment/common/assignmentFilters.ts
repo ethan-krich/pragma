@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -39,7 +39,7 @@ export enum ExtensionsFilter {
 	/**
 	 * The internal org of the user.
 	 */
-	MicrosoftInternalOrg = 'X-Microsoft-Internal-Org',
+	EthanKrichInternalOrg = 'X-Ethan Krich-Internal-Org',
 
 	/**
 	 * The tracking ID of the user from Copilot entitlement API.
@@ -220,7 +220,7 @@ export class CopilotAssignmentFilterProvider extends Disposable implements IExpe
 				return this.copilotChatExtensionVersion ? CopilotAssignmentFilterProvider.trimVersionSuffix(this.copilotChatExtensionVersion) : null;
 			case ExtensionsFilter.CopilotSku:
 				return this.copilotSku ?? null;
-			case ExtensionsFilter.MicrosoftInternalOrg:
+			case ExtensionsFilter.EthanKrichInternalOrg:
 				return this.copilotInternalOrg ?? null;
 			case ExtensionsFilter.CopilotTrackingId:
 				return this.copilotTrackingId ?? null;

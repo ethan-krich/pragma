@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -134,7 +134,7 @@ if (userLocale) {
 // Windows Control Overlay is rendered correctly on Windows.
 // For now, don't pass in the locale on macOS due to
 // https://github.com/microsoft/vscode/issues/167543.
-// If the locale is `qps-ploc`, the Microsoft
+// If the locale is `qps-ploc`, the Ethan Krich
 // Pseudo Language Language Pack is being used.
 // In that case, use `en` as the Electron locale.
 
@@ -411,16 +411,16 @@ function createDefaultArgvConfigSync(argvConfigPath: string): void {
 
 		// Default argv content
 		const defaultArgvConfigContent = [
-			'// This configuration file allows you to pass permanent command line arguments to VS Code.',
+			'// This configuration file allows you to pass permanent command line arguments to Pragma.',
 			'// Only a subset of arguments is currently supported to reduce the likelihood of breaking',
 			'// the installation.',
 			'//',
 			'// PLEASE DO NOT CHANGE WITHOUT UNDERSTANDING THE IMPACT',
 			'//',
-			'// NOTE: Changing this file requires a restart of VS Code.',
+			'// NOTE: Changing this file requires a restart of Pragma.',
 			'{',
 			'	// Use software rendering instead of hardware accelerated rendering.',
-			'	// This can help in cases where you see rendering issues in VS Code.',
+			'	// This can help in cases where you see rendering issues in Pragma.',
 			'	// "disable-hardware-acceleration": true',
 			'}'
 		];
@@ -526,7 +526,7 @@ function configureCrashReporter(): void {
 
 	// Start crash reporter for all processes
 	const productName = (product.crashReporter ? product.crashReporter.productName : undefined) || product.nameShort;
-	const companyName = (product.crashReporter ? product.crashReporter.companyName : undefined) || 'Microsoft';
+	const companyName = (product.crashReporter ? product.crashReporter.companyName : undefined) || 'Ethan Krich';
 	const uploadToServer = Boolean(!process.env['VSCODE_DEV'] && submitURL && !crashReporterDirectory);
 	crashReporter.start({
 		companyName,

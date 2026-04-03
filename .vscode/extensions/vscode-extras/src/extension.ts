@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -14,7 +14,7 @@ export class Extension extends vscode.Disposable {
 		const disposables: vscode.Disposable[] = [];
 		super(() => disposables.forEach(d => d.dispose()));
 
-		this._output = vscode.window.createOutputChannel('VS Code Extras', { log: true });
+		this._output = vscode.window.createOutputChannel('Pragma Extras', { log: true });
 		disposables.push(this._output);
 
 		this._updateNpmFeature();

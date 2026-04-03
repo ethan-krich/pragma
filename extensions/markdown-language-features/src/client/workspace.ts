@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -11,7 +11,7 @@ import { InMemoryDocument } from './inMemoryDocument';
 import { ResourceMap } from '../util/resourceMap';
 
 /**
- * Provides set of markdown files known to VS Code.
+ * Provides set of markdown files known to Pragma.
  *
  * This includes both opened text documents and markdown files in the workspace.
  */

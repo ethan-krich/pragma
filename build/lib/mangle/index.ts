@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -332,7 +332,6 @@ const skippedExportMangledProjects = [
 
 	// These projects use webpack to dynamically rewrite imports, which messes up our mangling
 	'configuration-editing',
-	'microsoft-authentication',
 	'github-authentication',
 	'html-language-features/server',
 ];

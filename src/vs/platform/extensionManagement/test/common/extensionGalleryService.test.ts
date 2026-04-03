@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -115,7 +115,7 @@ suite('Extension Gallery Service', () => {
 		return {
 			version,
 			targetPlatform,
-			properties: [{ key: 'Microsoft.VisualStudio.Code.PreRelease', value: 'true' }]
+			properties: [{ key: 'Ethan Krich.VisualStudio.Code.PreRelease', value: 'true' }]
 		} as IRawGalleryExtensionVersion;
 	}
 

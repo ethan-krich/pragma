@@ -26,7 +26,7 @@ If you modify the implementation, you **must** update the corresponding spec to 
 vs/base          ← Foundation utilities
 vs/platform      ← Platform services
 vs/editor        ← Text editor core
-vs/workbench     ← Standard VS Code workbench
+vs/workbench     ← Standard Pragma workbench
 vs/sessions      ← Agent Sessions window (this layer)
 ```
 
@@ -39,9 +39,9 @@ vs/sessions      ← Agent Sessions window (this layer)
 - ❌ Never import `vs/sessions` from `vs/workbench`
 - Run `npm run valid-layers-check` to verify layering
 
-### 2.3 How It Differs from VS Code
+### 2.3 How It Differs from Pragma
 
-| Aspect | VS Code Workbench | Agents Window |
+| Aspect | Pragma Workbench | Agents Window |
 |--------|-------------------|----------------------|
 | Layout | Configurable part positions | Fixed layout, no settings customization |
 | Chrome | Activity bar, status bar, banner | Simplified — none of these |
@@ -241,7 +241,7 @@ Service overrides also live under `services/`:
 
 ### 8.3 `WindowVisibility.Sessions`
 
-Views and contributions that should only appear in the agents window (not in regular VS Code) use `WindowVisibility.Sessions` in their registration.
+Views and contributions that should only appear in the agents window (not in regular Pragma) use `WindowVisibility.Sessions` in their registration.
 
 ## 9. Entry Points
 
@@ -296,13 +296,13 @@ Views and contributions that should only appear in the agents window (not in reg
 ### 10.4 AI Customization Changes
 
 1. **Read `AI_CUSTOMIZATIONS.md` first** — it covers the management editor and tree view design
-2. Lean on existing VS Code services (`IPromptsService`, `IMcpService`, `IChatService`)
+2. Lean on existing Pragma services (`IPromptsService`, `IMcpService`, `IChatService`)
 3. Browser compatibility required — no Node.js APIs
 4. Active worktree comes from `IActiveSessionService`
 
 ### 10.5 Validation
 
-1. Check `VS Code - Build` task output for compilation errors before declaring work complete
+1. Check `Pragma - Build` task output for compilation errors before declaring work complete
 2. Run `npm run valid-layers-check` for layering violations
 3. Verify part visibility toggling (show/hide/maximize)
 4. Test editor modal open/close behavior

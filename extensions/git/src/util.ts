@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -307,7 +307,7 @@ export function subject(value: string): string {
 
 function normalizePath(path: string): string {
 	// Windows & Mac are currently being handled
-	// as case insensitive file systems in VS Code.
+	// as case insensitive file systems in Pragma.
 	if (isWindows || isMacintosh) {
 		path = path.toLowerCase();
 	}

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -101,7 +101,7 @@ export class CopilotAgent extends Disposable implements IAgent {
 		this._clientStarting = (async () => {
 			this._logService.info(`[Copilot] Starting CopilotClient... ${this._githubToken ? '(with token)' : '(no token)'}`);
 
-			// Build a clean env for the CLI subprocess, stripping Electron/VS Code vars
+			// Build a clean env for the CLI subprocess, stripping Electron/Pragma vars
 			// that can interfere with the Node.js process the SDK spawns.
 			const env: Record<string, string | undefined> = Object.assign({}, process.env, { ELECTRON_RUN_AS_NODE: '1' });
 			delete env['NODE_OPTIONS'];
@@ -124,7 +124,7 @@ export class CopilotAgent extends Disposable implements IAgent {
 			// FileAccess.asFileUri('') points to the `out/` directory; node_modules is one level up.
 			const cliPath = URI.joinPath(FileAccess.asFileUri(''), '..', 'node_modules', '@github', 'copilot', 'index.js').fsPath;
 
-			// Add VS Code's built-in ripgrep to PATH so the CLI subprocess can find it.
+			// Add Pragma's built-in ripgrep to PATH so the CLI subprocess can find it.
 			// If @vscode/ripgrep is in an .asar file, the binary is unpacked.
 			const rgDiskPath = rgPath.replace(/\bnode_modules\.asar\b/, 'node_modules.asar.unpacked');
 			const rgDir = dirname(rgDiskPath);

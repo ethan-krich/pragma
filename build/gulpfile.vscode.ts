@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -238,14 +238,14 @@ function runTsGoTypeCheck(): Promise<void> {
 	});
 }
 
-const sourceMappingURLBase = `https://main.vscode-cdn.net/sourcemaps/${commit}`;
+const sourceMappingURLBase = process.env['PRAGMA_SOURCE_MAPS_BASE_URL'] ? `${process.env['PRAGMA_SOURCE_MAPS_BASE_URL']}/${commit}` : undefined;
 const isCI = !!process.env['CI'] || !!process.env['BUILD_ARTIFACTSTAGINGDIRECTORY'] || !!process.env['GITHUB_WORKSPACE'];
-const useCdnSourceMapsForPackagingTasks = isCI;
-const stripSourceMapsInPackagingTasks = isCI;
+const useCdnSourceMapsForPackagingTasks = isCI && !!sourceMappingURLBase;
+const stripSourceMapsInPackagingTasks = isCI && !sourceMappingURLBase;
 const minifyVSCodeTask = task.define('minify-vscode', task.series(
 	bundleVSCodeTask,
 	util.rimraf('out-vscode-min'),
-	optimize.minifyTask('out-vscode', `${sourceMappingURLBase}/core`)
+	optimize.minifyTask('out-vscode', sourceMappingURLBase ? `${sourceMappingURLBase}/core` : undefined)
 ));
 gulp.task(minifyVSCodeTask);
 
@@ -440,7 +440,7 @@ function packageTask(platform: string, arch: string, sourceFolderName: string, d
 			.pipe(util.cleanNodeModules(path.join(import.meta.dirname, `.moduleignore.${process.platform}`)))
 			.pipe(filter(getCopilotExcludeFilter(platform, arch)))
 			.pipe(jsFilter)
-			.pipe(util.rewriteSourceMappingURL(sourceMappingURLBase))
+			.pipe(sourceMappingURLBase ? util.rewriteSourceMappingURL(sourceMappingURLBase) : es.through())
 			.pipe(jsFilter.restore)
 			.pipe(createAsar(path.join(process.cwd(), 'node_modules'), [
 				'**/*.node',
@@ -666,11 +666,11 @@ function patchWin32DependenciesTask(destinationFolderName: string) {
 			await rcedit(path.join(cwd, dep), {
 				'file-version': baseVersion,
 				'version-string': {
-					'CompanyName': 'Microsoft Corporation',
+					'CompanyName': 'pragma contributors',
 					'FileDescription': product.nameLong,
 					'FileVersion': packageJson.version,
 					'InternalName': basename,
-					'LegalCopyright': 'Copyright (C) 2026 Microsoft. All rights reserved',
+					'LegalCopyright': 'Copyright (C) 2026 pragma contributors. All rights reserved',
 					'OriginalFilename': basename,
 					'ProductName': product.nameLong,
 					'ProductVersion': packageJson.version,

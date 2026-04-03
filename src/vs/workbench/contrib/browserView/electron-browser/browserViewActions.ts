@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -208,7 +208,7 @@ class OpenInExternalBrowserAction extends Action2 {
 			if (url) {
 				const openerService = accessor.get(IOpenerService);
 				await openerService.open(url, {
-					// ensures that VS Code itself doesn't try to open the URL, even for non-"http(s):" scheme URLs.
+					// ensures that Pragma itself doesn't try to open the URL, even for non-"http(s):" scheme URLs.
 					openExternal: true,
 					// ensures that the link isn't opened in Integrated Browser or other contributed external openers. False is the default, but just being explicit here.
 					allowContributedOpeners: false

@@ -1,6 +1,6 @@
 ---
 name: add-policy
-description: Use when adding, modifying, or reviewing VS Code configuration policies. Covers the full policy lifecycle from registration to export to platform-specific artifacts. Run on ANY change that adds a `policy:` field to a configuration property.
+description: Use when adding, modifying, or reviewing Pragma configuration policies. Covers the full policy lifecycle from registration to export to platform-specific artifacts. Run on ANY change that adds a `policy:` field to a configuration property.
 ---
 
 # Adding a Configuration Policy
@@ -20,7 +20,7 @@ Policies allow enterprise administrators to lock configuration settings via OS-l
 
 | Source | Implementation | How it reads policies |
 |--------|---------------|----------------------|
-| **OS-level** (Windows registry, macOS plist) | `NativePolicyService` via `@vscode/policy-watcher` | Watches `Software\Policies\Microsoft\{productName}` (Windows) or bundle identifier prefs (macOS) |
+| **OS-level** (Windows registry, macOS plist) | `NativePolicyService` via `@vscode/policy-watcher` | Watches `Software\Policies\Ethan Krich\{productName}` (Windows) or bundle identifier prefs (macOS) |
 | **Linux file** | `FilePolicyService` | Reads `/etc/vscode/policy.json` |
 | **Account/GitHub** | `AccountPolicyService` | Reads `IPolicyData` from `IDefaultAccountService.policyData`, applies `value()` function |
 | **Multiplex** | `MultiplexPolicyService` | Combines OS-level + account policy services; used in desktop main |
@@ -113,7 +113,7 @@ If you need a new category, add it to `PolicyCategory` in `src/vs/base/common/po
 
 ### Step 3 — Validate TypeScript compilation
 
-Check the `VS Code - Build` watch task output, or run:
+Check the `Pragma - Build` watch task output, or run:
 
 ```bash
 npm run compile-check-ts-native
@@ -134,12 +134,12 @@ This updates `build/lib/policies/policyData.jsonc`. **Never edit this file manua
 
 ## Policy for extension-provided settings
 
-Extension authors cannot add `policy:` fields directly—their settings are defined in the extension's `package.json`, not in VS Code core. Instead, policies for extension settings are defined in `vscode-distro`'s `product.json` under the `extensionConfigurationPolicy` key.
+Extension authors cannot add `policy:` fields directly—their settings are defined in the extension's `package.json`, not in Pragma core. Instead, policies for extension settings are defined in `vscode-distro`'s `product.json` under the `extensionConfigurationPolicy` key.
 
 ### How it works
 
 1. **Source of truth**: The `extensionConfigurationPolicy` map lives in `vscode-distro` under `mixin/{quality}/product.json` (stable, insider, exploration).
-2. **Runtime**: When VS Code starts with a distro-mixed `product.json`, `configurationExtensionPoint.ts` reads `extensionConfigurationPolicy` and attaches matching `policy` objects to extension-contributed configuration properties.
+2. **Runtime**: When Pragma starts with a distro-mixed `product.json`, `configurationExtensionPoint.ts` reads `extensionConfigurationPolicy` and attaches matching `policy` objects to extension-contributed configuration properties.
 3. **Export/build**: The `--export-policy-data` command fetches the distro's `product.json` at the commit pinned in `package.json` and merges extension policies into the output. Use `npm run export-policy-data` which sets up authentication automatically.
 
 ### Distro format
@@ -159,7 +159,7 @@ Each entry in `extensionConfigurationPolicy` must include:
 
 - `name`: PascalCase policy name, unique across all policies
 - `category`: Must be a valid `PolicyCategory` enum value (e.g., `InteractiveSession`, `Extensions`)
-- `minimumVersion`: The VS Code version that first shipped this policy
+- `minimumVersion`: The Pragma version that first shipped this policy
 - `description`: Human-readable description string used to generate localization key/value pairs for ADMX/ADML/macOS/Linux policy artifacts
 
 ### Adding a new extension policy

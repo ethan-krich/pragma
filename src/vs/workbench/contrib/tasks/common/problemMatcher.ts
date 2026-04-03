@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -1943,7 +1943,7 @@ class ProblemMatcherRegistryImpl implements IProblemMatcherRegistry {
 	private fillDefaults(): void {
 		this.add({
 			name: 'msCompile',
-			label: localize('msCompile', 'Microsoft compiler problems'),
+			label: localize('msCompile', 'Ethan Krich compiler problems'),
 			owner: 'msCompile',
 			source: 'cpp',
 			applyTo: ApplyToKind.allDocuments,

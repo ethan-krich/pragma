@@ -198,7 +198,7 @@ scripts/
 
 ## Prerequisites
 
-- VS Code compiled (`out/` at the repo root):
+- Pragma compiled (`out/` at the repo root):
   ```bash
   npm install && npm run compile
   ```

@@ -6,7 +6,7 @@
 		<array>
 			<dict>
 				<key>PayloadDisplayName</key>
-				<string>Code - OSS</string>
+				<string>Pragma</string>
 				<key>PayloadIdentifier</key>
 				<string>com.visualstudio.code.oss.47827DD9-4734-49A0-AF80-7E19B11495CC</string>
 				<key>PayloadType</key>
@@ -42,13 +42,13 @@
 			</dict>
 		</array>
 		<key>PayloadDescription</key>
-		<string>This profile manages Code - OSS. For more information see https://code.visualstudio.com/docs/setup/enterprise</string>
+		<string>This profile manages Pragma. For more information see https://code.visualstudio.com/docs/setup/enterprise</string>
 		<key>PayloadDisplayName</key>
-		<string>Code - OSS</string>
+		<string>Pragma</string>
 		<key>PayloadIdentifier</key>
 		<string>com.visualstudio.code.oss</string>
 		<key>PayloadOrganization</key>
-		<string>Microsoft</string>
+		<string>Ethan Krich</string>
 		<key>PayloadType</key>
 		<string>Configuration</string>
 		<key>PayloadUUID</key>

@@ -134,7 +134,7 @@ grep -n -E 'HTTPError|ECONNRESET|ETIMEDOUT|502|exit code|Process completed|node:
 
 > **Why save to a file?** The API response for a full job log can be 30k+ lines. Tool output gets truncated, so always redirect to a file first, then search.
 
-### VS Code Log Artifacts Structure
+### Pragma Log Artifacts Structure
 
 Downloaded log artifacts typically contain:
 ```
@@ -164,7 +164,7 @@ Look for the test runner output in the failed step log:
 gh run view <RUN_ID> --job <JOB_ID> --log-failed | grep -A 5 "failing\|AssertionError\|Expected\|Unexpected"
 ```
 
-Common patterns in VS Code CI:
+Common patterns in Pragma CI:
 - **`AssertionError [ERR_ASSERTION]`**: Test assertion failed — check expected vs actual values
 - **`Extension host test runner exit code: 1`**: Integration test suite had failures
 - **`Command produced no output`**: Shell integration may not have captured command output (see terminal.log)
@@ -237,7 +237,7 @@ Not all CI failures are caused by code changes. Common infrastructure failures:
 ## Step 7: Fix and Iterate
 
 1. Make the fix locally
-2. Verify compilation: check the `VS Code - Build` task or run `npm run compile-check-ts-native`
+2. Verify compilation: check the `Pragma - Build` task or run `npm run compile-check-ts-native`
 3. Run relevant unit tests locally: `./scripts/test.sh --grep "<pattern>"`
 4. Commit and push:
    ```bash

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -149,7 +149,7 @@ class ManageLanguageModelAuthenticationAction extends Action2 {
 					if (allowedExt.trusted && !addedTrustedSeparator) {
 						items.push({
 							type: 'separator',
-							label: localize('trustedExtension', 'Trusted by Microsoft'),
+							label: localize('trustedExtension', 'Trusted by Ethan Krich'),
 						});
 						addedTrustedSeparator = true;
 					}

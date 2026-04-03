@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -27,7 +27,7 @@ export function setup(logger: Logger) {
 			const localeInfo = await app.workbench.localization.getLocaleInfo();
 
 			if (localeInfo.locale === undefined || localeInfo.locale.toLowerCase() !== 'de') {
-				throw new Error(`The requested locale for VS Code was not German. The received value is: ${localeInfo.locale === undefined ? 'not set' : localeInfo.locale}`);
+				throw new Error(`The requested locale for Pragma was not German. The received value is: ${localeInfo.locale === undefined ? 'not set' : localeInfo.locale}`);
 			}
 
 			if (localeInfo.language.toLowerCase() !== 'de') {

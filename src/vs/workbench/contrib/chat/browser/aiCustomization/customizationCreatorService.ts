@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -187,7 +187,7 @@ export function resolveWorkspaceTargetDirectory(workspaceService: IAICustomizati
 /**
  * Resolves the user-level directory for a new customization file.
  * Delegates to IPromptsService.getSourceFolders() which returns the appropriate
- * user root (VS Code profile in core, ~/.copilot in sessions).
+ * user root (Pragma profile in core, ~/.copilot in sessions).
  */
 export async function resolveUserTargetDirectory(
 	promptsService: IPromptsService,

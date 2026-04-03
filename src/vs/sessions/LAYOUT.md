@@ -6,7 +6,7 @@ This document is the **authoritative specification** for the Agent Sessions work
 
 ## 1. Overview
 
-The Agent Sessions Workbench (`Workbench` in `sessions/browser/workbench.ts`) provides a simplified, fixed layout optimized for agent session workflows. Unlike the default VS Code workbench, this layout:
+The Agent Sessions Workbench (`Workbench` in `sessions/browser/workbench.ts`) provides a simplified, fixed layout optimized for agent session workflows. Unlike the default Pragma workbench, this layout:
 
 - Does **not** support settings-based customization
 - Has **fixed** part positions
@@ -103,7 +103,7 @@ The Agent Sessions titlebar includes a custom left toolbar that appears after th
 |--------|-----|----------|----------|
 | Toggle Sidebar | `workbench.action.agentToggleSidebarVisibility` | Left toolbar (`TitleBarLeft`) | Toggles primary sidebar visibility |
 | Run Script | `workbench.action.agentSessions.runScript` | Right toolbar (`TitleBarRight`) | Split button: runs configured script or shows configure dialog |
-| Open... | (submenu) | Right toolbar (`TitleBarRight`) | Split button submenu: Open Terminal, Open in VS Code |
+| Open... | (submenu) | Right toolbar (`TitleBarRight`) | Split button submenu: Open Terminal, Open in Pragma |
 | Toggle Secondary Sidebar | `workbench.action.agentToggleSecondarySidebarVisibility` | Right toolbar (`TitleBarRight`) | Toggles auxiliary bar visibility |
 
 The toggle sidebar action:
@@ -120,7 +120,7 @@ The Run Script action:
 
 The Open... action:
 - Displayed as a split button via `Menus.OpenSubMenu` on `Menus.TitleBarRight`
-- Contains "Open Terminal" (opens terminal at session worktree) and "Open in VS Code" (opens worktree in new VS Code window)
+- Contains "Open Terminal" (opens terminal at session worktree) and "Open in Pragma" (opens worktree in new Pragma window)
 - Registered in `contrib/chat/browser/chat.contribution.ts`
 
 ### 3.5 Panel Title Actions
@@ -536,7 +536,7 @@ src/vs/sessions/
 │   │   ├── changesView.ts
 │   │   └── media/
 │   ├── chat/browser/                       # Chat actions and services
-│   │   ├── chat.contribution.ts            # Open in VS Code, Open Terminal, branch chat, run script, prompts service
+│   │   ├── chat.contribution.ts            # Open in Pragma, Open Terminal, branch chat, run script, prompts service
 │   │   ├── branchChatSessionAction.ts      # Branch chat session action
 │   │   ├── runScriptAction.ts              # Run script contribution and split button
 │   │   └── promptsService.ts              # Agentic prompts service override

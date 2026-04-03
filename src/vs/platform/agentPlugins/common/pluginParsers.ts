@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -353,12 +353,12 @@ export function interpolateMcpPluginRoot(
 
 /**
  * Regex matching bare `${VAR_NAME}` references (uppercase only) that are NOT
- * using VS Code's `${env:VAR}` colon-delimited syntax.
+ * using Pragma's `${env:VAR}` colon-delimited syntax.
  */
 const BARE_ENV_VAR_RE = /\$\{(?![A-Za-z]+:)([A-Z_][A-Z0-9_]*)\}/g;
 
 /**
- * Converts bare `${VAR}` environment-variable references to VS Code `${env:VAR}` syntax.
+ * Converts bare `${VAR}` environment-variable references to Pragma `${env:VAR}` syntax.
  */
 export function convertBareEnvVarsToVsCodeSyntax(
 	def: IMcpServerDefinition,
@@ -380,11 +380,11 @@ export function convertBareEnvVarsToVsCodeSyntax(
 // ---------------------------------------------------------------------------
 
 /**
- * Maps known hook type identifiers from all formats (VS Code PascalCase,
+ * Maps known hook type identifiers from all formats (Pragma PascalCase,
  * Copilot CLI camelCase, Claude PascalCase) to canonical identifiers.
  */
 const HOOK_TYPE_MAP: Record<string, string> = {
-	// PascalCase (VS Code / Claude)
+	// PascalCase (Pragma / Claude)
 	'SessionStart': 'SessionStart',
 	'SessionEnd': 'SessionEnd',
 	'UserPromptSubmit': 'UserPromptSubmit',

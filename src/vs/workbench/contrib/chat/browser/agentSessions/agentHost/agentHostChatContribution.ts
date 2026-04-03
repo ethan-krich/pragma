@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -269,7 +269,7 @@ export class AgentHostContribution extends Disposable implements IWorkbenchContr
 	/**
 	 * Discover auth requirements from the server's resource metadata
 	 * and authenticate using matching tokens resolved via the standard
-	 * VS Code authentication service (same flow as MCP auth).
+	 * Pragma authentication service (same flow as MCP auth).
 	 */
 	private async _authenticateWithServer(): Promise<void> {
 		try {
@@ -293,7 +293,7 @@ export class AgentHostContribution extends Disposable implements IWorkbenchContr
 
 	/**
 	 * Resolve a bearer token for a set of authorization servers using the
-	 * standard VS Code authentication service provider resolution.
+	 * standard Pragma authentication service provider resolution.
 	 */
 	private _resolveTokenForResource(resourceServer: URI, authorizationServers: readonly string[], scopes: readonly string[]): Promise<string | undefined> {
 		return resolveTokenForResource(resourceServer, authorizationServers, scopes, this._authenticationService, this._logService, '[AgentHost]');

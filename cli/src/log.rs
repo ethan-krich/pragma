@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -199,7 +199,7 @@ impl LogSink for FileLogSink {
 impl Logger {
 	pub fn test() -> Self {
 		Self {
-			tracer: Arc::new(TracerProvider::builder().build().tracer("codeclitest")),
+			tracer: Arc::new(TracerProvider::builder().build().tracer("pragmaclitest")),
 			sink: vec![],
 			prefix: None,
 		}

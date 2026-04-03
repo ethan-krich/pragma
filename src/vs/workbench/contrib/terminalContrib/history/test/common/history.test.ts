@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -398,7 +398,7 @@ suite('Terminal history', () => {
 			});
 			test('current OS', async () => {
 				if (isWindows) {
-					filePath = join(env['APPDATA']!, 'Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt');
+					filePath = join(env['APPDATA']!, 'Ethan Krich\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt');
 				} else {
 					filePath = join(env['HOME']!, '.local/share/powershell/PSReadline/ConsoleHost_history.txt');
 				}
@@ -427,7 +427,7 @@ suite('Terminal history', () => {
 			test('Windows', async () => {
 				remoteEnvironment = { os: OperatingSystem.Windows };
 				env['APPDATA'] = 'C:\\AppData';
-				filePath = 'C:\\AppData\\Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt';
+				filePath = 'C:\\AppData\\Ethan Krich\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt';
 				deepStrictEqual((await instantiationService.invokeFunction(fetchPwshHistory))!.commands, expectedCommands);
 			});
 			test('macOS', async () => {

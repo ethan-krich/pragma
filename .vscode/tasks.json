@@ -89,7 +89,7 @@
 			}
 		},
 		{
-			"label": "VS Code - Build",
+			"label": "Pragma - Build",
 			"dependsOn": [
 				"Core - Transpile",
 				"Core - Typecheck",
@@ -138,7 +138,7 @@
 			"problemMatcher": "$tsc"
 		},
 		{
-			"label": "Kill VS Code - Build",
+			"label": "Kill Pragma - Build",
 			"dependsOn": [
 				"Kill Core - Transpile",
 				"Kill Core - Typecheck",
@@ -148,21 +148,21 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Restart VS Code - Build",
+			"label": "Restart Pragma - Build",
 			"dependsOn": [
-				"Kill VS Code - Build",
-				"VS Code - Build"
+				"Kill Pragma - Build",
+				"Pragma - Build"
 			],
 			"group": "build",
 			"dependsOrder": "sequence",
 			"problemMatcher": []
 		},
 		{
-			"label": "Kill VS Code - Build, Npm, VS Code - Build",
+			"label": "Kill Pragma - Build, Npm, Pragma - Build",
 			"dependsOn": [
-				"Kill VS Code - Build",
+				"Kill Pragma - Build",
 				"npm: install",
-				"VS Code - Build"
+				"Pragma - Build"
 			],
 			"group": "build",
 			"dependsOrder": "sequence",
@@ -255,7 +255,7 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Run and Compile Code - OSS",
+			"label": "Run and Compile Pragma",
 			"dependsOn": ["Transpile Client", "Run Dev"],
 			"dependsOrder": "sequence",
 			"inSessions": true,

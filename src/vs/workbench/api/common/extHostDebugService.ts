@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -454,7 +454,7 @@ export abstract class ExtHostDebugServiceBase extends DisposableCls implements I
 			}
 		}
 
-		// send DTOs to VS Code
+		// send DTOs to Pragma
 		return this._debugServiceProxy.$registerBreakpoints(dtos);
 	}
 
@@ -465,7 +465,7 @@ export abstract class ExtHostDebugServiceBase extends DisposableCls implements I
 		// send notification
 		this.fireBreakpointChanges([], breakpoints, []);
 
-		// unregister with VS Code
+		// unregister with Pragma
 		const ids = breakpoints.filter(bp => bp instanceof SourceBreakpoint).map(bp => bp.id);
 		const fids = breakpoints.filter(bp => bp instanceof FunctionBreakpoint).map(bp => bp.id);
 		const dids = breakpoints.filter(bp => bp instanceof DataBreakpoint).map(bp => bp.id);
@@ -658,7 +658,7 @@ export abstract class ExtHostDebugServiceBase extends DisposableCls implements I
 							tracker.onDidSendMessage(message);
 						}
 
-						// DA -> VS Code
+						// DA -> Pragma
 						try {
 							// Try to catch details for #233167
 							message = convertToVSCPaths(message, true);
@@ -696,7 +696,7 @@ export abstract class ExtHostDebugServiceBase extends DisposableCls implements I
 
 	public $sendDAMessage(debugAdapterHandle: number, message: DebugProtocol.ProtocolMessage): void {
 
-		// VS Code -> DA
+		// Pragma -> DA
 		message = convertToDAPaths(message, false);
 
 		const tracker = this._debugAdaptersTrackers.get(debugAdapterHandle);	// TODO@AW: same handle?

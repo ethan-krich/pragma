@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -440,16 +440,16 @@ class ESRPReleaseService {
 			owners: [{ owner: { userPrincipalName: 'jomo@microsoft.com' } }],
 			approvers: [{ approver: { userPrincipalName: 'jomo@microsoft.com' }, isAutoApproved: true, isMandatory: false }],
 			releaseInfo: {
-				title: 'VS Code',
+				title: 'Pragma',
 				properties: {
 					'ReleaseContentType': 'InstallPackage'
 				},
 				minimumNumberOfApprovers: 1
 			},
 			productInfo: {
-				name: 'VS Code',
+				name: 'Pragma',
 				version,
-				description: 'VS Code'
+				description: 'Pragma'
 			},
 			accessPermissionsInfo: {
 				mainPublisher: 'VSCode',

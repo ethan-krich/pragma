@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -206,13 +206,11 @@ import './contrib/notebook/browser/notebook.contribution.js';
 // Speech
 import './contrib/speech/browser/speech.contribution.js';
 
-// Chat
+// Chat foundation
 import './contrib/chat/browser/chat.contribution.js';
-import './contrib/inlineChat/browser/inlineChat.contribution.js';
+
+// MCP
 import './contrib/mcp/browser/mcp.contribution.js';
-import './contrib/chat/browser/chatSessions/chatSessions.contribution.js';
-import './contrib/chat/browser/contextContrib/chatContext.contribution.js';
-import './contrib/imageCarousel/browser/imageCarousel.contribution.js';
 
 // Interactive
 import './contrib/interactive/browser/interactive.contribution.js';

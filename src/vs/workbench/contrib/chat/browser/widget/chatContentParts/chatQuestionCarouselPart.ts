@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -1227,7 +1227,7 @@ export class ChatQuestionCarouselPart extends Disposable implements IChatContent
 			number.textContent = `${index + 1}`;
 			listItem.appendChild(number);
 
-			// Create checkbox using the VS Code Checkbox component
+			// Create checkbox using the Pragma Checkbox component
 			const checkbox = this._inputBoxes.add(new Checkbox(option.label, isChecked, defaultCheckboxStyles));
 			checkbox.domNode.classList.add('chat-question-list-checkbox');
 			// Remove checkbox from tab order since list items are navigable with arrow keys

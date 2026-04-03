@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -177,9 +177,6 @@ import './contrib/multiDiffEditor/browser/multiDiffEditor.contribution.js';
 
 // Remote Tunnel
 import './contrib/remoteTunnel/electron-browser/remoteTunnel.contribution.js';
-
-// Chat
-import './contrib/chat/electron-browser/chat.contribution.js';
 
 // Encryption
 import './contrib/encryption/electron-browser/encryption.contribution.js';

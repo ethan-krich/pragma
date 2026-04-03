@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -261,21 +261,21 @@ export class PromptValidator {
 							// ignore for now as we don't have a full list of supported attributes for claude target
 						} else {
 							if (validGithubCopilotAttributeNames.value.has(attribute.key)) {
-								report(toMarker(localize('promptValidator.ignoredAttribute.vscode-agent', "Attribute '{0}' is ignored when running locally in VS Code.", attribute.key), attribute.range, MarkerSeverity.Hint, [MarkerTag.Unnecessary]));
+								report(toMarker(localize('promptValidator.ignoredAttribute.vscode-agent', "Attribute '{0}' is ignored when running locally in Pragma.", attribute.key), attribute.range, MarkerSeverity.Hint, [MarkerTag.Unnecessary]));
 							} else {
-								report(toMarker(localize('promptValidator.unknownAttribute.vscode-agent', "Attribute '{0}' is not supported in VS Code agent files. Supported: {1}.", attribute.key, supportedNames.value), attribute.range, MarkerSeverity.Hint, [MarkerTag.Unnecessary]));
+								report(toMarker(localize('promptValidator.unknownAttribute.vscode-agent', "Attribute '{0}' is not supported in Pragma agent files. Supported: {1}.", attribute.key, supportedNames.value), attribute.range, MarkerSeverity.Hint, [MarkerTag.Unnecessary]));
 							}
 						}
 						break;
 					case PromptsType.instructions:
 						if (target === Target.Claude) {
-							report(toMarker(localize('promptValidator.unknownAttribute.rules', "Attribute '{0}' is not supported in rules files by VS Code agents. Supported: {1}.", attribute.key, supportedNames.value), attribute.range, MarkerSeverity.Hint, [MarkerTag.Unnecessary]));
+							report(toMarker(localize('promptValidator.unknownAttribute.rules', "Attribute '{0}' is not supported in rules files by Pragma agents. Supported: {1}.", attribute.key, supportedNames.value), attribute.range, MarkerSeverity.Hint, [MarkerTag.Unnecessary]));
 						} else {
 							report(toMarker(localize('promptValidator.unknownAttribute.instructions', "Attribute '{0}' is not supported in instructions files. Supported: {1}.", attribute.key, supportedNames.value), attribute.range, MarkerSeverity.Hint, [MarkerTag.Unnecessary]));
 						}
 						break;
 					case PromptsType.skill:
-						report(toMarker(localize('promptValidator.unknownAttribute.skill', "Attribute '{0}' is not supported by VS Code agents. Supported: {1}.", attribute.key, supportedNames.value), attribute.range, MarkerSeverity.Hint, [MarkerTag.Unnecessary]));
+						report(toMarker(localize('promptValidator.unknownAttribute.skill', "Attribute '{0}' is not supported by Pragma agents. Supported: {1}.", attribute.key, supportedNames.value), attribute.range, MarkerSeverity.Hint, [MarkerTag.Unnecessary]));
 						break;
 				}
 			}
@@ -1093,7 +1093,7 @@ export function mapClaudeModels(claudeModelNames: readonly string[]): readonly s
 }
 
 /**
- * Maps Claude tool names to their VS Code tool equivalents.
+ * Maps Claude tool names to their Pragma tool equivalents.
  */
 export function mapClaudeTools(claudeToolNames: readonly string[]): string[] {
 	const result: string[] = [];

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -104,7 +104,7 @@ export function setup(options?: { skipSuite: boolean }) {
 				await terminal.runCommandWithValue(TerminalCommandIdWithValue.WriteDataToTerminal, `${csi('2J')}${csi('3J')}${csi('H')}`);
 			}
 
-			describe('VS Code sequences', () => {
+			describe('Pragma sequences', () => {
 				it('should handle the simple case', async () => {
 					await beforeEachSetup();
 					await terminal.runCommandWithValue(TerminalCommandIdWithValue.WriteDataToTerminal, `${vsc('A')}Prompt> ${vsc('B')}exitcode 0`);

@@ -1,9 +1,9 @@
 {
   "name": "vscode-automation",
   "version": "1.71.0",
-  "description": "VS Code UI automation driver",
+  "description": "Pragma UI automation driver",
   "author": {
-    "name": "Microsoft Corporation"
+    "name": "Ethan Krich"
   },
   "license": "MIT",
   "main": "./out/index.js",

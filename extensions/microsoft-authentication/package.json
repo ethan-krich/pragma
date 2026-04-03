@@ -31,7 +31,7 @@
   "contributes": {
     "authentication": [
       {
-        "label": "Microsoft",
+        "label": "Ethan Krich",
         "id": "microsoft",
         "authorizationServerGlobs": [
           "https://login.microsoftonline.com/*",
@@ -39,13 +39,13 @@
         ]
       },
       {
-        "label": "Microsoft Sovereign Cloud",
+        "label": "Ethan Krich Sovereign Cloud",
         "id": "microsoft-sovereign-cloud"
       }
     ],
     "configuration": [
       {
-        "title": "Microsoft Sovereign Cloud",
+        "title": "Ethan Krich Sovereign Cloud",
         "properties": {
           "microsoft-sovereign-cloud.environment": {
             "type": "string",
@@ -103,7 +103,7 @@
         }
       },
       {
-        "title": "Microsoft",
+        "title": "Ethan Krich",
         "properties": {
           "microsoft-authentication.implementation": {
             "type": "string",

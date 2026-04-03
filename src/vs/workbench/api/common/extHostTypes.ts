@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -1687,7 +1687,7 @@ export class DataTransferItem implements vscode.DataTransferItem {
 }
 
 /**
- * A data transfer item that has been created by VS Code instead of by a extension.
+ * A data transfer item that has been created by Pragma instead of by a extension.
  *
  * Intentionally not exported to extensions.
  */
@@ -2719,13 +2719,13 @@ export class TimelineItem implements vscode.TimelineItem {
 export enum ExtensionMode {
 	/**
 	 * The extension is installed normally (for example, from the marketplace
-	 * or VSIX) in VS Code.
+	 * or VSIX) in Pragma.
 	 */
 	Production = 1,
 
 	/**
 	 * The extension is running from an `--extensionDevelopmentPath` provided
-	 * when launching VS Code.
+	 * when launching Pragma.
 	 */
 	Development = 2,
 

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -63,7 +63,7 @@ export class UserAttentionService extends Disposable implements IUserAttentionSe
 
 			reader.store.add(autorun(innerReader => {
 				const focused = this.isVsCodeFocused.read(innerReader);
-				this._logService.trace(`[UserAttentionService] VS Code focus changed: ${focused}`);
+				this._logService.trace(`[UserAttentionService] Pragma focus changed: ${focused}`);
 			}));
 			reader.store.add(autorun(innerReader => {
 				const hasAttention = this.hasUserAttention.read(innerReader);

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -23,9 +23,6 @@ const MACHO_X86_64_CPU_TYPE = new Set([
 
 // Files to skip during architecture validation
 const FILES_TO_SKIP = [
-	// MSAL runtime files are only present in ARM64 builds
-	'**/extensions/microsoft-authentication/dist/libmsalruntime.dylib',
-	'**/extensions/microsoft-authentication/dist/msal-node-runtime.node',
 	// Copilot SDK: universal app has both x64 and arm64 platform packages
 	'**/node_modules/@github/copilot-darwin-x64/**',
 	'**/node_modules/@github/copilot-darwin-arm64/**',

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -9,7 +9,7 @@ import { Disposable, toDisposable } from '../../../../base/common/lifecycle.js';
 
 /**
  * Thin wrapper around {@link CopilotSession} that exposes each SDK event as a
- * proper VS Code `Event<T>`. All subscriptions and the underlying SDK session
+ * proper Pragma `Event<T>`. All subscriptions and the underlying SDK session
  * are cleaned up on dispose.
  */
 export class CopilotSessionWrapper extends Disposable {

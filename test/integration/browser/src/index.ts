@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -43,7 +43,7 @@ const args = minimist(process.argv.slice(2), {
 });
 
 if (args.help) {
-	console.error(`Integration test runner for VS Code in the browser
+	console.error(`Integration test runner for Pragma in the browser
 	Usage: node integration-tests-browser/out/index.js [options]
 
 	--workspacePath <path>             Path to the workspace (folder or *.code-workspace file) to open in the test

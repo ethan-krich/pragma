@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # --------------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
+# Copyright (c) Ethan Krich. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
@@ -145,7 +145,7 @@ cd "$ROOT"
 
 # Start the server directly using Node (not via code-agent-host.sh which
 # spawns a subprocess tree that's harder to manage in background mode).
-# Use system node rather than the VS Code-managed node binary which may
+# Use system node rather than the Pragma-managed node binary which may
 # not have been downloaded yet.
 SERVER_ENTRY="$ROOT/out/vs/platform/agentHost/node/agentHostServerMain.js"
 

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -68,7 +68,7 @@ suite('GitHubRepositoryFetcher', () => {
 			owner: { login: 'microsoft' },
 			default_branch: 'main',
 			private: false,
-			description: 'Visual Studio Code',
+			description: 'Pragma',
 		});
 
 		const repo = await fetcher.getRepository('microsoft', 'vscode');
@@ -78,7 +78,7 @@ suite('GitHubRepositoryFetcher', () => {
 			fullName: 'microsoft/vscode',
 			defaultBranch: 'main',
 			isPrivate: false,
-			description: 'Visual Studio Code',
+			description: 'Pragma',
 		});
 		assert.strictEqual(mockApi.requestCalls[0].path, '/repos/microsoft/vscode');
 	});

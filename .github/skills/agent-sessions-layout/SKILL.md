@@ -76,7 +76,7 @@ When proposing or implementing changes, follow these rules from the spec:
 
 After modifying layout code:
 
-1. Verify the build compiles without errors via the `VS Code - Build` task
+1. Verify the build compiles without errors via the `Pragma - Build` task
 2. Ensure the grid structure matches the spec's visual representation
 3. Confirm part visibility toggling works correctly (show/hide/maximize)
 4. Test that editors open in the `ModalEditorPart` overlay and that it closes properly

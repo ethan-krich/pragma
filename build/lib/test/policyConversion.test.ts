@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -178,7 +178,7 @@ const policies: ExportedPolicyDataDto = {
 					},
 					{
 						key: 'chat.mcp.access.registry',
-						value: 'Allows access to MCP servers installed from the registry that VS Code is connected to.'
+						value: 'Allows access to MCP servers installed from the registry that Pragma is connected to.'
 					},
 					{
 						key: 'chat.mcp.access.any',
@@ -258,7 +258,7 @@ const policies: ExportedPolicyDataDto = {
 			localization: {
 				description: {
 					key: 'updateMode',
-					value: 'Configure whether you receive automatic updates. Requires a restart after change. The updates are fetched from a Microsoft online service.'
+					value: 'Configure whether you receive automatic updates. Requires a restart after change. The updates are fetched from a Ethan Krich online service.'
 				},
 				enumDescriptions: [
 					{
@@ -344,11 +344,11 @@ const policies: ExportedPolicyDataDto = {
 };
 
 const mockProduct: ProductJson = {
-	nameLong: 'Code - OSS',
+	nameLong: 'Pragma',
 	darwinBundleIdentifier: 'com.visualstudio.code.oss',
 	darwinProfilePayloadUUID: 'CF808BE7-53F3-46C6-A7E2-7EDB98A5E959',
 	darwinProfileUUID: '47827DD9-4734-49A0-AF80-7E19B11495CC',
-	win32RegValueName: 'CodeOSS'
+	win32RegValueName: 'Pragma'
 };
 
 const frenchTranslations = [
@@ -381,7 +381,7 @@ Cette fonctionnalité désactive [les protections de sécurité critiques](https
 				'telemetry.telemetryLevel.error': `Envoie la télémétrie d'erreur générale et les rapports de plantage.`,
 				'telemetry.telemetryLevel.crash': `Envoie des rapports de plantage au niveau du système d'exploitation.`,
 				'telemetry.telemetryLevel.off': 'Désactive toutes les données de télémétrie du produit.',
-				'updateMode': `Choisissez si vous voulez recevoir des mises à jour automatiques. Nécessite un redémarrage après le changement. Les mises à jour sont récupérées auprès d'un service en ligne Microsoft.`,
+				'updateMode': `Choisissez si vous voulez recevoir des mises à jour automatiques. Nécessite un redémarrage après le changement. Les mises à jour sont récupérées auprès d'un service en ligne Ethan Krich.`,
 				'none': 'Aucun',
 				'manual': 'Désactivez la recherche de mises à jour automatique en arrière-plan. Les mises à jour sont disponibles si vous les rechercher manuellement.',
 				'start': 'Démarrer',
@@ -432,7 +432,7 @@ suite('Policy E2E conversion', () => {
 		const result = renderGP(mockProduct, parsedPolicies, []);
 
 		// Load the expected fixture file
-		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'CodeOSS.admx');
+		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'Pragma.admx');
 		const expectedContent = await fs.readFile(fixturePath, 'utf-8');
 
 		// Compare the rendered ADMX with the fixture
@@ -444,7 +444,7 @@ suite('Policy E2E conversion', () => {
 		const result = renderGP(mockProduct, parsedPolicies, []);
 
 		// Load the expected fixture file
-		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'en-us', 'CodeOSS.adml');
+		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'en-us', 'Pragma.adml');
 		const expectedContent = await fs.readFile(fixturePath, 'utf-8');
 
 		// Find the en-us ADML
@@ -481,7 +481,7 @@ suite('Policy E2E conversion', () => {
 		const result = renderGP(mockProduct, parsedPolicies, frenchTranslations);
 
 		// Load the expected fixture file
-		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'fr-fr', 'CodeOSS.adml');
+		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'fr-fr', 'Pragma.adml');
 		const expectedContent = await fs.readFile(fixturePath, 'utf-8');
 
 		// Find the fr-fr ADML

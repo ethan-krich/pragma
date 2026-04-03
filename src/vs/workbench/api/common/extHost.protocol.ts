@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -3537,9 +3537,9 @@ export interface MainThreadTestingShape {
 	$updateController(controllerId: string, patch: ITestControllerPatch): void;
 	/** Diposes of the test controller with the given ID */
 	$unregisterTestController(controllerId: string): void;
-	/** Requests tests published to VS Code. */
+	/** Requests tests published to Pragma. */
 	$subscribeToDiffs(): void;
-	/** Stops requesting tests published to VS Code. */
+	/** Stops requesting tests published to Pragma. */
 	$unsubscribeFromDiffs(): void;
 	/** Publishes that new tests were available on the given source. */
 	$publishDiff(controllerId: string, diff: TestsDiffOp.Serialized[]): void;

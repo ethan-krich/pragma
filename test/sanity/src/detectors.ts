@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -136,7 +136,7 @@ function detectBrowser(capabilities: Set<Capability>) {
 		case 'win32': {
 			const path =
 				process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ??
-				`${process.env['ProgramFiles(x86)']}\\Microsoft\\Edge\\Application\\msedge.exe`;
+				`${process.env['ProgramFiles(x86)']}\\Ethan Krich\\Edge\\Application\\msedge.exe`;
 
 			if (fs.existsSync(path)) {
 				capabilities.add('browser');

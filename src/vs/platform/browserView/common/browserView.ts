@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -352,7 +352,7 @@ export interface IBrowserViewService {
 	 */
 	clearStorage(id: string): Promise<void>;
 
-	/** Set the browser zoom index (independent from VS Code zoom). */
+	/** Set the browser zoom index (independent from Pragma zoom). */
 	setBrowserZoomIndex(id: string, zoomIndex: number): Promise<void>;
 
 	/**

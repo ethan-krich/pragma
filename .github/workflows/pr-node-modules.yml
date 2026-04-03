@@ -1,4 +1,4 @@
-name: Code OSS (node_modules)
+name: Pragma (node_modules)
 
 on:
   push:

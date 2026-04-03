@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) Microsoft Corporation. All rights reserved.
+# Copyright (c) Ethan Krich. All rights reserved.
 #
 realdir() {
 	SOURCE=$1

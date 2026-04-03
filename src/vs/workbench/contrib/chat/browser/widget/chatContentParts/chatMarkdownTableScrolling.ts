@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -12,7 +12,7 @@ import { ScrollbarVisibility } from '../../../../../../base/common/scrollable.js
 
 /**
  * Finds all tables in `domNode` and wraps each in a {@link DomScrollableElement}
- * so they scroll horizontally with the custom VS Code scrollbar instead of the
+ * so they scroll horizontally with the custom Pragma scrollbar instead of the
  * native one. Each wrapped table is pushed onto `orderedDisposablesList` and a
  * `scanDomNode` callback is registered on `layoutParticipants` so the scrollbar
  * re-measures whenever the container is resized.

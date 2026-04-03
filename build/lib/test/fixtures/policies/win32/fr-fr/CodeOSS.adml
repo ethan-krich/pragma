@@ -4,12 +4,12 @@
 	<description />
 	<resources>
 		<stringTable>
-			<string id="Application">Code - OSS</string>
-			<string id="Supported_1_101">Code - OSS &gt;= 1.101</string>
-			<string id="Supported_1_104">Code - OSS &gt;= 1.104</string>
-			<string id="Supported_1_67">Code - OSS &gt;= 1.67</string>
-			<string id="Supported_1_96">Code - OSS &gt;= 1.96</string>
-			<string id="Supported_1_99">Code - OSS &gt;= 1.99</string>
+			<string id="Application">Pragma</string>
+			<string id="Supported_1_101">Pragma &gt;= 1.101</string>
+			<string id="Supported_1_104">Pragma &gt;= 1.104</string>
+			<string id="Supported_1_67">Pragma &gt;= 1.67</string>
+			<string id="Supported_1_96">Pragma &gt;= 1.96</string>
+			<string id="Supported_1_99">Pragma &gt;= 1.99</string>
 			<string id="Category_interactiveSessionConfigurationTitle">Session interactive</string>
 			<string id="Category_extensionsConfigurationTitle">Extensions</string>
 			<string id="Category_terminalIntegratedConfigurationTitle">Terminal intégré</string>
@@ -47,7 +47,7 @@ Cette fonctionnalité désactive [les protections de sécurité critiques](https
 			<string id="TelemetryLevel_telemetry_telemetryLevel_crash">Envoie des rapports de plantage au niveau du système d'exploitation.</string>
 			<string id="TelemetryLevel_telemetry_telemetryLevel_off">Désactive toutes les données de télémétrie du produit.</string>
 			<string id="UpdateMode">UpdateMode</string>
-			<string id="UpdateMode_updateMode">Choisissez si vous voulez recevoir des mises à jour automatiques. Nécessite un redémarrage après le changement. Les mises à jour sont récupérées auprès d'un service en ligne Microsoft.</string>
+			<string id="UpdateMode_updateMode">Choisissez si vous voulez recevoir des mises à jour automatiques. Nécessite un redémarrage après le changement. Les mises à jour sont récupérées auprès d'un service en ligne Ethan Krich.</string>
 			<string id="UpdateMode_none">Aucun</string>
 			<string id="UpdateMode_manual">Désactivez la recherche de mises à jour automatique en arrière-plan. Les mises à jour sont disponibles si vous les rechercher manuellement.</string>
 			<string id="UpdateMode_start">Démarrer</string>

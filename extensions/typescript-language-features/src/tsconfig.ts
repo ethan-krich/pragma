@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -157,7 +157,7 @@ export async function openProjectConfigForFile(
 	const rootPath = client.getWorkspaceRootForResource(resource);
 	if (!rootPath) {
 		vscode.window.showInformationMessage(
-			vscode.l10n.t("Please open a folder in VS Code to use a TypeScript or JavaScript project"));
+			vscode.l10n.t("Please open a folder in Pragma to use a TypeScript or JavaScript project"));
 		return;
 	}
 

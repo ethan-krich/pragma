@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -18,7 +18,7 @@ export interface WebviewRemoteInfo {
  * This is hardcoded because we never expect to actually hit it. Instead these requests
  * should always go to a service worker.
  */
-export const webviewResourceBaseHost = 'vscode-cdn.net';
+export const webviewResourceBaseHost = 'pragma-webview.net';
 
 export const webviewRootResourceAuthority = `vscode-resource.${webviewResourceBaseHost}`;
 

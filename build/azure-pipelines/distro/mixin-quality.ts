@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -37,6 +37,10 @@ function main() {
 	log(`Mixing in distro quality...`);
 
 	const basePath = `.build/distro/mixin/${quality}`;
+	if (!fs.existsSync(basePath)) {
+		log(`Skipping distro quality mixin: ${basePath} (missing)`);
+		return;
+	}
 
 	for (const name of fs.readdirSync(basePath)) {
 		const distroPath = path.join(basePath, name);

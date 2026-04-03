@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -19,7 +19,7 @@ export const itemData = new WeakMap<vscode.TestItem, VSCodeTest>();
 export const clearFileDiagnostics = (uri: vscode.Uri) => diagnosticCollection.delete(uri);
 
 /**
- * Tries to guess which workspace folder VS Code is in.
+ * Tries to guess which workspace folder Pragma is in.
  */
 export const guessWorkspaceFolder = async () => {
 	if (!vscode.workspace.workspaceFolders) {

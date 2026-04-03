@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -33,7 +33,7 @@ suite('ScopeData', () => {
 		assert.deepStrictEqual(scopeData.scopesToSend, ['email', 'offline_access', 'openid', 'profile', 'User.Read']);
 	});
 
-	test('should filter out internal VS Code scopes for scopesToSend', () => {
+	test('should filter out internal Pragma scopes for scopesToSend', () => {
 		const scopeData = new ScopeData(['custom_scope', 'VSCODE_CLIENT_ID:some_id']);
 		assert.deepStrictEqual(scopeData.scopesToSend, ['custom_scope']);
 	});

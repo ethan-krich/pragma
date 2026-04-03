@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -118,7 +118,7 @@ suite('convertBareEnvVarsToVsCodeSyntax', () => {
 			assert.strictEqual(cfg.command, '${config:editor.fontSize}');
 		});
 
-		test('does not convert lowercase/camelCase VS Code variable tokens', () => {
+		test('does not convert lowercase/camelCase Pragma variable tokens', () => {
 			const cfg = asStdio(convertBareEnvVarsToVsCodeSyntax({
 				name: 'test',
 				uri: URI.parse('file:///test'),

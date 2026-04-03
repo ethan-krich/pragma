@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -23,7 +23,7 @@ export class ConfigureDisplayLanguageAction extends Action2 {
 				id: MenuId.CommandPalette
 			},
 			metadata: {
-				description: localize2('configureLocaleDescription', "Changes the locale of VS Code based on installed language packs. Common languages include French, Chinese, Spanish, Japanese, German, Korean, and more.")
+				description: localize2('configureLocaleDescription', "Changes the locale of Pragma based on installed language packs. Common languages include French, Chinese, Spanish, Japanese, German, Korean, and more.")
 			}
 		});
 	}

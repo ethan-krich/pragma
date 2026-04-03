@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -69,11 +69,11 @@ class AICustomizationWorkspaceService implements IAICustomizationWorkspaceServic
 	clearOverrideProjectRoot(): void { }
 
 	async commitFiles(_projectRoot: URI, _fileUris: URI[]): Promise<void> {
-		// No-op in core VS Code.
+		// No-op in core Pragma.
 	}
 
 	async deleteFiles(_projectRoot: URI, _fileUris: URI[]): Promise<void> {
-		// No-op in core VS Code.
+		// No-op in core Pragma.
 	}
 
 	async generateCustomization(type: PromptsType): Promise<void> {

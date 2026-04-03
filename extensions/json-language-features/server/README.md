@@ -206,7 +206,7 @@ If the setting `jsonFoldingLimit` or `jsoncFoldingLimit` is set, the JSON langua
 
 ## Try
 
-The JSON language server is shipped with [Visual Studio Code](https://code.visualstudio.com/) as part of the built-in VSCode extension `json-language-features`. The server is started when the first JSON file is opened. The [VSCode JSON documentation](https://code.visualstudio.com/docs/languages/json) for detailed information on the user experience and has more information on how to configure the language support.
+The JSON language server is shipped with [Pragma](https://code.visualstudio.com/) as part of the built-in VSCode extension `json-language-features`. The server is started when the first JSON file is opened. The [VSCode JSON documentation](https://code.visualstudio.com/docs/languages/json) for detailed information on the user experience and has more information on how to configure the language support.
 
 ## Integrate
 
@@ -243,10 +243,10 @@ Help on any of these projects is very welcome.
 
 ## Code of Conduct
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This project has adopted the [Ethan Krich Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ## License
 
-Copyright (c) Microsoft Corporation. All rights reserved.
+Copyright (c) Ethan Krich. All rights reserved.
 
 Licensed under the [MIT](https://github.com/microsoft/vscode/blob/master/LICENSE.txt) License.

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -686,7 +686,7 @@ class PolicyDiagnosticsAction extends Action2 {
 
 		const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 
-		let content = '# VS Code Policy Diagnostics\n\n';
+		let content = '# Pragma Policy Diagnostics\n\n';
 		content += '*WARNING: This file may contain sensitive information.*\n\n';
 		content += '## System Information\n\n';
 		content += '| Property | Value |\n';

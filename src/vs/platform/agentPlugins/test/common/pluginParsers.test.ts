@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -213,7 +213,7 @@ suite('pluginParsers', () => {
 
 	suite('convertBareEnvVarsToVsCodeSyntax', () => {
 
-		test('converts bare env vars to VS Code syntax', () => {
+		test('converts bare env vars to Pragma syntax', () => {
 			const def = {
 				name: 'test',
 				uri: URI.file('/plugin'),

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -50,8 +50,17 @@ export async function main(argv: string[]): Promise<void> {
 		return;
 	}
 
+	if (args.chat) {
+		console.error('AI chat features are disabled in Pragma.');
+		return;
+	}
+
 	for (const subcommand of NATIVE_CLI_COMMANDS) {
 		if (args[subcommand]) {
+			if (subcommand === 'tunnel') {
+				console.error('Remote tunnels are disabled in Pragma.');
+				return;
+			}
 			if (!product.tunnelApplicationName) {
 				console.error(`'${subcommand}' command not supported in ${product.applicationName}`);
 				return;
@@ -73,7 +82,7 @@ export async function main(argv: string[]): Promise<void> {
 					tunnelProcess = spawn('cargo', ['run', '--', subcommand, ...tunnelArgs], { cwd: join(getAppRoot(), 'cli'), stdio, env });
 				} else {
 					const appPath = process.platform === 'darwin'
-						// ./Contents/MacOS/Code => ./Contents/Resources/app/bin/code-tunnel-insiders
+						// ./Contents/MacOS/Pragma => ./Contents/Resources/app/bin/pragma-tunnel-insiders
 						? join(dirname(dirname(process.execPath)), 'Resources', 'app')
 						: dirname(process.execPath);
 					const tunnelCommand = join(appPath, 'bin', `${product.tunnelApplicationName}${isWindows ? '.exe' : ''}`);
@@ -92,12 +101,6 @@ export async function main(argv: string[]): Promise<void> {
 	if (args.help) {
 		const executable = `${product.applicationName}${isWindows ? '.exe' : ''}`;
 		console.log(buildHelpMessage(product.nameLong, executable, product.version, OPTIONS));
-	}
-
-	// Help (chat)
-	else if (args.chat?.help) {
-		const executable = `${product.applicationName}${isWindows ? '.exe' : ''}`;
-		console.log(buildHelpMessage(product.nameLong, executable, product.version, OPTIONS.chat.options, { isChat: true }));
 	}
 
 	// Version Info
@@ -254,7 +257,7 @@ export async function main(argv: string[]): Promise<void> {
 			console.log(`State is temporarily stored. Relaunch this state with: ${product.applicationName} --user-data-dir "${tempUserDataDir}" --extensions-dir "${tempExtensionsDir}"`);
 		}
 
-		const hasReadStdinArg = args._.some(arg => arg === '-') || args.chat?._.some(arg => arg === '-');
+		const hasReadStdinArg = args._.some(arg => arg === '-');
 		if (hasReadStdinArg) {
 			// remove the "-" argument when we read from stdin
 			args._ = args._.filter(a => a !== '-');
@@ -293,15 +296,10 @@ export async function main(argv: string[]): Promise<void> {
 						processCallbacks.push(() => readFromStdinDone.p);
 					}
 
-					if (args.chat) {
-						// Make sure to add tmp file as context to chat
-						addArg(argv, '--add-file', stdinFilePath);
-					} else {
-						// Make sure to open tmp file as editor but ignore
-						// it in the "recently open" list
-						addArg(argv, stdinFilePath);
-						addArg(argv, '--skip-add-to-recently-opened');
-					}
+					// Make sure to open tmp file as editor but ignore
+					// it in the "recently open" list.
+					addArg(argv, stdinFilePath);
+					addArg(argv, '--skip-add-to-recently-opened');
 
 					console.log(`Reading from stdin via: ${stdinFilePath}`);
 				} catch (e) {
@@ -314,7 +312,7 @@ export async function main(argv: string[]): Promise<void> {
 				// if we detect that data flows into via stdin after a certain timeout.
 				processCallbacks.push(_ => stdinDataListener(1000).then(dataReceived => {
 					if (dataReceived) {
-						console.log(buildStdinMessage(product.applicationName, !!args.chat));
+						console.log(buildStdinMessage(product.applicationName, false));
 					}
 				}));
 			}
@@ -491,7 +489,7 @@ export async function main(argv: string[]): Promise<void> {
 			// similar to if the app was launched from the dock
 			// https://github.com/microsoft/vscode/issues/102975
 
-			// The following args are for the open command itself, rather than for VS Code:
+			// The following args are for the open command itself, rather than for Pragma:
 			// -n creates a new instance.
 			//    Without -n, the open command re-opens the existing instance as-is.
 			// -g starts the new instance in the background.

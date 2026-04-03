@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -169,7 +169,7 @@ export const RunTaskToolData: IToolData = {
 	toolReferenceName: 'runTask',
 	legacyToolReferenceFullNames: ['runTasks/runTask'],
 	displayName: localize('runInTerminalTool.displayName', 'Run Task'),
-	modelDescription: `Runs a VS Code task.\n\n- If you see that an appropriate task exists for building or running code, prefer to use this tool to run the task instead of using the ${TerminalToolId.RunInTerminal} tool.\n- Make sure that any appropriate build or watch task is running before trying to run tests or execute code.\n- If the user asks to run a task, use this tool to do so.`,
+	modelDescription: `Runs a Pragma task.\n\n- If you see that an appropriate task exists for building or running code, prefer to use this tool to run the task instead of using the ${TerminalToolId.RunInTerminal} tool.\n- Make sure that any appropriate build or watch task is running before trying to run tests or execute code.\n- If the user asks to run a task, use this tool to do so.`,
 	userDescription: localize('runInTerminalTool.userDescription', 'Run tasks in the workspace'),
 	icon: Codicon.tools,
 	source: ToolDataSource.Internal,

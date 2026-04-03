@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -241,7 +241,7 @@ else {
 	quality = parseQuality();
 }
 
-logger.log(`VS Code product quality: ${quality}.`);
+logger.log(`Pragma product quality: ${quality}.`);
 
 const userDataDir = path.join(testDataPath, 'd');
 
@@ -291,7 +291,7 @@ async function ensureStableCode(): Promise<void> {
 			throw new Error(`Could not find suitable stable version for ${version}`);
 		}
 
-		logger.log(`Found VS Code v${version}, downloading previous VS Code version ${stableVersion}...`);
+		logger.log(`Found Pragma v${version}, downloading previous Pragma version ${stableVersion}...`);
 
 		let lastProgressMessage: string | undefined = undefined;
 		let lastProgressReportedAt = 0;
@@ -322,7 +322,7 @@ async function ensureStableCode(): Promise<void> {
 		});
 
 		if (process.platform === 'darwin') {
-			// Visual Studio Code.app/Contents/MacOS/Code
+			// Pragma.app/Contents/MacOS/Code
 			stableCodePath = path.dirname(path.dirname(path.dirname(stableCodeExecutable)));
 		} else {
 			// VSCode/Code.exe (Windows) | VSCode/code (Linux)

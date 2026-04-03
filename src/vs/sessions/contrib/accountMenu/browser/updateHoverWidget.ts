@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -42,7 +42,7 @@ export class UpdateHoverWidget {
 		const container = document.createElement('div');
 		container.classList.add('sessions-update-hover');
 
-		// Header: e.g. "Downloading VS Code Insiders"
+		// Header: e.g. "Downloading Pragma Insiders"
 		const header = document.createElement('div');
 		header.classList.add('sessions-update-hover-header');
 		header.textContent = this.getUpdateHeaderLabel(state.type);

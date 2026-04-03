@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -72,7 +72,7 @@ export class DelegationSessionPickerActionItem extends SessionTypePickerActionIt
 		const allContributions = this.chatSessionsService.getAllChatSessionContributions();
 		const contribution = allContributions.find(contribution => getAgentSessionProvider(contribution.type) === type);
 
-		// In core VS Code, only allow delegation from local sessions.
+		// In core Pragma, only allow delegation from local sessions.
 		// In the sessions window, only allow delegation from background sessions (not cloud).
 		const activeProvider = this.delegate.getActiveSessionProvider();
 		if (!this._isSessionsWindow && activeProvider !== AgentSessionProviders.Local) {

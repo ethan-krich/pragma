@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -50,7 +50,7 @@ suite('StringEnumPolicy', () => {
 		const admx = policy.renderADMX('TestKey');
 
 		assert.deepStrictEqual(admx, [
-			'<policy name="TestStringEnumPolicy" class="Both" displayName="$(string.TestStringEnumPolicy)" explainText="$(string.TestStringEnumPolicy_test_policy_description)" key="Software\\Policies\\Microsoft\\TestKey" presentation="$(presentation.TestStringEnumPolicy)">',
+			'<policy name="TestStringEnumPolicy" class="Both" displayName="$(string.TestStringEnumPolicy)" explainText="$(string.TestStringEnumPolicy_test_policy_description)" key="Software\\Policies\\Ethan Krich\\TestKey" presentation="$(presentation.TestStringEnumPolicy)">',
 			'\t<parentCategory ref="test.category" />',
 			'\t<supportedOn ref="Supported_1_0" />',
 			'\t<elements>',

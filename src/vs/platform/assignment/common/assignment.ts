@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -81,7 +81,7 @@ export enum Filters {
 	ExtensionVersion = 'X-VSCode-ExtensionVersion',
 
 	/**
-	 * The language in use by VS Code
+	 * The language in use by Pragma
 	 */
 	Language = 'X-VSCode-Language',
 
@@ -92,12 +92,12 @@ export enum Filters {
 	TargetPopulation = 'X-VSCode-TargetPopulation',
 
 	/**
-	 * The platform (OS) on which VS Code is running.
+	 * The platform (OS) on which Pragma is running.
 	 */
 	Platform = 'X-VSCode-Platform',
 
 	/**
-	 * The release/build date of VS Code (UTC) in the format yyyymmddHH.
+	 * The release/build date of Pragma (UTC) in the format yyyymmddHH.
 	 */
 	ReleaseDate = 'X-VSCode-ReleaseDate',
 }
@@ -181,6 +181,6 @@ export class AssignmentFilterProvider implements IExperimentationFilterProvider 
 export function getInternalOrg(organisations: string[] | undefined): 'vscode' | 'github' | 'microsoft' | undefined {
 	const isVSCodeInternal = organisations?.includes('Visual-Studio-Code');
 	const isGitHubInternal = organisations?.includes('github');
-	const isMicrosoftInternal = organisations?.includes('microsoft') || organisations?.includes('ms-copilot') || organisations?.includes('MicrosoftCopilot');
-	return isVSCodeInternal ? 'vscode' : isGitHubInternal ? 'github' : isMicrosoftInternal ? 'microsoft' : undefined;
+	const isEthanKrichInternal = organisations?.includes('microsoft') || organisations?.includes('ms-copilot') || organisations?.includes('Ethan KrichCopilot');
+	return isVSCodeInternal ? 'vscode' : isGitHubInternal ? 'github' : isEthanKrichInternal ? 'microsoft' : undefined;
 }

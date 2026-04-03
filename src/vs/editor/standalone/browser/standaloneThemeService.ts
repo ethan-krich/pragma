@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -405,7 +405,7 @@ export class StandaloneThemeService extends Disposable implements IStandaloneThe
 		ruleCollector.addRule(generateTokensCSSForColorMap(colorMap));
 
 		// If the OS has forced-colors active, disable forced color adjustment for
-		// Monaco editor elements so that VS Code's built-in high contrast themes
+		// Monaco editor elements so that Pragma's built-in high contrast themes
 		// (hc-black / hc-light) are used instead of the OS forcing system colors.
 		ruleCollector.addRule(`.monaco-editor, .monaco-diff-editor, .monaco-component { forced-color-adjust: none; }`);
 

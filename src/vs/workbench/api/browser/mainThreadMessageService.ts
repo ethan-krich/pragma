@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -21,8 +21,7 @@ export class MainThreadMessageService implements MainThreadMessageServiceShape {
 	private extensionsListener: IDisposable;
 
 	private static readonly URGENT_NOTIFICATION_SOURCES = [
-		'vscode.github-authentication',
-		'vscode.microsoft-authentication'
+		'vscode.github-authentication'
 	];
 
 	constructor(

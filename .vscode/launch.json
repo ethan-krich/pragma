@@ -87,7 +87,7 @@
 		{
 			"type": "extensionHost",
 			"request": "launch",
-			"name": "VS Code Emmet Tests",
+			"name": "Pragma Emmet Tests",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"${workspaceFolder}/extensions/emmet/test-workspace",
@@ -105,7 +105,7 @@
 		{
 			"type": "extensionHost",
 			"request": "launch",
-			"name": "VS Code Configuration Editing Tests",
+			"name": "Pragma Configuration Editing Tests",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}/extensions/configuration-editing",
@@ -122,7 +122,7 @@
 		{
 			"type": "extensionHost",
 			"request": "launch",
-			"name": "VS Code Git Tests",
+			"name": "Pragma Git Tests",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"/tmp/my4g9l",
@@ -140,7 +140,7 @@
 		{
 			"type": "extensionHost",
 			"request": "launch",
-			"name": "VS Code Github Tests",
+			"name": "Pragma Github Tests",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"${workspaceFolder}/extensions/github/testWorkspace",
@@ -158,7 +158,7 @@
 		{
 			"type": "extensionHost",
 			"request": "launch",
-			"name": "VS Code API Tests (single folder)",
+			"name": "Pragma API Tests (single folder)",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				// "${workspaceFolder}", // Uncomment for running out of sources.
@@ -178,7 +178,7 @@
 		{
 			"type": "extensionHost",
 			"request": "launch",
-			"name": "VS Code API Tests (workspace)",
+			"name": "Pragma API Tests (workspace)",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"${workspaceFolder}/extensions/vscode-api-tests/testworkspace.code-workspace",
@@ -196,7 +196,7 @@
 		{
 			"type": "extensionHost",
 			"request": "launch",
-			"name": "VS Code Tokenizer Tests",
+			"name": "Pragma Tokenizer Tests",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"${workspaceFolder}/extensions/vscode-colorize-tests/test",
@@ -214,7 +214,7 @@
 		{
 			"type": "extensionHost",
 			"request": "launch",
-			"name": "VS Code Tokenizer Performance Tests",
+			"name": "Pragma Tokenizer Performance Tests",
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"${workspaceFolder}/extensions/vscode-colorize-perf-tests/test",
@@ -232,7 +232,7 @@
 		{
 			"type": "chrome",
 			"request": "attach",
-			"name": "Attach to VS Code",
+			"name": "Attach to Pragma",
 			"browserAttachLocation": "workspace",
 			"port": 9222,
 			"outFiles": [
@@ -246,7 +246,7 @@
 		{
 			"type": "chrome",
 			"request": "launch",
-			"name": "Launch VS Code Internal",
+			"name": "Launch Pragma Internal",
 			"windows": {
 				"runtimeExecutable": "${workspaceFolder}/scripts/code.bat"
 			},
@@ -336,7 +336,7 @@
 			// To debug observables you also need the extension "ms-vscode.debug-value-editor"
 			"type": "chrome",
 			"request": "launch",
-			"name": "Launch VS Code Internal (Hot Reload)",
+			"name": "Launch Pragma Internal (Hot Reload)",
 			"windows": {
 				"runtimeExecutable": "${workspaceFolder}/scripts/code.bat"
 			},
@@ -384,7 +384,7 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "VS Code Server (Web)",
+			"name": "Pragma Server (Web)",
 			"runtimeExecutable": "${workspaceFolder}/scripts/code-server.sh",
 			"windows": {
 				"runtimeExecutable": "${workspaceFolder}/scripts/code-server.bat",
@@ -400,7 +400,7 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "VS Code Agent Host",
+			"name": "Pragma Agent Host",
 			"outputCapture": "std",
 			"program": "./scripts/code-agent-host.js",
 			"args": ["--port", "7777", "--without-connection-token"],
@@ -439,7 +439,7 @@
 			"request": "launch",
 			"outFiles": [],
 			"perScriptSourcemaps": "yes",
-			"name": "VS Code Server (Web, Chrome)",
+			"name": "Pragma Server (Web, Chrome)",
 			"url": "http://localhost:8080?tkn=dev-token",
 			"preLaunchTask": "Run code server",
 			"presentation": {
@@ -452,7 +452,7 @@
 			"request": "launch",
 			"outFiles": [],
 			"perScriptSourcemaps": "yes",
-			"name": "VS Code Server (Web, Edge)",
+			"name": "Pragma Server (Web, Edge)",
 			"url": "http://localhost:8080?tkn=dev-token",
 			"pauseForSourceMap": false,
 			"preLaunchTask": "Run code server",
@@ -466,7 +466,7 @@
 			"request": "launch",
 			"outFiles": [],
 			"perScriptSourcemaps": "yes",
-			"name": "VS Code Web (Chrome)",
+			"name": "Pragma Web (Chrome)",
 			"url": "http://localhost:8080",
 			"preLaunchTask": "Run code web",
 			"presentation": {
@@ -479,7 +479,7 @@
 			"request": "launch",
 			"outFiles": [],
 			"perScriptSourcemaps": "yes",
-			"name": "VS Code Web (Edge)",
+			"name": "Pragma Web (Edge)",
 			"url": "http://localhost:8080",
 			"pauseForSourceMap": false,
 			"preLaunchTask": "Run code web",
@@ -574,9 +574,9 @@
 			"request": "launch",
 			"name": "Run Unit Tests",
 			"program": "${workspaceFolder}/test/unit/electron/index.js",
-			"runtimeExecutable": "${workspaceFolder}/.build/electron/Code - OSS.app/Contents/MacOS/Code - OSS",
+			"runtimeExecutable": "${workspaceFolder}/.build/electron/Pragma.app/Contents/MacOS/Pragma",
 			"windows": {
-				"runtimeExecutable": "${workspaceFolder}/.build/electron/Code - OSS.exe"
+				"runtimeExecutable": "${workspaceFolder}/.build/electron/Pragma.exe"
 			},
 			"linux": {
 				"runtimeExecutable": "${workspaceFolder}/.build/electron/code-oss"
@@ -590,7 +590,7 @@
 				"${workspaceFolder}/out/**/*.js"
 			],
 			"cascadeTerminateToConfigurations": [
-				"Attach to VS Code"
+				"Attach to Pragma"
 			],
 			"env": {
 				"MOCHA_COLORS": "true"
@@ -604,15 +604,15 @@
 			"request": "launch",
 			"name": "Run Unit Tests For Current File",
 			"program": "${workspaceFolder}/test/unit/electron/index.js",
-			"runtimeExecutable": "${workspaceFolder}/.build/electron/Code - OSS.app/Contents/MacOS/Code - OSS",
+			"runtimeExecutable": "${workspaceFolder}/.build/electron/Pragma.app/Contents/MacOS/Pragma",
 			"windows": {
-				"runtimeExecutable": "${workspaceFolder}/.build/electron/Code - OSS.exe"
+				"runtimeExecutable": "${workspaceFolder}/.build/electron/Pragma.exe"
 			},
 			"linux": {
 				"runtimeExecutable": "${workspaceFolder}/.build/electron/code-oss"
 			},
 			"cascadeTerminateToConfigurations": [
-				"Attach to VS Code"
+				"Attach to Pragma"
 			],
 			"outputCapture": "std",
 			"args": [
@@ -640,7 +640,7 @@
 			"timeout": 240000,
 			"args": [
 				"-l",
-				"${workspaceFolder}/.build/electron/Code - OSS.app/Contents/MacOS/Code - OSS"
+				"${workspaceFolder}/.build/electron/Pragma.app/Contents/MacOS/Pragma"
 			],
 			"outFiles": [
 				"${cwd}/out/**/*.js"
@@ -718,10 +718,10 @@
 	],
 	"compounds": [
 		{
-			"name": "VS Code",
+			"name": "Pragma",
 			"stopAll": true,
 			"configurations": [
-				"Launch VS Code Internal",
+				"Launch Pragma Internal",
 				"Attach to Main Process",
 				"Attach to Extension Host",
 				"Attach to Shared Process",
@@ -749,10 +749,10 @@
 			}
 		},
 		{
-			"name": "VS Code (Hot Reload)",
+			"name": "Pragma (Hot Reload)",
 			"stopAll": true,
 			"configurations": [
-				"Launch VS Code Internal (Hot Reload)",
+				"Launch Pragma Internal (Hot Reload)",
 				"Attach to Main Process",
 				"Attach to Extension Host",
 				"Attach to Shared Process",
@@ -766,7 +766,7 @@
 		{
 			"name": "Search, Renderer, and Main processes",
 			"configurations": [
-				"Launch VS Code Internal",
+				"Launch Pragma Internal",
 				"Attach to Main Process",
 				"Attach to Search Process"
 			],
@@ -778,7 +778,7 @@
 		{
 			"name": "Renderer, Extension Host, and Main processes",
 			"configurations": [
-				"Launch VS Code Internal",
+				"Launch Pragma Internal",
 				"Attach to Main Process",
 				"Attach to Extension Host"
 			],
@@ -790,7 +790,7 @@
 		{
 			"name": "Debug Unit Tests",
 			"configurations": [
-				"Attach to VS Code",
+				"Attach to Pragma",
 				"Run Unit Tests"
 			],
 			"presentation": {
@@ -801,7 +801,7 @@
 		{
 			"name": "Debug Unit Tests (Current File)",
 			"configurations": [
-				"Attach to VS Code",
+				"Attach to Pragma",
 				"Run Unit Tests For Current File"
 			],
 			"presentation": {
@@ -813,7 +813,7 @@
 			"name": "Renderer and Main processes",
 			"stopAll": true,
 			"configurations": [
-				"Launch VS Code Internal",
+				"Launch Pragma Internal",
 				"Attach to Main Process"
 			],
 			"preLaunchTask": "Ensure Prelaunch Dependencies"

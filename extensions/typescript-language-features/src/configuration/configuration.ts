@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -254,10 +254,10 @@ export abstract class BaseServiceConfigurationProvider implements ServiceConfigu
 	private readUseVsCodeWatcher(configuration: vscode.WorkspaceConfiguration): boolean {
 		const watcherExcludes = configuration.get<Record<string, boolean>>('files.watcherExclude') ?? {};
 		if (
-			watcherExcludes['**/node_modules/*/**'] === true || // VS Code default prior to 1.94.x
+			watcherExcludes['**/node_modules/*/**'] === true || // Pragma default prior to 1.94.x
 			watcherExcludes['**/node_modules/**'] === true ||
 			watcherExcludes['**/node_modules'] === true ||
-			watcherExcludes['**'] === true	 					// VS Code Watching is entirely disabled
+			watcherExcludes['**'] === true	 					// Pragma Watching is entirely disabled
 		) {
 			return false;
 		}

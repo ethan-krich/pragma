@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -45,7 +45,7 @@ const UPDATE_POLL_INTERVAL: Duration = Duration::from_secs(10 * 60);
 /// How long to wait for the server to signal readiness.
 const STARTUP_TIMEOUT: Duration = Duration::from_secs(30);
 
-/// Runs a local agent host server. Downloads the latest VS Code server on
+/// Runs a local agent host server. Downloads the latest Pragma server on
 /// demand, starts it with `--enable-remote-auto-shutdown`, and proxies
 /// WebSocket connections from a local TCP port to the server's agent host
 /// socket. The server auto-shuts down when idle; the CLI checks for updates
@@ -132,13 +132,13 @@ pub async fn agent_host(ctx: CommandContext, mut args: AgentHostArgs) -> Result<
 
 // ---- AgentHostManager -------------------------------------------------------
 
-/// State of the running VS Code server process.
+/// State of the running Pragma server process.
 struct RunningServer {
 	child: tokio::process::Child,
 	commit: String,
 }
 
-/// Manages the VS Code server lifecycle: on-demand start, auto-restart
+/// Manages the Pragma server lifecycle: on-demand start, auto-restart
 /// after idle shutdown, and background update checking.
 struct AgentHostManager {
 	log: log::Logger,

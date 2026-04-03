@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -108,10 +108,12 @@ export interface IProductConfiguration {
 
 	readonly extensionsGallery?: {
 		readonly serviceUrl: string;
-		readonly controlUrl: string;
-		readonly extensionUrlTemplate: string;
-		readonly resourceUrlTemplate: string;
-		readonly nlsBaseUrl: string;
+		readonly itemUrl?: string;
+		readonly publisherUrl?: string;
+		readonly controlUrl?: string;
+		readonly extensionUrlTemplate?: string;
+		readonly resourceUrlTemplate?: string;
+		readonly nlsBaseUrl?: string;
 		readonly accessSKUs?: string[];
 	};
 

@@ -1,9 +1,8 @@
 {
-  "name": "code-oss-dev",
+  "name": "pragma-dev",
   "version": "1.115.0",
-  "distro": "7b60af3ce53ae18d76f52e3d0e94f25dd02a13a4",
   "author": {
-    "name": "Microsoft Corporation"
+    "name": "pragma contributors"
   },
   "license": "MIT",
   "main": "./out/main.js",
@@ -248,10 +247,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/vscode.git"
+    "url": "https://github.com/ethan-krich/pragma.git"
   },
   "bugs": {
-    "url": "https://github.com/microsoft/vscode/issues"
+    "url": "https://github.com/ethan-krich/pragma/issues"
   },
   "optionalDependencies": {
     "windows-foreground-love": "0.6.1"

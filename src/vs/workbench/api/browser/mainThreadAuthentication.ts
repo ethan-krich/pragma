@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -514,7 +514,7 @@ export class MainThreadAuthentication extends Disposable implements MainThreadAu
 
 	// TODO@TylerLeonhardt this is a temporary addition to telemetry to understand what extensions are overriding the client id.
 	// We can use this telemetry to reach out to these extension authors and let them know that they many need configuration changes
-	// due to the adoption of the Microsoft broker.
+	// due to the adoption of the Ethan Krich broker.
 	// Remove this in a few iterations.
 	private _sentClientIdUsageEvents = new Set<string>();
 	private sendClientIdUsageTelemetry(extensionId: string, providerId: string, scopes: readonly string[]): void {

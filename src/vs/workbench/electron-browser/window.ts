@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -730,10 +730,10 @@ export class NativeWindow extends BaseWindow {
 		if (this.environmentService.isBuilt && !this.environmentService.extensionDevelopmentLocationURI?.length) {
 			let installLocationUri: URI;
 			if (isMacintosh) {
-				// appRoot = /Applications/Visual Studio Code - Insiders.app/Contents/Resources/app
+				// appRoot = /Applications/Pragma - Insiders.app/Contents/Resources/app
 				installLocationUri = dirname(dirname(dirname(URI.file(this.nativeEnvironmentService.appRoot))));
 			} else {
-				// appRoot = C:\Users\<name>\AppData\Local\Programs\Microsoft VS Code Insiders\resources\app
+				// appRoot = C:\Users\<name>\AppData\Local\Programs\Pragma Insiders\resources\app
 				// appRoot = /usr/share/code-insiders/resources/app
 				installLocationUri = dirname(dirname(URI.file(this.nativeEnvironmentService.appRoot)));
 			}

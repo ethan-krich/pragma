@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -150,7 +150,7 @@ function buildHookProperties(target: Target, arraySchema: IJSONSchema): Record<s
 }
 
 /**
- * Hook properties for the VS Code format.
+ * Hook properties for the Pragma format.
  */
 const vscodeHookProperties: Record<string, IJSONSchema> = buildHookProperties(Target.VSCode, hookArraySchema);
 
@@ -242,7 +242,7 @@ export const hookFileSchema: IJSONSchema = {
 		}
 	},
 	else: {
-		// VS Code / PascalCase format
+		// Pragma / PascalCase format
 		properties: {
 			hooks: {
 				properties: vscodeHookProperties

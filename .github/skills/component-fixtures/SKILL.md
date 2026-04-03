@@ -77,11 +77,11 @@ Key points:
 
 ## CSS Scoping
 
-Fixtures render inside shadow DOM. The component-explorer automatically adopts the global VS Code stylesheets and theme CSS.
+Fixtures render inside shadow DOM. The component-explorer automatically adopts the global Pragma stylesheets and theme CSS.
 
 ### Matching production CSS selectors
 
-Many VS Code components have CSS rules scoped to deep ancestor selectors (e.g., `.interactive-session .interactive-input-part > .widget-container .my-element`). In fixtures, you must recreate the required ancestor DOM structure for these selectors to match:
+Many Pragma components have CSS rules scoped to deep ancestor selectors (e.g., `.interactive-session .interactive-input-part > .widget-container .my-element`). In fixtures, you must recreate the required ancestor DOM structure for these selectors to match:
 
 ```typescript
 function render({ container }: ComponentFixtureContext): void {

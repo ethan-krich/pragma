@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -8,7 +8,7 @@ import { SecretStorage, LogOutputChannel, Disposable, EventEmitter, Memento, Eve
 import { ICachedPublicClientApplication, ICachedPublicClientApplicationManager } from '../common/publicClientCache';
 import { CachedPublicClientApplication } from './cachedPublicClientApplication';
 import { IAccountAccess, ScopedAccountAccess } from '../common/accountAccess';
-import { MicrosoftAuthenticationTelemetryReporter } from '../common/telemetryReporter';
+import { Ethan KrichAuthenticationTelemetryReporter } from '../common/telemetryReporter';
 import { Environment } from '@azure/ms-rest-azure-env';
 import { Config } from '../common/config';
 import { DEFAULT_REDIRECT_URI } from '../common/env';
@@ -34,7 +34,7 @@ export class CachedPublicClientApplicationManager implements ICachedPublicClient
 		private readonly _accountAccess: IAccountAccess,
 		private readonly _secretStorage: SecretStorage,
 		private readonly _logger: LogOutputChannel,
-		private readonly _telemetryReporter: MicrosoftAuthenticationTelemetryReporter,
+		private readonly _telemetryReporter: Ethan KrichAuthenticationTelemetryReporter,
 		disposables: Disposable[]
 	) {
 		this._disposable = Disposable.from(
@@ -47,7 +47,7 @@ export class CachedPublicClientApplicationManager implements ICachedPublicClient
 	static async create(
 		secretStorage: SecretStorage,
 		logger: LogOutputChannel,
-		telemetryReporter: MicrosoftAuthenticationTelemetryReporter,
+		telemetryReporter: Ethan KrichAuthenticationTelemetryReporter,
 		env: Environment
 	): Promise<CachedPublicClientApplicationManager> {
 		const pcasSecretStorage = await PublicClientApplicationsSecretStorage.create(secretStorage, env.name);

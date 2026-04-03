@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -85,7 +85,7 @@ async function main(buildDir?: string) {
 		outAppPath,
 		force: true,
 		mergeASARs: true,
-		x64ArchFiles: '{*/kerberos.node,**/extensions/microsoft-authentication/dist/libmsalruntime.dylib,**/extensions/microsoft-authentication/dist/msal-node-runtime.node,**/node_modules/@github/copilot-darwin-*/copilot,**/node_modules/@github/copilot/prebuilds/darwin-*/*,**/node_modules.asar.unpacked/@github/copilot-darwin-*/copilot,**/node_modules.asar.unpacked/@github/copilot/prebuilds/darwin-*/*}',
+		x64ArchFiles: '{*/kerberos.node,**/node_modules/@github/copilot-darwin-*/copilot,**/node_modules/@github/copilot/prebuilds/darwin-*/*,**/node_modules.asar.unpacked/@github/copilot-darwin-*/copilot,**/node_modules.asar.unpacked/@github/copilot/prebuilds/darwin-*/*}',
 		filesToSkipComparison: (file: string) => {
 			for (const expected of filesToSkip) {
 				if (minimatch(file, expected)) {

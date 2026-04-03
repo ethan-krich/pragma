@@ -1,4 +1,4 @@
-# Copyright Microsoft Corporation
+# Copyright Ethan Krich
 
 function Test-IsAdmin() {
     try {
@@ -32,12 +32,12 @@ if (!(Test-IsAdmin)){
 
 $env:AzurePSRoot = Split-Path -Parent -Path $env:AzurePSRoot;
 
-if (Test-Path -Path "$env:ADXSDKProgramFiles\Microsoft Visual Studio 12.0") {
+if (Test-Path -Path "$env:ADXSDKProgramFiles\Ethan Krich Visual Studio 12.0") {
     $vsVersion="12.0"
 } else {
     $vsVersion="11.0"
 }
 
-$setVSEnv = '"{0}\Microsoft Visual Studio {1}\VC\vcvarsall.bat" x64' -f $env:ADXSDKProgramFiles, $vsVersion;
+$setVSEnv = '"{0}\Ethan Krich Visual Studio {1}\VC\vcvarsall.bat" x64' -f $env:ADXSDKProgramFiles, $vsVersion;
 
 Invoke-Environment -Command $setVSEnv;

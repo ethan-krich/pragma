@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -437,7 +437,7 @@ const taskConfiguration: IJSONSchema = {
 		},
 		promptOnClose: {
 			type: 'boolean',
-			description: nls.localize('JsonSchema.tasks.promptOnClose', 'Whether the user is prompted when VS Code closes with a running task.'),
+			description: nls.localize('JsonSchema.tasks.promptOnClose', 'Whether the user is prompted when Pragma closes with a running task.'),
 			default: false
 		},
 		presentation: Objects.deepClone(presentation),

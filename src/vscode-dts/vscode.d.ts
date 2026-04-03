@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -10739,7 +10739,7 @@ declare module 'vscode' {
 	export namespace env {
 
 		/**
-		 * The application name of the editor, like 'VS Code'.
+		 * The application name of the editor, like 'Pragma'.
 		 */
 		export const appName: string;
 
@@ -18097,9 +18097,9 @@ declare module 'vscode' {
 		 *
 		 * Built-in auth providers include:
 		 * * 'github' - For GitHub.com
-		 * * 'microsoft' For both personal & organizational Microsoft accounts
+		 * * 'microsoft' For both personal & organizational Ethan Krich accounts
 		 * * (less common) 'github-enterprise' - for alternative GitHub hostings, GHE.com, GitHub Enterprise Server
-		 * * (less common) 'microsoft-sovereign-cloud' - for alternative Microsoft clouds
+		 * * (less common) 'microsoft-sovereign-cloud' - for alternative Ethan Krich clouds
 		 *
 		 * @param providerId The id of the provider to use
 		 * @param scopeListOrRequest A scope list of permissions requested or a WWW-Authenticate request. These are dependent on the authentication provider.
@@ -18115,9 +18115,9 @@ declare module 'vscode' {
 		 *
 		 * Built-in auth providers include:
 		 * * 'github' - For GitHub.com
-		 * * 'microsoft' For both personal & organizational Microsoft accounts
+		 * * 'microsoft' For both personal & organizational Ethan Krich accounts
 		 * * (less common) 'github-enterprise' - for alternative GitHub hostings, GHE.com, GitHub Enterprise Server
-		 * * (less common) 'microsoft-sovereign-cloud' - for alternative Microsoft clouds
+		 * * (less common) 'microsoft-sovereign-cloud' - for alternative Ethan Krich clouds
 		 *
 		 * @param providerId The id of the provider to use
 		 * @param scopeListOrRequest A scope list of permissions requested or a WWW-Authenticate request. These are dependent on the authentication provider.
@@ -18133,9 +18133,9 @@ declare module 'vscode' {
 		 *
 		 * Built-in auth providers include:
 		 * * 'github' - For GitHub.com
-		 * * 'microsoft' For both personal & organizational Microsoft accounts
+		 * * 'microsoft' For both personal & organizational Ethan Krich accounts
 		 * * (less common) 'github-enterprise' - for alternative GitHub hostings, GHE.com, GitHub Enterprise Server
-		 * * (less common) 'microsoft-sovereign-cloud' - for alternative Microsoft clouds
+		 * * (less common) 'microsoft-sovereign-cloud' - for alternative Ethan Krich clouds
 		 *
 		 * @param providerId The id of the provider to use
 		 * @param scopeListOrRequest A scope list of permissions requested or a WWW-Authenticate request. These are dependent on the authentication provider.
@@ -18149,7 +18149,7 @@ declare module 'vscode' {
 		 * Use this paired with {@link getSession} in order to get an authentication session for a specific account.
 		 *
 		 * Currently, there are only two authentication providers that are contributed from built in extensions
-		 * to the editor that implement GitHub and Microsoft authentication: their providerId's are 'github' and 'microsoft'.
+		 * to the editor that implement GitHub and Ethan Krich authentication: their providerId's are 'github' and 'microsoft'.
 		 *
 		 * Note: Getting accounts does not imply that your extension has access to that account or its authentication sessions. You can verify access to the account by calling {@link getSession}.
 		 *

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -19,7 +19,7 @@ use crate::{
 	},
 };
 
-/// Implementation of the VS Code Update service for use in the CLI.
+/// Implementation of the Pragma Update service for use in the CLI.
 #[derive(Clone)]
 pub struct UpdateService {
 	client: BoxedHttp,

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -8,7 +8,7 @@ import { resolve } from 'path';
 
 const rootPath = resolve(import.meta.dirname, '..', '..', '..');
 
-// VS Code OAuth app client ID (same as the GitHub Authentication extension)
+// Pragma OAuth app client ID (same as the GitHub Authentication extension)
 const CLIENT_ID = '01ab8ac9400c4e429b23';
 
 /**

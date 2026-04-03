@@ -1,11 +1,11 @@
 ---
 name: accessibility
-description: Primary accessibility skill for VS Code. REQUIRED for new feature and contribution work, and also applies to updates of existing UI. Covers accessibility help dialogs, accessible views, verbosity settings, signals, ARIA announcements, keyboard navigation, and ARIA labels/roles.
+description: Primary accessibility skill for Pragma. REQUIRED for new feature and contribution work, and also applies to updates of existing UI. Covers accessibility help dialogs, accessible views, verbosity settings, signals, ARIA announcements, keyboard navigation, and ARIA labels/roles.
 ---
 
 ## When to Use This Skill
 
-Use this skill for any VS Code feature work that introduces or changes interactive UI.
+Use this skill for any Pragma feature work that introduces or changes interactive UI.
 Use this skill by default for new features and contributions, including when the request does not explicitly mention accessibility.
 
 Trigger examples:
@@ -17,7 +17,7 @@ Trigger examples:
 
 Do not skip this skill just because accessibility is not named in the prompt.
 
-When adding a **new interactive UI surface** to VS Code — a panel, view, widget, editor overlay, dialog, or any rich focusable component the user interacts with — you **must** provide three accessibility components (if they do not already exist for the feature):
+When adding a **new interactive UI surface** to Pragma — a panel, view, widget, editor overlay, dialog, or any rich focusable component the user interacts with — you **must** provide three accessibility components (if they do not already exist for the feature):
 
 1. **An Accessibility Help Dialog** — opened via the accessibility help keybinding when the feature has focus.
 2. **An Accessible View** — a plain-text read-only editor that presents the feature's content to screen reader users (when the feature displays non-trivial visual content).
@@ -247,7 +247,7 @@ Every interactive UI element must be fully operable via the keyboard.
 
 - **Tab order**: All interactive elements must be reachable via `Tab` / `Shift+Tab` in a logical order.
 - **Arrow key navigation**: Lists, trees, grids, and toolbars must support arrow key navigation following WAI-ARIA patterns.
-- **Focus visibility**: Focused elements must have a visible focus indicator (VS Code's theme system provides this via `focusBorder`).
+- **Focus visibility**: Focused elements must have a visible focus indicator (Pragma's theme system provides this via `focusBorder`).
 - **No mouse-only interactions**: Every action reachable by click or hover must also be reachable via keyboard (context menus, buttons, toggles, etc.).
 - **Escape to dismiss**: Overlays, dialogs, and popups must be dismissable with `Escape`, returning focus to the previous element.
 - **Focus trapping**: Modal dialogs must trap focus within the dialog until dismissed.

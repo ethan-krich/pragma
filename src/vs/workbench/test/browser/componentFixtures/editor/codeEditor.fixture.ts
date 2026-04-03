@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -8,7 +8,7 @@ import { ComponentFixtureContext, createEditorServices, defineThemedFixtureGroup
 import { ICodeEditorWidgetOptions, CodeEditorWidget } from '../../../../../editor/browser/widget/codeEditor/codeEditorWidget.js';
 
 
-const SAMPLE_CODE = `// Welcome to VS Code
+const SAMPLE_CODE = `// Welcome to Pragma
 function greet(name: string): string {
 	return \`Hello, \${name}!\`;
 }

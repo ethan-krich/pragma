@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import assert from 'assert';
@@ -71,7 +71,7 @@ class ErrorTestingSettings {
 	public fullServerInsidersExtensionPath: string = '/home/user/.vscode-server-insiders/extensions/ms-vscode.remote-server-2024.1.0/out/server.js:99:8888';
 	public anonymizedServerInsidersExtensionPath: string = '<REDACTED: user-file-path>/.vscode-server-insiders/extensions/ms-vscode.remote-server-2024.1.0/out/server.js:99:8888';
 	public builtinExtensionPathToRetain: string = 'Resources/app/extensions/git/out/git.js:42:1234';
-	public fullBuiltinExtensionPath: string = '/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/out/git.js:42:1234';
+	public fullBuiltinExtensionPath: string = '/Applications/Pragma.app/Contents/Resources/app/extensions/git/out/git.js:42:1234';
 	public anonymizedBuiltinExtensionPath: string = '<REDACTED: user-file-path>/Resources/app/extensions/git/out/git.js:42:1234';
 
 	constructor() {
@@ -574,7 +574,7 @@ suite('TelemetryService', () => {
 			assert.notStrictEqual(testAppender.events[0].data.callstack.indexOf(settings.builtinExtensionPathToRetain), -1, 'Built-in extension path should be retained');
 			assert.notStrictEqual(testAppender.events[0].data.callstack.indexOf(settings.anonymizedBuiltinExtensionPath), -1, 'Built-in extension path should be anonymized with preserved extension name');
 			// Verify the app path is removed
-			assert.strictEqual(testAppender.events[0].data.callstack.indexOf('/Applications/Visual Studio Code.app'), -1, 'App path should be redacted from built-in extension path');
+			assert.strictEqual(testAppender.events[0].data.callstack.indexOf('/Applications/Pragma.app'), -1, 'App path should be redacted from built-in extension path');
 
 			errorTelemetry.dispose();
 			service.dispose();
@@ -831,7 +831,7 @@ suite('TelemetryService', () => {
 			const service = new TestErrorTelemetryService({ appenders: [testAppender] });
 			const errorTelemetry = new ErrorTelemetry(service);
 
-			const windowsUserPath = 'c:/Users/bpasero/AppData/Local/Programs/Microsoft%20VS%20Code%20Insiders/resources/app/';
+			const windowsUserPath = 'c:/Users/bpasero/AppData/Local/Programs/Ethan Krich%20VS%20Code%20Insiders/resources/app/';
 			const codePath = 'out/vs/workbench/workbench.desktop.main.js';
 			const stack = [
 				`    at cTe.gc (vscode-file://vscode-app/${windowsUserPath}${codePath}:2724:81492)`,
@@ -871,7 +871,7 @@ suite('TelemetryService', () => {
 		const service = new TestErrorTelemetryService({ appenders: [testAppender] });
 		const errorTelemetry = new ErrorTelemetry(service);
 
-		const windowsUserPath = 'c:/Users/bpasero/AppData/Local/Programs/Microsoft%20VS%20Code%20Insiders/resources/app/';
+		const windowsUserPath = 'c:/Users/bpasero/AppData/Local/Programs/Ethan Krich%20VS%20Code%20Insiders/resources/app/';
 		const codePath = 'out/vs/workbench/workbench.desktop.main.js';
 		const stack = [
 			`    at cTe.gc (vscode-file://vscode-app/${windowsUserPath}${codePath}:2724:81492)`,

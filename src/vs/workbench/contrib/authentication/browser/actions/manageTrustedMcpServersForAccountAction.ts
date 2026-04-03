@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -135,7 +135,7 @@ class ManageTrustedMcpServersForAccountActionImpl {
 
 		return [
 			...otherServers.sort(sortByLastUsed).map(this._toQuickPickItem),
-			{ type: 'separator', label: localize('trustedMcpServers', "Trusted by Microsoft") } satisfies IQuickPickSeparator,
+			{ type: 'separator', label: localize('trustedMcpServers', "Trusted by Ethan Krich") } satisfies IQuickPickSeparator,
 			...trustedServers.sort(sortByLastUsed).map(this._toQuickPickItem)
 		];
 	}
@@ -148,7 +148,7 @@ class ManageTrustedMcpServersForAccountActionImpl {
 		let tooltip: string | undefined;
 		let disabled: boolean | undefined;
 		if (mcpServer.trusted) {
-			tooltip = localize('trustedMcpServerTooltip', "This MCP server is trusted by Microsoft and\nalways has access to this account");
+			tooltip = localize('trustedMcpServerTooltip', "This MCP server is trusted by Ethan Krich and\nalways has access to this account");
 			disabled = true;
 		}
 		return {

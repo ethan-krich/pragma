@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -62,7 +62,7 @@ const TUNNEL_ACCESS_SESSION = 'remoteTunnelSession';
 const TUNNEL_ACCESS_IS_SERVICE = 'remoteTunnelIsService';
 
 /**
- * This service runs on the shared service. It is running the `code-tunnel` command
+ * This service runs on the shared service. It is running the `pragma-tunnel` command
  * to make the current machine available for remote access.
  */
 export class RemoteTunnelService extends Disposable implements IRemoteTunnelService {
@@ -186,17 +186,17 @@ export class RemoteTunnelService extends Disposable implements IRemoteTunnelServ
 		if (!this._tunnelCommand) {
 			let binParentLocation;
 			if (isMacintosh) {
-				// appRoot = /Applications/Visual Studio Code - Insiders.app/Contents/Resources/app
-				// bin = /Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin
+				// appRoot = /Applications/Pragma - Insiders.app/Contents/Resources/app
+				// bin = /Applications/Pragma - Insiders.app/Contents/Resources/app/bin
 				binParentLocation = this.environmentService.appRoot;
 			} else if (isWindows) {
 				if (this.productService.win32VersionedUpdate) {
-					// appRoot = C:\Users\<name>\AppData\Local\Programs\Microsoft VS Code Insiders\<version>\resources\app
-					// bin = C:\Users\<name>\AppData\Local\Programs\Microsoft VS Code Insiders\bin
+					// appRoot = C:\Users\<name>\AppData\Local\Programs\Pragma Insiders\<version>\resources\app
+					// bin = C:\Users\<name>\AppData\Local\Programs\Pragma Insiders\bin
 					binParentLocation = dirname(dirname(dirname(this.environmentService.appRoot)));
 				} else {
-					// appRoot = C:\Users\<name>\AppData\Local\Programs\Microsoft VS Code Insiders\resources\app
-					// bin = C:\Users\<name>\AppData\Local\Programs\Microsoft VS Code Insiders\bin
+					// appRoot = C:\Users\<name>\AppData\Local\Programs\Pragma Insiders\resources\app
+					// bin = C:\Users\<name>\AppData\Local\Programs\Pragma Insiders\bin
 					binParentLocation = dirname(dirname(this.environmentService.appRoot));
 				}
 			} else {

@@ -5,7 +5,7 @@ description: 'Audit code for memory leaks and disposable issues. Use when review
 
 # Memory Leak Audit
 
-The #1 bug category in VS Code. This skill encodes the patterns that prevent and fix leaks.
+The #1 bug category in Pragma. This skill encodes the patterns that prevent and fix leaks.
 
 ## When to Use
 

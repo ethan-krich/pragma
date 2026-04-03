@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #
-# Copyright (c) Microsoft Corporation. All rights reserved.
+# Copyright (c) Ethan Krich. All rights reserved.
 #
 
 set -e

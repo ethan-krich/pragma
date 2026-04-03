@@ -1,38 +1,48 @@
 {
-	"nameShort": "Code - OSS",
-	"nameLong": "Code - OSS",
-	"applicationName": "code-oss",
-	"dataFolderName": ".vscode-oss",
-	"win32MutexName": "vscodeoss",
+	"nameShort": "pragma",
+	"nameLong": "pragma",
+	"applicationName": "pragma",
+	"dataFolderName": ".pragma",
+	"win32MutexName": "pragma",
 	"licenseName": "MIT",
-	"licenseUrl": "https://github.com/microsoft/vscode/blob/main/LICENSE.txt",
-	"serverLicenseUrl": "https://github.com/microsoft/vscode/blob/main/LICENSE.txt",
+	"licenseUrl": "https://github.com/ethan-krich/pragma/blob/main/LICENSE.txt",
+	"serverLicenseUrl": "https://github.com/ethan-krich/pragma/blob/main/LICENSE.txt",
 	"serverGreeting": [],
 	"serverLicense": [],
 	"serverLicensePrompt": "",
-	"serverApplicationName": "code-server-oss",
-	"serverDataFolderName": ".vscode-server-oss",
-	"tunnelApplicationName": "code-tunnel-oss",
-	"win32DirName": "Microsoft Code OSS",
-	"win32NameVersion": "Microsoft Code OSS",
-	"win32RegValueName": "CodeOSS",
-	"win32x64AppId": "{{D77B7E06-80BA-4137-BCF4-654B95CCEBC5}",
-	"win32arm64AppId": "{{D1ACE434-89C5-48D1-88D3-E2991DF85475}",
-	"win32x64UserAppId": "{{CC6B787D-37A0-49E8-AE24-8559A032BE0C}",
-	"win32arm64UserAppId": "{{3AEBF0C8-F733-4AD4-BADE-FDB816D53D7B}",
-	"win32AppUserModelId": "Microsoft.CodeOSS",
-	"win32ShellNameShort": "C&ode - OSS",
-	"win32TunnelServiceMutex": "vscodeoss-tunnelservice",
-	"win32TunnelMutex": "vscodeoss-tunnel",
-	"darwinBundleIdentifier": "com.visualstudio.code.oss",
-	"darwinProfileUUID": "47827DD9-4734-49A0-AF80-7E19B11495CC",
-	"darwinProfilePayloadUUID": "CF808BE7-53F3-46C6-A7E2-7EDB98A5E959",
+	"serverApplicationName": "pragma-server",
+	"serverDataFolderName": ".pragma-server",
+	"tunnelApplicationName": "pragma-tunnel",
+	"win32DirName": "Pragma",
+	"win32NameVersion": "Pragma",
+	"win32RegValueName": "Pragma",
+	"win32x64AppId": "{{8B4AE3BF-5C65-41C4-9578-888C72A5A073}",
+	"win32arm64AppId": "{{8F576BD6-4658-4B85-8E18-9860DF9F989A}",
+	"win32x64UserAppId": "{{DBA6701E-1308-4E1B-BB87-E9BEBEAAEFD5}",
+	"win32arm64UserAppId": "{{3E5A1B2A-9B2C-4018-B02C-FEF8A6D81903}",
+	"win32AppUserModelId": "Pragma.Editor",
+	"win32ShellNameShort": "&pragma",
+	"win32TunnelServiceMutex": "pragma-tunnelservice",
+	"win32TunnelMutex": "pragma-tunnel",
+	"darwinBundleIdentifier": "com.ethankrich.pragma",
+	"darwinProfileUUID": "9E6E3425-8C19-4D5B-8797-EF81994FB2E3",
+	"darwinProfilePayloadUUID": "25D5328B-7EFC-4B8B-B1EC-36D6E6825D54",
 	"linuxIconName": "code-oss",
 	"licenseFileName": "LICENSE.txt",
-	"reportIssueUrl": "https://github.com/microsoft/vscode/issues/new",
+	"reportIssueUrl": "https://github.com/ethan-krich/pragma/issues/new",
 	"nodejsRepository": "https://nodejs.org",
-	"urlProtocol": "code-oss",
-	"webviewContentExternalBaseUrlTemplate": "https://{{uuid}}.vscode-cdn.net/insider/ef65ac1ba57f57f2a3961bfe94aa20481caca4c6/out/vs/workbench/contrib/webview/browser/pre/",
+	"urlProtocol": "pragma",
+	"enableTelemetry": false,
+	"extensionsGallery": {
+		"serviceUrl": "https://open-vsx.org/vscode/gallery",
+		"itemUrl": "https://open-vsx.org/vscode/item"
+	},
+	"linkProtectionTrustedDomains": [
+		"https://open-vsx.org",
+		"https://*.github.com",
+		"https://gh.io"
+	],
+	"webviewContentExternalBaseUrlTemplate": "https://{{uuid}}.pragma-webview.net/{{quality}}/{{commit}}/out/vs/workbench/contrib/webview/browser/pre/",
 	"builtInExtensions": [
 		{
 			"name": "ms-vscode.js-debug-companion",
@@ -43,11 +53,11 @@
 				"id": "99cb0b7f-7354-4278-b8da-6cc79972169d",
 				"publisherId": {
 					"publisherId": "5f5636e7-69ed-4afe-b5d6-8d231fb3d3ee",
-					"publisherName": "ms-vscode",
-					"displayName": "Microsoft",
-					"flags": "verified"
+					"publisherName": "pragma",
+					"displayName": "pragma",
+					"flags": ""
 				},
-				"publisherDisplayName": "Microsoft"
+				"publisherDisplayName": "pragma"
 			}
 		},
 		{
@@ -59,11 +69,11 @@
 				"id": "25629058-ddac-4e17-abba-74678e126c5d",
 				"publisherId": {
 					"publisherId": "5f5636e7-69ed-4afe-b5d6-8d231fb3d3ee",
-					"publisherName": "ms-vscode",
-					"displayName": "Microsoft",
-					"flags": "verified"
+					"publisherName": "pragma",
+					"displayName": "pragma",
+					"flags": ""
 				},
-				"publisherDisplayName": "Microsoft"
+				"publisherDisplayName": "pragma"
 			}
 		},
 		{
@@ -75,85 +85,64 @@
 				"id": "7e52b41b-71ad-457b-ab7e-0620f1fc4feb",
 				"publisherId": {
 					"publisherId": "5f5636e7-69ed-4afe-b5d6-8d231fb3d3ee",
-					"publisherName": "ms-vscode",
-					"displayName": "Microsoft",
-					"flags": "verified"
+					"publisherName": "pragma",
+					"displayName": "pragma",
+					"flags": ""
 				},
-				"publisherDisplayName": "Microsoft"
+				"publisherDisplayName": "pragma"
 			}
 		}
 	],
 	"defaultChatAgent": {
-		"extensionId": "GitHub.copilot",
-		"chatExtensionId": "GitHub.copilot-chat",
-		"chatExtensionOutputId": "GitHub.copilot-chat.GitHub Copilot Chat.log",
-		"chatExtensionOutputExtensionStateCommand": "github.copilot.debug.extensionState",
-		"documentationUrl": "https://aka.ms/github-copilot-overview",
-		"termsStatementUrl": "https://aka.ms/github-copilot-terms-statement",
-		"privacyStatementUrl": "https://aka.ms/github-copilot-privacy-statement",
-		"skusDocumentationUrl": "https://aka.ms/github-copilot-plans",
-		"publicCodeMatchesUrl": "https://aka.ms/github-copilot-match-public-code",
-		"manageSettingsUrl": "https://aka.ms/github-copilot-settings",
-		"managePlanUrl": "https://aka.ms/github-copilot-manage-plan",
-		"manageOverageUrl": "https://aka.ms/github-copilot-manage-overage",
-		"upgradePlanUrl": "https://aka.ms/github-copilot-upgrade-plan",
-		"signUpUrl": "https://aka.ms/github-sign-up",
+		"extensionId": "",
+		"chatExtensionId": "",
+		"chatExtensionOutputId": "",
+		"chatExtensionOutputExtensionStateCommand": "",
+		"documentationUrl": "",
+		"termsStatementUrl": "",
+		"privacyStatementUrl": "",
+		"skusDocumentationUrl": "",
+		"publicCodeMatchesUrl": "",
+		"manageSettingsUrl": "",
+		"managePlanUrl": "",
+		"manageOverageUrl": "",
+		"upgradePlanUrl": "",
+		"signUpUrl": "",
 		"provider": {
 			"default": {
-				"id": "github",
-				"name": "GitHub"
+				"id": "",
+				"name": ""
 			},
 			"enterprise": {
-				"id": "github-enterprise",
-				"name": "GHE.com"
+				"id": "",
+				"name": ""
 			},
 			"google": {
-				"id": "google",
-				"name": "Google"
+				"id": "",
+				"name": ""
 			},
 			"apple": {
-				"id": "apple",
-				"name": "Apple"
+				"id": "",
+				"name": ""
 			}
 		},
-		"providerExtensionId": "vscode.github-authentication",
-		"providerUriSetting": "github-enterprise.uri",
-		"providerScopes": [
-			[
-				"read:user",
-				"user:email",
-				"repo",
-				"workflow"
-			],
-			[
-				"user:email"
-			],
-			[
-				"read:user"
-			]
-		],
-		"entitlementUrl": "https://api.github.com/copilot_internal/user",
-		"entitlementSignupLimitedUrl": "https://api.github.com/copilot_internal/subscribe_limited_user",
-		"chatQuotaExceededContext": "github.copilot.chat.quotaExceeded",
-		"completionsQuotaExceededContext": "github.copilot.completions.quotaExceeded",
-		"walkthroughCommand": "github.copilot.open.walkthrough",
-		"completionsMenuCommand": "github.copilot.toggleStatusMenu",
-		"completionsRefreshTokenCommand": "github.copilot.signIn",
-		"chatRefreshTokenCommand": "github.copilot.refreshToken",
-		"generateCommitMessageCommand": "github.copilot.git.generateCommitMessage",
-		"resolveMergeConflictsCommand": "github.copilot.git.resolveMergeConflicts",
-		"completionsAdvancedSetting": "github.copilot.advanced",
-		"completionsEnablementSetting": "github.copilot.enable",
-		"nextEditSuggestionsSetting": "github.copilot.nextEditSuggestions.enabled",
-		"tokenEntitlementUrl": "https://api.github.com/copilot_internal/v2/token",
-		"mcpRegistryDataUrl": "https://api.github.com/copilot/mcp_registry"
-	},
-	"trustedExtensionAuthAccess": {
-		"github": [
-			"GitHub.copilot-chat"
-		],
-		"github-enterprise": [
-			"GitHub.copilot-chat"
-		]
+		"providerExtensionId": "",
+		"providerUriSetting": "",
+		"providerScopes": [],
+		"entitlementUrl": "",
+		"entitlementSignupLimitedUrl": "",
+		"chatQuotaExceededContext": "",
+		"completionsQuotaExceededContext": "",
+		"walkthroughCommand": "",
+		"completionsMenuCommand": "",
+		"completionsRefreshTokenCommand": "",
+		"chatRefreshTokenCommand": "",
+		"generateCommitMessageCommand": "",
+		"resolveMergeConflictsCommand": "",
+		"completionsAdvancedSetting": "",
+		"completionsEnablementSetting": "",
+		"nextEditSuggestionsSetting": "",
+		"tokenEntitlementUrl": "",
+		"mcpRegistryDataUrl": ""
 	}
 }

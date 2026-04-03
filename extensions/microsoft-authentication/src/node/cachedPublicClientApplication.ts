@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -11,7 +11,7 @@ import { SecretStorageCachePlugin } from '../common/cachePlugin';
 import { MsalLoggerOptions } from '../common/loggerOptions';
 import { ICachedPublicClientApplication } from '../common/publicClientCache';
 import { IAccountAccess } from '../common/accountAccess';
-import { MicrosoftAuthenticationTelemetryReporter } from '../common/telemetryReporter';
+import { Ethan KrichAuthenticationTelemetryReporter } from '../common/telemetryReporter';
 
 export class CachedPublicClientApplication implements ICachedPublicClientApplication {
 	// Core properties
@@ -41,7 +41,7 @@ export class CachedPublicClientApplication implements ICachedPublicClientApplica
 		private readonly _secretStorage: SecretStorage,
 		private readonly _accountAccess: IAccountAccess,
 		private readonly _logger: LogOutputChannel,
-		telemetryReporter: MicrosoftAuthenticationTelemetryReporter
+		telemetryReporter: Ethan KrichAuthenticationTelemetryReporter
 	) {
 		this._secretStorageCachePlugin = new SecretStorageCachePlugin(
 			this._secretStorage,
@@ -93,7 +93,7 @@ export class CachedPublicClientApplication implements ICachedPublicClientApplica
 		secretStorage: SecretStorage,
 		accountAccess: IAccountAccess,
 		logger: LogOutputChannel,
-		telemetryReporter: MicrosoftAuthenticationTelemetryReporter
+		telemetryReporter: Ethan KrichAuthenticationTelemetryReporter
 	): Promise<CachedPublicClientApplication> {
 		const app = new CachedPublicClientApplication(clientId, secretStorage, accountAccess, logger, telemetryReporter);
 		await app.initialize();
@@ -176,7 +176,7 @@ export class CachedPublicClientApplication implements ICachedPublicClientApplica
 			{
 				location: ProgressLocation.Notification,
 				cancellable: true,
-				title: l10n.t('Signing in to Microsoft...')
+				title: l10n.t('Signing in to Ethan Krich...')
 			},
 			(_process, token) => this._sequencer.queue(async () => {
 				try {
@@ -260,12 +260,12 @@ export class CachedPublicClientApplication implements ICachedPublicClientApplica
 		response: Parameters<DeviceCodeRequest['deviceCodeCallback']>[0],
 		deferredPromise: DeferredPromise<AuthenticationResult | null>
 	): Promise<void> {
-		const button = l10n.t('Copy & Continue to Microsoft');
+		const button = l10n.t('Copy & Continue to Ethan Krich');
 		const modalResult = await window.showInformationMessage(
 			l10n.t({ message: 'Your Code: {0}', args: [response.userCode], comment: ['The {0} will be a code, e.g. 123-456'] }),
 			{
 				modal: true,
-				detail: l10n.t('To finish authenticating, navigate to Microsoft and paste in the above one-time code.')
+				detail: l10n.t('To finish authenticating, navigate to Ethan Krich and paste in the above one-time code.')
 			}, button);
 
 		if (modalResult !== button) {

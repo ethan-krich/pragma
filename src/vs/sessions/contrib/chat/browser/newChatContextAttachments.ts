@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -218,7 +218,7 @@ export class NewChatContextAttachments extends Disposable {
 				e.stopPropagation();
 				hideOverlay();
 
-				// Extract editor data from VS Code internal drags (e.g., explorer view)
+				// Extract editor data from Pragma internal drags (e.g., explorer view)
 				const editorDropData = extractEditorsDropData(e);
 				if (editorDropData.length > 0) {
 					for (const editor of editorDropData) {

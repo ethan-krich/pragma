@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -43,31 +43,31 @@ export function isEngineCompatible(productVersion: string, engineVersion: string
 	if (prefix === '>=') {
 		// Minimum version check
 		if (pMajor > reqMajor) { return { compatible: true }; }
-		if (pMajor < reqMajor) { return { compatible: false, error: `Extension requires VS Code >=${engineVersion}, but product version is ${productVersion}` }; }
+		if (pMajor < reqMajor) { return { compatible: false, error: `Extension requires Pragma >=${engineVersion}, but product version is ${productVersion}` }; }
 		if (pMinor > reqMinor) { return { compatible: true }; }
-		if (pMinor < reqMinor) { return { compatible: false, error: `Extension requires VS Code >=${engineVersion}, but product version is ${productVersion}` }; }
+		if (pMinor < reqMinor) { return { compatible: false, error: `Extension requires Pragma >=${engineVersion}, but product version is ${productVersion}` }; }
 		if (pPatch >= reqPatch) { return { compatible: true }; }
-		return { compatible: false, error: `Extension requires VS Code >=${engineVersion}, but product version is ${productVersion}` };
+		return { compatible: false, error: `Extension requires Pragma >=${engineVersion}, but product version is ${productVersion}` };
 	}
 
 	// Caret or exact version check
 	if (pMajor !== reqMajor) {
-		return { compatible: false, error: `Extension requires VS Code ${engineVersion}, but product version is ${productVersion} (major version mismatch)` };
+		return { compatible: false, error: `Extension requires Pragma ${engineVersion}, but product version is ${productVersion} (major version mismatch)` };
 	}
 
 	if (prefix === '^') {
 		// Caret: same major, minor and patch must be >= required
 		if (pMinor > reqMinor) { return { compatible: true }; }
-		if (pMinor < reqMinor) { return { compatible: false, error: `Extension requires VS Code ${engineVersion}, but product version is ${productVersion}` }; }
+		if (pMinor < reqMinor) { return { compatible: false, error: `Extension requires Pragma ${engineVersion}, but product version is ${productVersion}` }; }
 		if (pPatch >= reqPatch) { return { compatible: true }; }
-		return { compatible: false, error: `Extension requires VS Code ${engineVersion}, but product version is ${productVersion}` };
+		return { compatible: false, error: `Extension requires Pragma ${engineVersion}, but product version is ${productVersion}` };
 	}
 
 	// Exact or default behavior
-	if (pMinor < reqMinor) { return { compatible: false, error: `Extension requires VS Code ${engineVersion}, but product version is ${productVersion}` }; }
+	if (pMinor < reqMinor) { return { compatible: false, error: `Extension requires Pragma ${engineVersion}, but product version is ${productVersion}` }; }
 	if (pMinor > reqMinor) { return { compatible: true }; }
 	if (pPatch >= reqPatch) { return { compatible: true }; }
-	return { compatible: false, error: `Extension requires VS Code ${engineVersion}, but product version is ${productVersion}` };
+	return { compatible: false, error: `Extension requires Pragma ${engineVersion}, but product version is ${productVersion}` };
 }
 
 export function parseApiProposals(enabledApiProposals: string[]): { proposalName: string; version?: number }[] {
@@ -94,9 +94,9 @@ export function areApiProposalsCompatible(
 		}
 		const existingProposal = productApiProposals[proposalName];
 		if (!existingProposal) {
-			errors.push(`API proposal '${proposalName}' does not exist in this version of VS Code`);
+			errors.push(`API proposal '${proposalName}' does not exist in this version of Pragma`);
 		} else if (existingProposal.version !== version) {
-			errors.push(`API proposal '${proposalName}' version mismatch: extension requires version ${version}, but VS Code has version ${existingProposal.version ?? 'unversioned'}`);
+			errors.push(`API proposal '${proposalName}' version mismatch: extension requires version ${version}, but Pragma has version ${existingProposal.version ?? 'unversioned'}`);
 		}
 	}
 

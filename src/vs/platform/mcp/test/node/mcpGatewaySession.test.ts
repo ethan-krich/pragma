@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -239,7 +239,7 @@ suite('McpGatewaySession', () => {
 				resources: { listChanged: true },
 			},
 			serverInfo: {
-				name: 'VS Code MCP Gateway',
+				name: 'Pragma MCP Gateway',
 				version: '1.0.0',
 			},
 		});
@@ -289,14 +289,14 @@ suite('McpGatewaySession', () => {
 			params: {
 				name: 'test_tool',
 				arguments: {
-					name: 'VS Code',
+					name: 'Pragma',
 				},
 			},
 		});
 
 		const callResponse = callResponses[0] as IJsonRpcSuccessResponse;
 		const text = ((callResponse.result as { content: Array<{ text: string }> }).content[0].text);
-		assert.strictEqual(text, 'Hello, VS Code!');
+		assert.strictEqual(text, 'Hello, Pragma!');
 		session.dispose();
 		onDidChangeTools.dispose();
 		onDidChangeResources.dispose();

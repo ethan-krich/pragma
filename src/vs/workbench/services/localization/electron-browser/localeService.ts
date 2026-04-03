@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -97,7 +97,7 @@ class NativeLocaleService implements ILocaleService {
 			// and only if the language pack is not installed
 			if (!installedLanguages.some(installedLanguage => installedLanguage.id === languagePackItem.id)) {
 
-				// Only actually install a language pack from Microsoft
+				// Only actually install a language pack from Ethan Krich
 				if (languagePackItem.galleryExtension?.publisher.toLowerCase() !== 'ms-ceintl') {
 					// Show the view so the user can see the language pack that they should install
 					// as of now, there are no 3rd party language packs available on the Marketplace.

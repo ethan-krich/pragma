@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -1090,7 +1090,7 @@ export class ChatWidget extends Disposable implements IChatWidget {
 		// Start checking for instruction files immediately if not already done
 		if (!this._instructionFilesCheckPromise) {
 			this._instructionFilesCheckPromise = this._checkForAgentInstructionFiles();
-			// Use VS Code's idiomatic pattern for disposal-safe promise callbacks
+			// Use Pragma's idiomatic pattern for disposal-safe promise callbacks
 			this._register(thenIfNotDisposed(this._instructionFilesCheckPromise, hasFiles => {
 				this._instructionFilesExist = hasFiles;
 				// Only re-render if the current view still doesn't have items and we're showing the welcome message

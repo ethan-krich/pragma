@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -10,7 +10,7 @@ import * as typeConverters from '../../typeConverters';
 
 export interface IFilePathToResourceConverter {
 	/**
-	 * Convert a typescript filepath to a VS Code resource.
+	 * Convert a typescript filepath to a Pragma resource.
 	 */
 	toResource(filepath: string): vscode.Uri;
 }
@@ -157,7 +157,7 @@ function convertLinkTags(
 					if (currentLink.target) {
 						const file = filePathConverter.toResource(currentLink.target.file);
 						const args: OpenJsDocLinkCommand_Args = {
-							file: { ...file.toJSON(), $mid: undefined }, // Prevent VS Code from trying to transform the uri,
+							file: { ...file.toJSON(), $mid: undefined }, // Prevent Pragma from trying to transform the uri,
 							position: typeConverters.Position.fromLocation(currentLink.target.start)
 						};
 						const command = `command:${OpenJsDocLinkCommand.id}?${encodeURIComponent(JSON.stringify([args]))}`;

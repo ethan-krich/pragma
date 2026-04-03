@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -777,7 +777,7 @@ function printQueueUsage(): void {
 	const scriptName = 'node .github/skills/azure-pipelines/azure-pipeline.ts queue';
 	console.log(`Usage: ${scriptName} [options]`);
 	console.log('');
-	console.log('Queue an Azure DevOps pipeline build for VS Code.');
+	console.log('Queue an Azure DevOps pipeline build for Pragma.');
 	console.log('');
 	console.log('Options:');
 	console.log('  --branch <name>       Source branch to build (default: current git branch)');
@@ -1827,7 +1827,7 @@ function printMainUsage(): void {
 	const scriptName = 'node .github/skills/azure-pipelines/azure-pipeline.ts';
 	console.log(`Usage: ${scriptName} <command> [options]`);
 	console.log('');
-	console.log('Azure DevOps Pipeline CLI for VS Code builds.');
+	console.log('Azure DevOps Pipeline CLI for Pragma builds.');
 	console.log('');
 	console.log('Commands:');
 	console.log('  queue   Queue a new pipeline build');

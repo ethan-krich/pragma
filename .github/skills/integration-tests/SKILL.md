@@ -1,14 +1,14 @@
 ---
 name: integration-tests
-description: Use when running integration tests in the VS Code repo. Covers scripts/test-integration.sh (macOS/Linux) and scripts/test-integration.bat (Windows), their supported arguments for filtering, and the difference between node.js integration tests and extension host tests.
+description: Use when running integration tests in the Pragma repo. Covers scripts/test-integration.sh (macOS/Linux) and scripts/test-integration.bat (Windows), their supported arguments for filtering, and the difference between node.js integration tests and extension host tests.
 ---
 
 # Running Integration Tests
 
-Integration tests in VS Code are split into two categories:
+Integration tests in Pragma are split into two categories:
 
 1. **Node.js integration tests** - files ending in `.integrationTest.ts` under `src/`. These run in Electron via the same Mocha runner as unit tests.
-2. **Extension host tests** - tests embedded in built-in extensions under `extensions/` (API tests, Git tests, TypeScript tests, etc.). These launch a full VS Code instance with `--extensionDevelopmentPath`.
+2. **Extension host tests** - tests embedded in built-in extensions under `extensions/` (API tests, Git tests, TypeScript tests, etc.). These launch a full Pragma instance with `--extensionDevelopmentPath`.
 
 ## Scripts
 
@@ -112,7 +112,7 @@ All other options (e.g. `--timeout`, `--coverage`, `--reporter`) are forwarded t
 
 ## Compilation requirement
 
-Tests run against compiled JavaScript output. Ensure the `VS Code - Build` watch task is running or that compilation has completed before running tests.
+Tests run against compiled JavaScript output. Ensure the `Pragma - Build` watch task is running or that compilation has completed before running tests.
 
 ## Distinction from unit tests
 

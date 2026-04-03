@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -96,7 +96,7 @@ class ApplyChangesToParentRepoAction extends Action2 {
 
 		const openFolderAction = toAction({
 			id: 'applyChangesToParentRepo.openFolder',
-			label: localize('openInVSCode', "Open in VS Code"),
+			label: localize('openInVSCode', "Open in Pragma"),
 			run: () => {
 				const scheme = productService.quality === 'stable'
 					? 'vscode'

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -62,29 +62,77 @@ else {
 	if (Object.keys(product).length === 0) {
 		Object.assign(product, {
 			version: '1.104.0-dev',
-			nameShort: 'Code - OSS Dev',
-			nameLong: 'Code - OSS Dev',
-			applicationName: 'code-oss',
-			dataFolderName: '.vscode-oss',
-			urlProtocol: 'code-oss',
-			reportIssueUrl: 'https://github.com/microsoft/vscode/issues/new',
+			nameShort: 'pragma Dev',
+			nameLong: 'pragma Dev',
+			applicationName: 'pragma',
+			dataFolderName: '.pragma',
+			urlProtocol: 'pragma',
+			reportIssueUrl: 'https://github.com/ethan-krich/pragma/issues/new',
 			licenseName: 'MIT',
-			licenseUrl: 'https://github.com/microsoft/vscode/blob/main/LICENSE.txt',
-			serverLicenseUrl: 'https://github.com/microsoft/vscode/blob/main/LICENSE.txt',
+			licenseUrl: 'https://github.com/ethan-krich/pragma/blob/main/LICENSE.txt',
+			serverLicenseUrl: 'https://github.com/ethan-krich/pragma/blob/main/LICENSE.txt',
+			enableTelemetry: false,
+			extensionsGallery: {
+				serviceUrl: 'https://open-vsx.org/vscode/gallery',
+				itemUrl: 'https://open-vsx.org/vscode/item'
+			},
+			linkProtectionTrustedDomains: [
+				'https://open-vsx.org',
+				'https://*.github.com',
+				'https://gh.io'
+			],
+			webviewContentExternalBaseUrlTemplate: 'https://{{uuid}}.pragma-webview.net/{{quality}}/{{commit}}/out/vs/workbench/contrib/webview/browser/pre/',
 			defaultChatAgent: {
-				extensionId: 'GitHub.copilot',
-				chatExtensionId: 'GitHub.copilot-chat',
+				extensionId: '',
+				chatExtensionId: '',
+				chatExtensionOutputId: '',
+				chatExtensionOutputExtensionStateCommand: '',
+				documentationUrl: '',
+				termsStatementUrl: '',
+				privacyStatementUrl: '',
+				skusDocumentationUrl: '',
+				publicCodeMatchesUrl: '',
+				manageSettingsUrl: '',
+				managePlanUrl: '',
+				manageOverageUrl: '',
+				upgradePlanUrl: '',
+				signUpUrl: '',
 				provider: {
 					default: {
-						id: 'github',
-						name: 'GitHub',
+						id: '',
+						name: '',
 					},
 					enterprise: {
-						id: 'github-enterprise',
-						name: 'GitHub Enterprise',
-					}
+						id: '',
+						name: '',
+					},
+					google: {
+						id: '',
+						name: '',
+					},
+					apple: {
+						id: '',
+						name: '',
+					},
 				},
-				providerScopes: []
+				providerExtensionId: '',
+				providerUriSetting: '',
+				providerScopes: [],
+				entitlementUrl: '',
+				entitlementSignupLimitedUrl: '',
+				chatQuotaExceededContext: '',
+				completionsQuotaExceededContext: '',
+				walkthroughCommand: '',
+				completionsMenuCommand: '',
+				completionsRefreshTokenCommand: '',
+				chatRefreshTokenCommand: '',
+				generateCommitMessageCommand: '',
+				resolveMergeConflictsCommand: '',
+				completionsAdvancedSetting: '',
+				completionsEnablementSetting: '',
+				nextEditSuggestionsSetting: '',
+				tokenEntitlementUrl: '',
+				mcpRegistryDataUrl: ''
 			}
 		});
 	}
