@@ -138,6 +138,12 @@
 	vertical-align: bottom;
 }
 
+.monaco-workbench.project-canvas-empty-workbench .tree-explorer-viewlet-tree-view > .message,
+.monaco-workbench.project-canvas-empty-workbench .pane > .pane-body > .welcome-view,
+.monaco-workbench.project-canvas-empty-workbench .search-view > * {
+	display: none !important;
+}
+
 .customview-tree .monaco-list-row .monaco-tl-contents.align-icon-with-twisty::before {
 	display: none;
 }

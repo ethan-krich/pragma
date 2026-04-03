@@ -1,0 +1,185 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Ethan Krich. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.project-canvas-editor {
+	width: 100%;
+	height: 100%;
+	outline: none;
+	color: var(--vscode-editor-foreground);
+	background: var(--vscode-editor-background);
+}
+
+.project-canvas-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	max-width: 1000px;
+	height: 100%;
+	margin: 0 auto;
+	padding: 52px 32px 28px;
+	box-sizing: border-box;
+	gap: 20px;
+}
+
+.project-canvas-title {
+	margin: 0;
+	font-size: 22px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+}
+
+.project-canvas-open-folder {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 14px;
+	border: none;
+	border-radius: 4px;
+	background: var(--vscode-button-background);
+	color: var(--vscode-button-foreground);
+	font-size: 13px;
+	font-weight: 500;
+	cursor: pointer;
+	outline: none;
+}
+
+.project-canvas-open-folder:hover {
+	background: var(--vscode-button-hoverBackground);
+}
+
+.project-canvas-open-folder:focus {
+	outline: 1px solid var(--vscode-focusBorder);
+	outline-offset: 2px;
+}
+
+.project-canvas-footer {
+	display: flex;
+	justify-content: center;
+	padding: 12px 0;
+}
+
+.project-canvas-projects-scrollable {
+	flex: 1;
+	min-height: 0;
+}
+
+.project-canvas-projects {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	max-width: 1500px;
+	gap: 8px;
+}
+
+.project-canvas-empty {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 120px;
+	grid-column: 1 / -1;
+	border: 1px dashed var(--vscode-panel-border);
+	border-radius: 12px;
+	color: var(--vscode-descriptionForeground);
+	background: color-mix(
+		in srgb,
+		var(--vscode-editorWidget-background) 70%,
+		transparent
+	);
+}
+
+.project-canvas-project {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 130px;
+	height: 88px;
+	padding: 8px;
+	border-radius: 10px;
+	border: 1px solid var(--vscode-panel-border);
+	background: color-mix(
+		in srgb,
+		var(--vscode-editorWidget-background) 84%,
+		transparent
+	);
+	color: inherit;
+	cursor: pointer;
+	box-sizing: border-box;
+	outline: none;
+	gap: 6px;
+	transition:
+		border-color 0.12s ease,
+		transform 0.12s ease,
+		background-color 0.12s ease;
+}
+
+.monaco-workbench.monaco-enable-motion .project-canvas-project:hover,
+.monaco-workbench.monaco-enable-motion .project-canvas-project:focus {
+	transform: translateY(-1px);
+}
+
+.project-canvas-project:hover,
+.project-canvas-project:focus {
+	border-color: var(--vscode-focusBorder);
+	background: color-mix(
+		in srgb,
+		var(--vscode-list-hoverBackground) 60%,
+		var(--vscode-editorWidget-background)
+	);
+}
+
+.project-canvas-project:focus {
+	outline: 1px solid var(--vscode-focusBorder);
+	outline-offset: 2px;
+}
+
+.project-canvas-project-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 8px;
+	background: color-mix(
+		in srgb,
+		var(--vscode-button-background) 18%,
+		transparent
+	);
+	color: var(--vscode-symbolIcon-folderForeground);
+	font-size: 16px;
+}
+
+.project-canvas-project-label {
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+	text-align: center;
+}
+
+@media (max-width: 720px) {
+	.project-canvas-content {
+		padding: 32px 20px 20px;
+	}
+
+	.project-canvas-projects {
+		grid-template-columns: repeat(auto-fill, 80px);
+		gap: 10px;
+	}
+
+	.project-canvas-project {
+		width: 80px;
+		height: 80px;
+	}
+
+	.project-canvas-empty {
+		min-height: 100px;
+	}
+}
