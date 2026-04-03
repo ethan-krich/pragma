@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 //@ts-check
@@ -200,7 +200,7 @@ sw.addEventListener('fetch', (event) => {
 	}
 
 	// If we're making a request against the remote authority, we want to go
-	// through VS Code itself so that we are authenticated properly.  If the
+	// through Pragma itself so that we are authenticated properly.  If the
 	// service worker is hosted on the same origin we will have cookies and
 	// authentication will not be an issue.
 	if (requestUrl.origin !== sw.origin && requestUrl.host === remoteAuthority) {

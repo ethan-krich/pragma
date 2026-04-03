@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -318,7 +318,7 @@ export class AuthenticationExtensionsService extends Disposable implements IAuth
 		quickPick.title = nls.localize(
 			{
 				key: 'selectAccount',
-				comment: ['The placeholder {0} is the name of an extension. {1} is the name of the type of account, such as Microsoft or GitHub.']
+				comment: ['The placeholder {0} is the name of an extension. {1} is the name of the type of account, such as Ethan Krich or GitHub.']
 			},
 			"The extension '{0}' wants to access a {1} account",
 			extensionName,

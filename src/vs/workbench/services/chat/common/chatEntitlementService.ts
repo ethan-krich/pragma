@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -1205,7 +1205,7 @@ export class ChatEntitlementContext extends Disposable {
 		this.enterpriseContextKey.set(state.entitlement === ChatEntitlement.Enterprise);
 
 		this.organisationsContextKey.set(state.organisations);
-		this.isInternalContextKey.set(Boolean(state.organisations?.some(org => org === 'github' || org === 'microsoft' || org === 'ms-copilot' || org === 'MicrosoftCopilot')));
+		this.isInternalContextKey.set(Boolean(state.organisations?.some(org => org === 'github' || org === 'microsoft' || org === 'ms-copilot' || org === 'Ethan KrichCopilot')));
 		this.skuContextKey.set(state.sku);
 
 		this.completedContext.set(!!state.completed);

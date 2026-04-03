@@ -1,12 +1,12 @@
-# Code - OSS Development MCP Server
+# Pragma Development MCP Server
 
-This directory contains a Model Context Protocol (MCP) server that provides VS Code automation capabilities for Code - OSS development and testing. The MCP server exposes Code - OSS's testing infrastructure through a standardized interface, allowing AI assistants and other tools to interact with VS Code programmatically.
+This directory contains a Model Context Protocol (MCP) server that provides Pragma automation capabilities for Pragma development and testing. The MCP server exposes Pragma's testing infrastructure through a standardized interface, allowing AI assistants and other tools to interact with Pragma programmatically.
 
 ## What is MCP?
 
-The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) is an open standard that enables AI assistants to securely connect to external data sources and tools. This MCP server specifically provides VS Code automation capabilities, making it possible for AI assistants to:
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) is an open standard that enables AI assistants to securely connect to external data sources and tools. This MCP server specifically provides Pragma automation capabilities, making it possible for AI assistants to:
 
-- Start and stop VS Code instances
+- Start and stop Pragma instances
 - Interact with editors, terminals, and UI elements
 - Run commands and keybindings
 - Navigate the explorer, search, debug, and other viewlets
@@ -55,10 +55,10 @@ You can modify the mcp.json to debug the server:
 
 ## What the Server Provides
 
-The MCP server exposes a comprehensive set of VS Code automation tools through the MCP protocol:
+The MCP server exposes a comprehensive set of Pragma automation tools through the MCP protocol:
 
 ### Application Management
-- Start, stop, and restart VS Code instances
+- Start, stop, and restart Pragma instances
 - Open workspaces and folders
 
 ### Editor Tools
@@ -121,7 +121,7 @@ test/mcp/
 ├── src/
 │   ├── stdio.ts             # Entry point for stdio transport
 │   ├── automation.ts        # MCP server with automation tools
-│   ├── application.ts       # VS Code application lifecycle management
+│   ├── application.ts       # Pragma application lifecycle management
 │   ├── options.ts           # Command-line options parsing
 │   ├── utils.ts             # Utility functions
 │   └── automationTools/     # Tool implementations organized by feature
@@ -141,23 +141,23 @@ test/mcp/
 The server uses a simple architecture:
 - **stdio.ts** - Entry point that creates the MCP server and connects via stdio transport
 - **automation.ts** - Creates the MCP server and registers all automation tools
-- **application.ts** - Manages VS Code application lifecycle (start, stop, restart)
-- **automationTools/** - Modular tool implementations organized by VS Code feature area
+- **application.ts** - Manages Pragma application lifecycle (start, stop, restart)
+- **automationTools/** - Modular tool implementations organized by Pragma feature area
 
 ## Troubleshooting
 
 ### Server Won't Start
-- Ensure Code - OSS has been built and run at least once (via F5 or `code.sh`)
+- Ensure Pragma has been built and run at least once (via F5 or `code.sh`)
 - Verify all dependencies are installed with `npm install`
 
 ### Automation Issues
-- Ensure Code - OSS has been built and run at least once (via F5 or `code.sh`)
+- Ensure Pragma has been built and run at least once (via F5 or `code.sh`)
 - Check the server logs for errors
 - Verify the workspace path is correct
 
 ## Contributing
 
-This MCP server is part of the Code - OSS development infrastructure. When making changes:
+This MCP server is part of the Pragma development infrastructure. When making changes:
 
 1. Follow the existing TypeScript and coding conventions
 2. Test with multiple MCP clients if possible

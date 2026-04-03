@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -12,7 +12,7 @@ const sendWorkspaceInfoLabel = escape(localize('sendWorkspaceInfo', "Include my 
 const sendExtensionsLabel = escape(localize('sendExtensions', "Include my enabled extensions"));
 const sendExperimentsLabel = escape(localize('sendExperiments', "Include A/B experiment info"));
 const sendExtensionData = escape(localize('sendExtensionData', "Include additional extension info"));
-const acknowledgementsLabel = escape(localize('acknowledgements', "I acknowledge that my VS Code version is not updated and this issue may be closed."));
+const acknowledgementsLabel = escape(localize('acknowledgements', "I acknowledge that my Pragma version is not updated and this issue may be closed."));
 const reviewGuidanceLabel = localize( // intentionally not escaped because of its embedded tags
 	{
 		key: 'reviewGuidanceLabel',

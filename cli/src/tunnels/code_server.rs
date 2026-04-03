@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 use super::paths::{InstalledServer, ServerPaths};
@@ -176,7 +176,7 @@ pub struct ServerParamsRaw {
 	pub platform: Platform,
 }
 
-/// Server params that can be used to start a VS Code server.
+/// Server params that can be used to start a Pragma server.
 pub struct ResolvedServerParams {
 	pub release: Release,
 	pub code_server_args: CodeServerArgs,
@@ -741,7 +741,7 @@ fn get_extensions_flag(extension_id: &str) -> String {
 	format!("--install-extension={extension_id}")
 }
 
-/// A type that can be used to scan stdout from the VS Code server. Returns
+/// A type that can be used to scan stdout from the Pragma server. Returns
 /// some other type that, in turn, is returned from starting the server.
 pub trait ServerOutputMatcher<R>
 where

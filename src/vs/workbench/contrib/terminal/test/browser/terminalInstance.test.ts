@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -202,7 +202,7 @@ suite('Workbench - TerminalInstance', () => {
 			strictEqual(taskTerminal.title, 'Test Task Name', 'Task terminal should preserve API-set title');
 		});
 
-		test('custom key event handler should handle commands in DEFAULT_COMMANDS_TO_SKIP_SHELL in VS Code and not xterm when sendKeybindingsToShell is disabled', async () => {
+		test('custom key event handler should handle commands in DEFAULT_COMMANDS_TO_SKIP_SHELL in Pragma and not xterm when sendKeybindingsToShell is disabled', async () => {
 			const instance = await createTerminalInstance();
 			const keybindingService = instance['_keybindingService'];
 			const originalSoftDispatch = keybindingService.softDispatch;

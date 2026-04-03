@@ -1,12 +1,12 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
 use std::{env, io};
 
 /// Gets whether the current CLI seems like it's running in integrated mode,
-/// by looking at the location of the exe and known VS Code files.
+/// by looking at the location of the exe and known Pragma files.
 pub fn is_integrated_cli() -> io::Result<bool> {
 	let exe = env::current_exe()?;
 

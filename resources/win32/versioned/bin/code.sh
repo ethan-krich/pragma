@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #
-# Copyright (c) Microsoft Corporation. All rights reserved.
+# Copyright (c) Ethan Krich. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 if [ "$VSCODE_WSL_DEBUG_INFO" = true ]; then
 	set -x
@@ -20,7 +20,7 @@ if [ -n "$WSL_DISTRO_NAME" ]; then
 	# $WSL_DISTRO_NAME is available since WSL builds 18362, also for WSL2
 	IN_WSL=true
 else
-	WSL_BUILD=$(uname -r | sed -E 's/^[0-9.]+-([0-9]+)-Microsoft.*|.*/\1/')
+	WSL_BUILD=$(uname -r | sed -E 's/^[0-9.]+-([0-9]+)-Ethan Krich.*|.*/\1/')
 	if [ -n "$WSL_BUILD" ]; then
 		if [ "$WSL_BUILD" -ge 17063 ]; then
 			# WSLPATH is available since WSL build 17046

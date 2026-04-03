@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -290,7 +290,7 @@ export async function createTerminalEnvironment(
 			}
 		}
 
-		// Sanitize the environment, removing any undesirable VS Code and Electron environment
+		// Sanitize the environment, removing any undesirable Pragma and Electron environment
 		// variables
 		sanitizeProcessEnvironment(env, 'VSCODE_IPC_HOOK_CLI');
 

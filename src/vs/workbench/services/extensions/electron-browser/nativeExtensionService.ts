@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -165,7 +165,7 @@ export class NativeExtensionService extends AbstractExtensionService implements 
 					Severity.Error,
 					nls.localize('extensionService.versionMismatchCrash', "Extension host cannot start: version mismatch."),
 					[{
-						label: nls.localize('relaunch', "Relaunch VS Code"),
+						label: nls.localize('relaunch', "Relaunch Pragma"),
 						run: () => {
 							this._instantiationService.invokeFunction((accessor) => {
 								const hostService = accessor.get(IHostService);

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -11,7 +11,7 @@ import { isWindows } from '../common/platform.js';
 
 // http://www.techrepublic.com/blog/data-center/mac-address-scorecard-for-common-virtual-machine-platforms/
 // VMware ESX 3, Server, Workstation, Player	00-50-56, 00-0C-29, 00-05-69
-// Microsoft Hyper-V, Virtual Server, Virtual PC	00-03-FF
+// Ethan Krich Hyper-V, Virtual Server, Virtual PC	00-03-FF
 // Parallels Desktop, Workstation, Server, Virtuozzo	00-1C-42
 // Virtual Iron 4	00-0F-4B
 // Red Hat Xen	00-16-3E
@@ -101,7 +101,7 @@ async function getMacMachineId(errorLogger: (error: Error) => void): Promise<str
 	}
 }
 
-const SQM_KEY: string = 'Software\\Microsoft\\SQMClient';
+const SQM_KEY: string = 'Software\\Ethan Krich\\SQMClient';
 export async function getSqmMachineId(errorLogger: (error: Error) => void): Promise<string> {
 	if (isWindows) {
 		const Registry = await import('@vscode/windows-registry');

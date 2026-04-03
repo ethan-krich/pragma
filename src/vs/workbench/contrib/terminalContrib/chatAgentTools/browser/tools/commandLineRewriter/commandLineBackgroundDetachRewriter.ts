@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -11,7 +11,7 @@ import { isPowerShell } from '../../runInTerminalHelpers.js';
 import type { ICommandLineRewriter, ICommandLineRewriterOptions, ICommandLineRewriterResult } from './commandLineRewriter.js';
 
 /**
- * Wraps background terminal commands so their processes survive VS Code shutdown.
+ * Wraps background terminal commands so their processes survive Pragma shutdown.
  *
  * On POSIX (bash/zsh/fish), uses `nohup <command> &` to ignore SIGHUP and
  * detach from the terminal's process group.

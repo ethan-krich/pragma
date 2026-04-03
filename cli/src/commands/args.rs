@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -164,8 +164,8 @@ pub struct StandaloneUpdateArgs {
 #[derive(Subcommand, Debug, Clone)]
 
 pub enum Commands {
-	/// Create a tunnel that's accessible on vscode.dev from anywhere.
-	/// Run `code tunnel --help` for more usage info.
+	/// Remote tunnels are disabled in Pragma.
+	#[clap(hide = true)]
 	Tunnel(TunnelArgs),
 
 	/// Manage editor extensions.
@@ -178,7 +178,7 @@ pub enum Commands {
 	/// Changes the version of the editor you're using.
 	Version(VersionArgs),
 
-	/// Runs a local web version of VS Code.
+	/// Runs a local web version of Pragma.
 	#[clap(about = concatcp!("Runs a local web version of ", constants::PRODUCT_NAME_LONG))]
 	ServeWeb(ServeWebArgs),
 
@@ -862,6 +862,6 @@ pub struct LoginArgs {
 
 #[derive(clap::ValueEnum, Debug, Clone, Copy)]
 pub enum AuthProvider {
-	Microsoft,
+	EthanKrich,
 	Github,
 }

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -296,7 +296,7 @@ export class WindowTitle extends Disposable {
 	 * {rootPath}: e.g. /Users/Development
 	 * {folderName}: e.g. myFolder
 	 * {folderPath}: e.g. /Users/Development/myFolder
-	 * {appName}: e.g. VS Code
+	 * {appName}: e.g. Pragma
 	 * {remoteName}: e.g. SSH
 	 * {dirty}: indicator
 	 * {focusedView}: e.g. Terminal

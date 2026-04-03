@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -15,7 +15,7 @@ export function applyChatTools(server: McpServer, appService: ApplicationService
 
 	tools.push(server.tool(
 		'vscode_automation_chat_send_message',
-		'Send a message to the VS Code chat panel',
+		'Send a message to the Pragma chat panel',
 		{
 			message: z.string().describe('The message to send to the chat')
 		},

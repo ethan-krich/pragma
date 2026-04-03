@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { ThemeIcon } from './themables.js';
@@ -53,9 +53,9 @@ export const codiconsDerived = {
 } as const;
 
 /**
- * The Codicon library is a set of default icons that are built-in in VS Code.
+ * The Codicon library is a set of default icons that are built-in in Pragma.
  *
- * In the product (outside of base) Codicons should only be used as defaults. In order to have all icons in VS Code
+ * In the product (outside of base) Codicons should only be used as defaults. In order to have all icons in Pragma
  * themeable, component should define new, UI component specific icons using `iconRegistry.registerIcon`.
  * In that call a Codicon can be named as default.
  */

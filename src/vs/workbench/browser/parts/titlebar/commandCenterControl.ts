@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -24,10 +24,12 @@ import { WindowTitle } from './windowTitle.js';
 import { IEditorGroupsService } from '../../../services/editor/common/editorGroupsService.js';
 import { IHoverService } from '../../../../platform/hover/browser/hover.js';
 import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
+import product from '../../../../platform/product/common/product.js';
 
 const AI_DISABLED_SETTING = 'chat.disableAIFeatures';
 const AI_CUSTOMIZATION_MENU_ENABLED_SETTING = 'chat.customizationsMenu.enabled';
 const AGENT_STATUS_ENABLED_SETTING = 'chat.agentsControl.enabled';
+const HAS_DEFAULT_CHAT_AGENT = Boolean(product.defaultChatAgent?.chatExtensionId);
 
 export class CommandCenterControl {
 
@@ -170,7 +172,7 @@ class CommandCenterCenterViewItem extends BaseActionViewItem {
 							const aiCustomizationsDisabled = that._configurationService.getValue<boolean>('disableAICustomizations') === true
 								|| that._configurationService.getValue<boolean>('workbench.disableAICustomizations') === true
 								|| that._configurationService.getValue<boolean>(AI_CUSTOMIZATION_MENU_ENABLED_SETTING) === false;
-							const forcedHidden = aiFeaturesDisabled && aiCustomizationsDisabled;
+							const forcedHidden = !HAS_DEFAULT_CHAT_AGENT || (aiFeaturesDisabled && aiCustomizationsDisabled);
 							const agentControlValue = that._configurationService.getValue(AGENT_STATUS_ENABLED_SETTING);
 							const isCompactMode = !forcedHidden && (agentControlValue === true || agentControlValue === undefined || agentControlValue === 'compact');
 							container.classList.toggle('compact-mode', isCompactMode);

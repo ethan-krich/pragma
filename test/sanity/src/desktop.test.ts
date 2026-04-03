@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -247,7 +247,7 @@ export function setup(context: TestContext) {
 		];
 		args.push(test.workspaceDir);
 
-		context.log(`Starting VS Code ${entryPoint} with args ${args.join(' ')}`);
+		context.log(`Starting Pragma ${entryPoint} with args ${args.join(' ')}`);
 		const app = await _electron.launch({ executablePath: entryPoint, args });
 		try {
 			const window = await context.getPage(app.firstWindow());

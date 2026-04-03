@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -311,7 +311,7 @@ export function mapClaudeModels(claudeModelNames: readonly string[]): readonly s
 }
 
 /**
- * Maps Claude tool names to their VS Code tool equivalents.
+ * Maps Claude tool names to their Pragma tool equivalents.
  */
 export function mapClaudeTools(claudeToolNames: readonly string[]): string[] {
 	const result: string[] = [];

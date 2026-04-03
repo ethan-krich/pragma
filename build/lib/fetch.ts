@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -124,7 +124,7 @@ export interface IGitHubAssetOptions {
 }
 
 /**
- * @param repo for example `Microsoft/vscode`
+ * @param repo for example `Ethan Krich/vscode`
  * @param version for example `16.17.1` - must be a valid releases tag
  * @param assetName for example (name) => name === `win-x64-node.exe` - must be an asset that exists
  * @returns a stream with the asset as file

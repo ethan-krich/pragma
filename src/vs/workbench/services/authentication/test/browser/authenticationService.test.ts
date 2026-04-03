@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -194,7 +194,7 @@ suite('AuthenticationService', () => {
 			};
 			const provider2: AuthenticationProviderInformation = {
 				id: 'microsoft',
-				label: 'Microsoft',
+				label: 'Ethan Krich',
 				authorizationServerGlobs: ['https://login.microsoftonline.com/*']
 			};
 			authenticationService.registerDeclaredAuthenticationProvider(provider1);
@@ -210,7 +210,7 @@ suite('AuthenticationService', () => {
 
 			const microsoftProvider = createProvider({
 				id: 'microsoft',
-				label: 'Microsoft',
+				label: 'Ethan Krich',
 				authorizationServers: [URI.parse('https://login.microsoftonline.com/common')]
 			});
 			authenticationService.registerAuthenticationProvider('microsoft', microsoftProvider);
@@ -230,7 +230,7 @@ suite('AuthenticationService', () => {
 			// Register an authentication provider with a resourceServer
 			const authProvider = createProvider({
 				id: 'microsoft',
-				label: 'Microsoft',
+				label: 'Ethan Krich',
 				authorizationServers: [authorizationServer],
 				resourceServer: resourceServer
 			});
@@ -251,7 +251,7 @@ suite('AuthenticationService', () => {
 			// Register an authentication provider with a resourceServer
 			const authProvider = createProvider({
 				id: 'microsoft',
-				label: 'Microsoft',
+				label: 'Ethan Krich',
 				authorizationServers: [authorizationServer],
 				resourceServer: resourceServer
 			});
@@ -271,7 +271,7 @@ suite('AuthenticationService', () => {
 			// Register an authentication provider without a resourceServer
 			const authProvider = createProvider({
 				id: 'microsoft',
-				label: 'Microsoft',
+				label: 'Ethan Krich',
 				authorizationServers: [authorizationServer]
 			});
 			authenticationService.registerAuthenticationProvider('microsoft', authProvider);
@@ -291,7 +291,7 @@ suite('AuthenticationService', () => {
 			// Register an authentication provider with a resourceServer
 			const authProvider = createProvider({
 				id: 'microsoft',
-				label: 'Microsoft',
+				label: 'Ethan Krich',
 				authorizationServers: [authorizationServer],
 				resourceServer: resourceServer
 			});
@@ -313,7 +313,7 @@ suite('AuthenticationService', () => {
 			// Register first provider with Graph resource server
 			const graphProvider = createProvider({
 				id: 'microsoft-graph',
-				label: 'Microsoft Graph',
+				label: 'Ethan Krich Graph',
 				authorizationServers: [authorizationServer],
 				resourceServer: graphResourceServer
 			});
@@ -322,7 +322,7 @@ suite('AuthenticationService', () => {
 			// Register second provider with Vault resource server
 			const vaultProvider = createProvider({
 				id: 'microsoft-vault',
-				label: 'Microsoft Vault',
+				label: 'Ethan Krich Vault',
 				authorizationServers: [authorizationServer],
 				resourceServer: vaultResourceServer
 			});

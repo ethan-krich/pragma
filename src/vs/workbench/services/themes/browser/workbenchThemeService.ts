@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -280,7 +280,7 @@ export class WorkbenchThemeService extends Disposable implements IWorkbenchTheme
 		const keepTheme = await new Promise(resolve => {
 			this.notificationService.prompt(
 				Severity.Info,
-				nls.localize({ key: 'themeUpdatedNotification', comment: ['{0} is the name of the new default theme'] }, "VS Code has a new default theme: '{0}'.", this.getColorTheme().label),
+				nls.localize({ key: 'themeUpdatedNotification', comment: ['{0} is the name of the new default theme'] }, "Pragma has a new default theme: '{0}'.", this.getColorTheme().label),
 				[
 					toAction({
 						id: 'themeUpdated.tryItOut',

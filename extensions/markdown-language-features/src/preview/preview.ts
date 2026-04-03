@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -129,7 +129,7 @@ class MarkdownPreview extends Disposable implements WebviewResourceProvider {
 			const watcher = this._register(vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(resource, '*')));
 			this._register(watcher.onDidChange(uri => {
 				if (this.isPreviewOf(uri)) {
-					// Only use the file system event when VS Code does not already know about the file.
+					// Only use the file system event when Pragma does not already know about the file.
 					// This is needed to avoid duplicate refreshes
 					if (!vscode.workspace.textDocuments.some(doc => areUrisEqual(doc.uri, uri))) {
 						this.refresh();

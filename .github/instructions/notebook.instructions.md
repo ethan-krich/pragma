@@ -1,10 +1,10 @@
 ---
-description: Architecture documentation for VS Code notebook and interactive window components. Use when working in `src/vs/workbench/contrib/notebook/`
+description: Architecture documentation for Pragma notebook and interactive window components. Use when working in `src/vs/workbench/contrib/notebook/`
 ---
 
 # Notebook Architecture
 
-This document describes the internal architecture of VS Code's notebook implementation.
+This document describes the internal architecture of Pragma's notebook implementation.
 
 ## Model resolution
 

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 use crate::{
@@ -105,7 +105,7 @@ impl StatusError {
 	}
 }
 
-// When the provided connection token doesn't match the one used to set up the original VS Code Server
+// When the provided connection token doesn't match the one used to set up the original Pragma Server
 // This is most likely due to a new user joining.
 #[derive(Debug)]
 pub struct MismatchConnectionToken(pub String);
@@ -116,7 +116,7 @@ impl std::fmt::Display for MismatchConnectionToken {
 	}
 }
 
-// When the VS Code server has an unrecognized extension (rather than zip or gz)
+// When the Pragma server has an unrecognized extension (rather than zip or gz)
 #[derive(Debug)]
 pub struct InvalidServerExtensionError(pub String);
 
@@ -435,7 +435,7 @@ impl Display for DbusConnectFailedError {
 	}
 }
 
-/// Internal errors in the VS Code CLI.
+/// Internal errors in the Pragma CLI.
 /// Note: other error should be migrated to this type gradually
 #[derive(Error, Debug)]
 pub enum CodeError {
@@ -451,6 +451,8 @@ pub enum CodeError {
 	SingletonLockedProcessExited(u32),
 	#[error("no tunnel process is currently running")]
 	NoRunningTunnel,
+	#[error("Remote tunnels are disabled in Pragma.")]
+	RemoteTunnelsDisabled,
 	#[error("rpc call failed: {0:?}")]
 	TunnelRpcCallFailed(ResponseError),
 	#[cfg(windows)]

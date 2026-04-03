@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -221,7 +221,7 @@ export interface IChatDebugService extends IDisposable {
 	importLog(data: Uint8Array): Promise<URI | undefined>;
 
 	/**
-	 * Returns true if the event was logged by VS Code core
+	 * Returns true if the event was logged by Pragma core
 	 * (not sourced from an external provider).
 	 */
 	isCoreEvent(event: IChatDebugEvent): boolean;

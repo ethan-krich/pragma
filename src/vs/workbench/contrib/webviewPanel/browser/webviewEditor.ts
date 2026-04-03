@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -109,7 +109,7 @@ export class WebviewEditor extends EditorPane {
 	public override focus(): void {
 		super.focus();
 		if (!this._onFocusWindowHandler.value && !isWeb) {
-			// Make sure we restore focus when switching back to a VS Code window
+			// Make sure we restore focus when switching back to a Pragma window
 			this._onFocusWindowHandler.value = this._hostService.onDidChangeFocus(focused => {
 				if (focused && this._editorService.activeEditorPane === this && this._workbenchLayoutService.hasFocus(Parts.EDITOR_PART)) {
 					this.focus();

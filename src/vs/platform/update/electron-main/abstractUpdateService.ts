@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -72,7 +72,7 @@ export function getUpdateRequestHeaders(productVersion: string): Record<string, 
 export type UpdateErrorClassification = {
 	owner: 'joaomoreno';
 	messageHash: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The hash of the error message.' };
-	comment: 'This is used to know how often VS Code updates have failed.';
+	comment: 'This is used to know how often Pragma updates have failed.';
 };
 
 export abstract class AbstractUpdateService implements IUpdateService {
@@ -247,11 +247,11 @@ export abstract class AbstractUpdateService implements IUpdateService {
 
 		type VersionChangeClassification = {
 			owner: 'dmitriv';
-			comment: 'Fired when VS Code detects a version change on startup.';
-			fromVersion: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The previous version of VS Code.' };
+			comment: 'Fired when Pragma detects a version change on startup.';
+			fromVersion: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The previous version of Pragma.' };
 			fromCommit: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The commit hash of the previous version.' };
 			fromVersionTime: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'Timestamp when the previous version was first detected.' };
-			toVersion: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The current version of VS Code.' };
+			toVersion: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The current version of Pragma.' };
 			toCommit: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The commit hash of the current version.' };
 			timeToUpdateMs: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; isMeasurement: true; comment: 'Milliseconds between the previous version install and this version install.' };
 			updateMode: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The update mode configured by the user.' };

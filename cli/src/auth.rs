@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -52,14 +52,14 @@ struct AuthenticationError {
 
 #[derive(clap::ValueEnum, Serialize, Deserialize, Debug, Clone, Copy)]
 pub enum AuthProvider {
-	Microsoft,
+	EthanKrich,
 	Github,
 }
 
 impl Display for AuthProvider {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
-			AuthProvider::Microsoft => write!(f, "Microsoft Account"),
+			AuthProvider::EthanKrich => write!(f, "Ethan Krich Account"),
 			AuthProvider::Github => write!(f, "GitHub Account"),
 		}
 	}
@@ -68,14 +68,14 @@ impl Display for AuthProvider {
 impl AuthProvider {
 	pub fn client_id(&self) -> &'static str {
 		match self {
-			AuthProvider::Microsoft => "aebc6443-996d-45c2-90f0-388ff96faa56",
+			AuthProvider::EthanKrich => "aebc6443-996d-45c2-90f0-388ff96faa56",
 			AuthProvider::Github => "01ab8ac9400c4e429b23",
 		}
 	}
 
 	pub fn code_uri(&self) -> &'static str {
 		match self {
-			AuthProvider::Microsoft => {
+			AuthProvider::EthanKrich => {
 				"https://login.microsoftonline.com/organizations/oauth2/v2.0/devicecode"
 			}
 			AuthProvider::Github => "https://github.com/login/device/code",
@@ -84,7 +84,7 @@ impl AuthProvider {
 
 	pub fn grant_uri(&self) -> &'static str {
 		match self {
-			AuthProvider::Microsoft => {
+			AuthProvider::EthanKrich => {
 				"https://login.microsoftonline.com/organizations/oauth2/v2.0/token"
 			}
 			AuthProvider::Github => "https://github.com/login/oauth/access_token",
@@ -93,7 +93,7 @@ impl AuthProvider {
 
 	pub fn get_default_scopes(&self) -> String {
 		match self {
-			AuthProvider::Microsoft => {
+			AuthProvider::EthanKrich => {
 				format!("{PROD_FIRST_PARTY_APP_ID}/.default+offline_access+profile+openid")
 			}
 			AuthProvider::Github => "read:user+read:org".to_string(),
@@ -130,7 +130,7 @@ async fn get_github_user(
 impl StoredCredential {
 	pub async fn is_expired(&self, log: &log::Logger, client: &reqwest::Client) -> bool {
 		match self.provider {
-			AuthProvider::Microsoft => self
+			AuthProvider::EthanKrich => self
 				.expires_at
 				.map(|e| Utc::now() + chrono::Duration::minutes(5) > e)
 				.unwrap_or(false),
@@ -445,7 +445,7 @@ impl Auth {
 	pub async fn get_tunnel_authentication(&self) -> Result<Authorization, AnyError> {
 		let cred = self.get_credential().await?;
 		let auth = match cred.provider {
-			AuthProvider::Microsoft => Authorization::Bearer(cred.access_token),
+			AuthProvider::EthanKrich => Authorization::Bearer(cred.access_token),
 			AuthProvider::Github => Authorization::Github(format!(
 				"client_id={} {}",
 				cred.provider.client_id(),
@@ -690,7 +690,7 @@ impl Auth {
 
 		let provider = prompt_options(
 			format!("How would you like to log in to {PRODUCT_NAME_LONG}?"),
-			&[AuthProvider::Microsoft, AuthProvider::Github],
+			&[AuthProvider::EthanKrich, AuthProvider::Github],
 		)?;
 
 		Ok(provider)

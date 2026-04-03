@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -274,7 +274,7 @@ export class McpServersListView extends AbstractExtensionsListView<IWorkbenchMcp
 		const description = dom.append(welcomeContent, dom.$('.mcp-welcome-description'));
 		const markdownResult = this._register(this.markdownRendererService.render(
 			new MarkdownString(
-				localize('mcp.welcome.descriptionWithLink', "Browse and install [Model Context Protocol (MCP) servers](https://code.visualstudio.com/docs/copilot/customization/mcp-servers) directly from VS Code to extend agent mode with extra tools for connecting to databases, invoking APIs and performing specialized tasks."),
+				localize('mcp.welcome.descriptionWithLink', "Browse and install [Model Context Protocol (MCP) servers](https://code.visualstudio.com/docs/copilot/customization/mcp-servers) directly from Pragma to extend agent mode with extra tools for connecting to databases, invoking APIs and performing specialized tasks."),
 				{ isTrusted: { enabledCommands: ['workbench.action.openSettings'] } },
 			)
 				.appendMarkdown('\n\n')

@@ -148,9 +148,9 @@ See the `sessions` skill for sessions-window specific guidance.
 
 ## Debugging Layout in the Real Product
 
-Component fixtures use mock data and a fixed container size. Layout bugs caused by reflow timing, real data shapes, or narrow window sizes often **don't reproduce in fixtures**. When a user reports a broken layout, debug in the live Code OSS product.
+Component fixtures use mock data and a fixed container size. Layout bugs caused by reflow timing, real data shapes, or narrow window sizes often **don't reproduce in fixtures**. When a user reports a broken layout, debug in the live Pragma product.
 
-For launching Code OSS with CDP and connecting `agent-browser`, see the **`launch` skill**. Use `--user-data-dir /tmp/code-oss-debug` to avoid colliding with an already-running instance from another worktree.
+For launching Pragma with CDP and connecting `agent-browser`, see the **`launch` skill**. Use `--user-data-dir /tmp/code-oss-debug` to avoid colliding with an already-running instance from another worktree.
 
 ### Navigating to the customizations editor
 

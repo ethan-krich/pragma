@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -28,7 +28,7 @@ suite('getFlows', () => {
 
 	const testCases: Array<{ label: string; query: IFlowQuery; expectedFlows: Flows[] }> = [
 		{
-			label: 'VS Code Desktop. Local filesystem. GitHub.com',
+			label: 'Pragma Desktop. Local filesystem. GitHub.com',
 			query: {
 				extensionHost: ExtensionHost.Local,
 				isSupportedClient: true,
@@ -41,7 +41,7 @@ suite('getFlows', () => {
 			]
 		},
 		{
-			label: 'VS Code Desktop. Local filesystem. GitHub Hosted Enterprise',
+			label: 'Pragma Desktop. Local filesystem. GitHub Hosted Enterprise',
 			query: {
 				extensionHost: ExtensionHost.Local,
 				isSupportedClient: true,
@@ -55,7 +55,7 @@ suite('getFlows', () => {
 			]
 		},
 		{
-			label: 'VS Code Desktop. Local filesystem. GitHub Enterprise Server',
+			label: 'Pragma Desktop. Local filesystem. GitHub Enterprise Server',
 			query: {
 				extensionHost: ExtensionHost.Local,
 				isSupportedClient: true,
@@ -138,7 +138,7 @@ suite('getFlows', () => {
 			]
 		},
 		{
-			label: 'Code - OSS. Local filesystem. GitHub.com',
+			label: 'Pragma. Local filesystem. GitHub.com',
 			query: {
 				extensionHost: ExtensionHost.Local,
 				isSupportedClient: false,
@@ -151,7 +151,7 @@ suite('getFlows', () => {
 			]
 		},
 		{
-			label: 'Code - OSS. Local filesystem. GitHub Hosted Enterprise',
+			label: 'Pragma. Local filesystem. GitHub Hosted Enterprise',
 			query: {
 				extensionHost: ExtensionHost.Local,
 				isSupportedClient: false,
@@ -164,7 +164,7 @@ suite('getFlows', () => {
 			]
 		},
 		{
-			label: 'Code - OSS. Local filesystem. GitHub Enterprise Server',
+			label: 'Pragma. Local filesystem. GitHub Enterprise Server',
 			query: {
 				extensionHost: ExtensionHost.Local,
 				isSupportedClient: false,
@@ -208,7 +208,7 @@ suite('getFlows', () => {
 			await config.update('preferDeviceCodeFlow', originalConfig, vscode.ConfigurationTarget.Global);
 		});
 
-		test('returns device code flow first when preferDeviceCodeFlow is true - VS Code Desktop', async () => {
+		test('returns device code flow first when preferDeviceCodeFlow is true - Pragma Desktop', async () => {
 			const config = vscode.workspace.getConfiguration('github-authentication');
 			await config.update('preferDeviceCodeFlow', true, vscode.ConfigurationTarget.Global);
 

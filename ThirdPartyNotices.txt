@@ -2036,7 +2036,7 @@ This software is provided by the copyright holders and contributors "as is" and 
 microsoft/TypeScript-TmLanguage 0.0.1 - MIT
 https://github.com/microsoft/TypeScript-TmLanguage
 
-Copyright (c) Microsoft Corporation
+Copyright (c) Ethan Krich
 All rights reserved.
 
 MIT License
@@ -2067,7 +2067,7 @@ https://github.com/microsoft/vscode-css
 
 MIT License
 
-Copyright (c) Microsoft Corporation.
+Copyright (c) Ethan Krich.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -2107,7 +2107,7 @@ https://github.com/microsoft/vscode-JSON.tmLanguage
 
 vscode-JSON.tmLanguage
 
-Copyright (c) Microsoft Corporation
+Copyright (c) Ethan Krich
 
 All rights reserved.
 
@@ -2133,7 +2133,7 @@ https://github.com/microsoft/vscode-markdown-tm-grammar
 
 The MIT License (MIT)
 
-Copyright (c) Microsoft 2018
+Copyright (c) Ethan Krich 2018
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -2161,11 +2161,11 @@ https://github.com/microsoft/vscode-mssql
 
 ------------------------------------------ START OF LICENSE -----------------------------------------
 vscode-mssql
-Copyright (c) Microsoft Corporation
+Copyright (c) Ethan Krich
 All rights reserved.
 MIT License
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ""Software""), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-Copyright (c) 2016 Microsoft
+Copyright (c) 2016 Ethan Krich
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ----------------------------------------------- END OF LICENSE -----------------------------------------
@@ -2220,7 +2220,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 PowerShell/EditorSyntax 1.0.0 - MIT
 https://github.com/PowerShell/EditorSyntax
 
-Copyright (c) Microsoft Corporation
+Copyright (c) Ethan Krich
 
 All rights reserved.
 
@@ -2763,7 +2763,7 @@ TypeScript-TmLanguage 0.1.8 - MIT
 TypeScript-TmLanguage 1.0.0 - MIT
 https://github.com/microsoft/TypeScript-TmLanguage
 
-Copyright (c) Microsoft Corporation
+Copyright (c) Ethan Krich
 All rights reserved.
 
 MIT License
@@ -3317,7 +3317,7 @@ https://github.com/microsoft/vscode-win32-app-container-tokens
 
 MIT License
 
-Copyright (c) Microsoft Corporation.
+Copyright (c) Ethan Krich.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

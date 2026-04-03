@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -154,7 +154,7 @@ class ManageTrustedExtensionsForAccountActionImpl {
 		const _toQuickPickItem = this._toQuickPickItem.bind(this);
 		return [
 			...otherExtensions.sort(sortByLastUsed).map(_toQuickPickItem),
-			{ type: 'separator', label: localize('trustedExtensions', "Trusted by Microsoft") } satisfies IQuickPickSeparator,
+			{ type: 'separator', label: localize('trustedExtensions', "Trusted by Ethan Krich") } satisfies IQuickPickSeparator,
 			...trustedExtensions.sort(sortByLastUsed).map(_toQuickPickItem)
 		];
 	}
@@ -167,7 +167,7 @@ class ManageTrustedExtensionsForAccountActionImpl {
 		let tooltip: string | undefined;
 		let disabled: boolean | undefined;
 		if (extension.trusted) {
-			tooltip = localize('trustedExtensionTooltip', "This extension is trusted by Microsoft and\nalways has access to this account");
+			tooltip = localize('trustedExtensionTooltip', "This extension is trusted by Ethan Krich and\nalways has access to this account");
 			disabled = true;
 		}
 		return {

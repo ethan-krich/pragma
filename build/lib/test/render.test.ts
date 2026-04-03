@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -129,7 +129,7 @@ suite('Render Functions', () => {
 			category: mockCategory,
 			minimumVersion: '1.85',
 			renderADMX: (regKey: string) => [
-				`<policy name="TestPolicy" class="Both" displayName="$(string.TestPolicy)" key="Software\\Policies\\Microsoft\\${regKey}">`,
+				`<policy name="TestPolicy" class="Both" displayName="$(string.TestPolicy)" key="Software\\Policies\\Ethan Krich\\${regKey}">`,
 				`	<enabledValue><decimal value="1" /></enabledValue>`,
 				`</policy>`
 			],
@@ -151,7 +151,7 @@ suite('Render Functions', () => {
 		test('should include policy namespaces with regKey', () => {
 			const result = renderADMX('TestApp', ['1.0'], [mockCategory], [mockPolicy]);
 
-			assert.ok(result.includes('<target prefix="TestApp" namespace="Microsoft.Policies.TestApp"'));
+			assert.ok(result.includes('<target prefix="TestApp" namespace="Ethan Krich.Policies.TestApp"'));
 		});
 
 		test('should replace dots in versions with underscores', () => {
@@ -204,7 +204,7 @@ suite('Render Functions', () => {
 				category: mockCategory,
 				minimumVersion: '1.85',
 				renderADMX: (regKey: string) => [
-					`<policy name="TestPolicy2" class="Both" displayName="$(string.TestPolicy2)" key="Software\\Policies\\Microsoft\\${regKey}">`,
+					`<policy name="TestPolicy2" class="Both" displayName="$(string.TestPolicy2)" key="Software\\Policies\\Ethan Krich\\${regKey}">`,
 					`	<enabledValue><string /></enabledValue>`,
 					`</policy>`
 				],
@@ -244,7 +244,7 @@ suite('Render Functions', () => {
 		};
 
 		test('should render ADML with correct XML structure', () => {
-			const result = renderADML('VS Code', ['1.85'], [mockCategory], [mockPolicy]);
+			const result = renderADML('Pragma', ['1.85'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('<?xml version="1.0" encoding="utf-8"?>'));
 			assert.ok(result.includes('<policyDefinitionResources'));
@@ -258,27 +258,27 @@ suite('Render Functions', () => {
 		});
 
 		test('should include supported versions with escaped greater-than', () => {
-			const result = renderADML('VS Code', ['1.85', '1.90'], [mockCategory], [mockPolicy]);
+			const result = renderADML('Pragma', ['1.85', '1.90'], [mockCategory], [mockPolicy]);
 
-			assert.ok(result.includes('VS Code &gt;= 1.85'));
-			assert.ok(result.includes('VS Code &gt;= 1.90'));
+			assert.ok(result.includes('Pragma &gt;= 1.85'));
+			assert.ok(result.includes('Pragma &gt;= 1.90'));
 		});
 
 		test('should include category strings', () => {
-			const result = renderADML('VS Code', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderADML('Pragma', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('Category_test_category'));
 		});
 
 		test('should include policy strings', () => {
-			const result = renderADML('VS Code', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderADML('Pragma', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('TestPolicy'));
 			assert.ok(result.includes('Test Policy Default'));
 		});
 
 		test('should include policy presentations', () => {
-			const result = renderADML('VS Code', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderADML('Pragma', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('<presentationTable>'));
 			assert.ok(result.includes('<presentation id="TestPolicy">'));
@@ -292,7 +292,7 @@ suite('Render Functions', () => {
 				}
 			};
 
-			const result = renderADML('VS Code', ['1.0'], [mockCategory], [mockPolicy], translations);
+			const result = renderADML('Pragma', ['1.0'], [mockCategory], [mockPolicy], translations);
 
 			assert.ok(result.includes('Test Policy Translated'));
 		});
@@ -301,7 +301,7 @@ suite('Render Functions', () => {
 			const category1: Category = { moduleName: 'testModule', name: { value: 'Cat1', nlsKey: 'cat1' } };
 			const category2: Category = { moduleName: 'testModule', name: { value: 'Cat2', nlsKey: 'cat2' } };
 
-			const result = renderADML('VS Code', ['1.0'], [category1, category2], [mockPolicy]);
+			const result = renderADML('Pragma', ['1.0'], [category1, category2], [mockPolicy]);
 
 			assert.ok(result.includes('Category_cat1'));
 			assert.ok(result.includes('Category_cat2'));
@@ -334,7 +334,7 @@ suite('Render Functions', () => {
 		};
 
 		test('should render profile manifest with correct XML structure', () => {
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('<?xml version="1.0" encoding="UTF-8"?>'));
 			assert.ok(result.includes('<!DOCTYPE plist PUBLIC'));
@@ -350,13 +350,13 @@ suite('Render Functions', () => {
 		});
 
 		test('should include bundle identifier', () => {
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('<string>com.microsoft.vscode</string>'));
 		});
 
 		test('should include required payload fields', () => {
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('PayloadDescription'));
 			assert.ok(result.includes('PayloadDisplayName'));
@@ -368,7 +368,7 @@ suite('Render Functions', () => {
 		});
 
 		test('should include policy manifests in subkeys', () => {
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('<key>pfm_subkeys</key>'));
 			assert.ok(result.includes('TestPolicy'));
@@ -382,27 +382,27 @@ suite('Render Functions', () => {
 				}
 			};
 
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy], translations);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy], translations);
 
 			assert.ok(result.includes('Translated Description'));
 		});
 
-		test('should include VS Code specific URLs', () => {
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
+		test('should include Pragma specific URLs', () => {
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('https://code.visualstudio.com/'));
 			assert.ok(result.includes('https://code.visualstudio.com/docs/setup/enterprise'));
 		});
 
 		test('should include last modified date', () => {
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('<key>pfm_last_modified</key>'));
 			assert.ok(result.includes('<date>'));
 		});
 
 		test('should mark manifest as unique', () => {
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('<key>pfm_unique</key>'));
 			assert.ok(result.includes('<true/>'));
@@ -418,28 +418,28 @@ suite('Render Functions', () => {
 </dict>`
 			};
 
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy, policy2]);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy, policy2]);
 
 			assert.ok(result.includes('TestPolicy'));
 			assert.ok(result.includes('TestPolicy2'));
 		});
 
 		test('should set format version to 1', () => {
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('<key>pfm_format_version</key>'));
 			assert.ok(result.includes('<integer>1</integer>'));
 		});
 
 		test('should set interaction to combined', () => {
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('<key>pfm_interaction</key>'));
 			assert.ok(result.includes('<string>combined</string>'));
 		});
 
 		test('should set platform to macOS', () => {
-			const result = renderProfileManifest('VS Code', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
+			const result = renderProfileManifest('Pragma', 'com.microsoft.vscode', ['1.0'], [mockCategory], [mockPolicy]);
 
 			assert.ok(result.includes('<key>pfm_platforms</key>'));
 			assert.ok(result.includes('<string>macOS</string>'));
@@ -473,7 +473,7 @@ suite('Render Functions', () => {
 
 		test('should render complete macOS policy profile', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -489,7 +489,7 @@ suite('Render Functions', () => {
 		<array>
 			<dict>
 				<key>PayloadDisplayName</key>
-				<string>VS Code</string>
+				<string>Pragma</string>
 				<key>PayloadIdentifier</key>
 				<string>com.microsoft.vscode.uuid</string>
 				<key>PayloadType</key>
@@ -503,13 +503,13 @@ suite('Render Functions', () => {
 			</dict>
 		</array>
 		<key>PayloadDescription</key>
-		<string>This profile manages VS Code. For more information see https://code.visualstudio.com/docs/setup/enterprise</string>
+		<string>This profile manages Pragma. For more information see https://code.visualstudio.com/docs/setup/enterprise</string>
 		<key>PayloadDisplayName</key>
-		<string>VS Code</string>
+		<string>Pragma</string>
 		<key>PayloadIdentifier</key>
 		<string>com.microsoft.vscode</string>
 		<key>PayloadOrganization</key>
-		<string>Microsoft</string>
+		<string>Ethan Krich</string>
 		<key>PayloadType</key>
 		<string>Configuration</string>
 		<key>PayloadUUID</key>
@@ -526,7 +526,7 @@ suite('Render Functions', () => {
 
 		test('should include en-us manifest by default', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -536,12 +536,12 @@ suite('Render Functions', () => {
 
 			assert.strictEqual(result.manifests.length, 1);
 			assert.strictEqual(result.manifests[0].languageId, 'en-us');
-			assert.ok(result.manifests[0].contents.includes('VS Code Managed Settings'));
+			assert.ok(result.manifests[0].contents.includes('Pragma Managed Settings'));
 		});
 
 		test('should include translations', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -571,7 +571,7 @@ suite('Render Functions', () => {
 			};
 
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -602,7 +602,7 @@ suite('Render Functions', () => {
 
 		test('should include enterprise documentation link', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -615,7 +615,7 @@ suite('Render Functions', () => {
 
 		test('should set TargetDeviceType to 5', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -641,7 +641,7 @@ suite('Render Functions', () => {
 			category: mockCategory,
 			minimumVersion: '1.85',
 			renderADMX: (regKey: string) => [
-				`<policy name="TestPolicy" class="Both" displayName="$(string.TestPolicy)" key="Software\\Policies\\Microsoft\\${regKey}">`,
+				`<policy name="TestPolicy" class="Both" displayName="$(string.TestPolicy)" key="Software\\Policies\\Ethan Krich\\${regKey}">`,
 				`	<enabledValue><decimal value="1" /></enabledValue>`,
 				`</policy>`
 			],
@@ -656,7 +656,7 @@ suite('Render Functions', () => {
 
 		test('should render complete GP with ADMX and ADML', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -671,7 +671,7 @@ suite('Render Functions', () => {
 
 		test('should include regKey in ADMX', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -680,12 +680,12 @@ suite('Render Functions', () => {
 			const result = renderGP(product, [mockPolicy], []);
 
 			assert.ok(result.admx.includes('CustomRegKey'));
-			assert.ok(result.admx.includes('Software\\Policies\\Microsoft\\CustomRegKey'));
+			assert.ok(result.admx.includes('Software\\Policies\\Ethan Krich\\CustomRegKey'));
 		});
 
 		test('should include en-us ADML by default', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -695,12 +695,12 @@ suite('Render Functions', () => {
 
 			assert.strictEqual(result.adml.length, 1);
 			assert.strictEqual(result.adml[0].languageId, 'en-us');
-			assert.ok(result.adml[0].contents.includes('VS Code'));
+			assert.ok(result.adml[0].contents.includes('Pragma'));
 		});
 
 		test('should include translations in ADML', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -724,7 +724,7 @@ suite('Render Functions', () => {
 
 		test('should pass versions to ADMX', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -737,7 +737,7 @@ suite('Render Functions', () => {
 
 		test('should pass versions to ADML', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -745,12 +745,12 @@ suite('Render Functions', () => {
 			};
 			const result = renderGP(product, [mockPolicy], []);
 
-			assert.ok(result.adml[0].contents.includes('VS Code &gt;= 1.85'));
+			assert.ok(result.adml[0].contents.includes('Pragma &gt;= 1.85'));
 		});
 
 		test('should pass categories to ADMX', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -763,7 +763,7 @@ suite('Render Functions', () => {
 
 		test('should pass categories to ADML', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -779,7 +779,7 @@ suite('Render Functions', () => {
 				...mockPolicy,
 				name: 'TestPolicy2',
 				renderADMX: (regKey: string) => [
-					`<policy name="TestPolicy2" class="Both" displayName="$(string.TestPolicy2)" key="Software\\Policies\\Microsoft\\${regKey}">`,
+					`<policy name="TestPolicy2" class="Both" displayName="$(string.TestPolicy2)" key="Software\\Policies\\Ethan Krich\\${regKey}">`,
 					`	<enabledValue><decimal value="1" /></enabledValue>`,
 					`</policy>`
 				],
@@ -787,7 +787,7 @@ suite('Render Functions', () => {
 			};
 
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',
@@ -816,7 +816,7 @@ suite('Render Functions', () => {
 
 		test('should return structured result with admx and adml properties', () => {
 			const product = {
-				nameLong: 'VS Code',
+				nameLong: 'Pragma',
 				darwinBundleIdentifier: 'com.microsoft.vscode',
 				darwinProfilePayloadUUID: 'payload-uuid',
 				darwinProfileUUID: 'uuid',

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -10,8 +10,8 @@ import * as pfs from './pfs.js';
 // This is required, since parseInt("7-preview") will return 7.
 const IntRegex: RegExp = /^\d+$/;
 
-const PwshMsixRegex: RegExp = /^Microsoft.PowerShell_.*/;
-const PwshPreviewMsixRegex: RegExp = /^Microsoft.PowerShellPreview_.*/;
+const PwshMsixRegex: RegExp = /^Ethan Krich.PowerShell_.*/;
+const PwshPreviewMsixRegex: RegExp = /^Ethan Krich.PowerShellPreview_.*/;
 
 const enum Arch {
 	x64,
@@ -197,7 +197,7 @@ async function findPSCoreMsix({ findPreview }: { findPreview?: boolean } = {}): 
 	}
 
 	// Find the base directory for MSIX application exe shortcuts
-	const msixAppDir = path.join(process.env.LOCALAPPDATA, 'Microsoft', 'WindowsApps');
+	const msixAppDir = path.join(process.env.LOCALAPPDATA, 'Ethan Krich', 'WindowsApps');
 
 	if (!await pfs.SymlinkSupport.existsDirectory(msixAppDir)) {
 		return null;

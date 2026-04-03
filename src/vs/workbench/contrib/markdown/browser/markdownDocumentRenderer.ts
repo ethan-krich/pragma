@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -217,7 +217,7 @@ interface IRenderMarkdownDocumentOptions {
 /**
  * Renders a string of markdown for use in an external document context.
  *
- * Uses VS Code's syntax highlighting code blocks. Also does not attach all the hooks and customization that normal
+ * Uses Pragma's syntax highlighting code blocks. Also does not attach all the hooks and customization that normal
  * markdown renderer.
  */
 export async function renderMarkdownDocument(

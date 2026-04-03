@@ -8,9 +8,9 @@ There are **three layers** that connect to form a chat session type (like "Backg
 
 In package.json, the extension contributes to the `"chatSessions"` extension point. Each entry declares a session **type** (used as a URI scheme), a **name** (used as a chat participant name like `@cli`), display metadata, capabilities, slash commands, and a `when` clause for conditional availability.
 
-### Layer 2: VS Code Platform -- Extension Point + Service
+### Layer 2: Pragma Platform -- Extension Point + Service
 
-On the VS Code side:
+On the Pragma side:
 
 - chatSessions.contribution.ts -- Registers the `chatSessions` extension point via `ExtensionsRegistry.registerExtensionPoint`. When extensions contribute to it, the `ChatSessionsService` processes each contribution: it sets up context keys, icons, welcome messages, commands, and -- if `canDelegate` is true -- also **registers a dynamic chat agent**.
 

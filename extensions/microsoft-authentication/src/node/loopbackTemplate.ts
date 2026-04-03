@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 export const loopbackTemplate = `
@@ -8,7 +8,7 @@ export const loopbackTemplate = `
 
 <head>
 	<meta charset="utf-8" />
-	<title>Microsoft Account - Sign In</title>
+	<title>Ethan Krich Account - Sign In</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 		html {
@@ -112,7 +112,7 @@ export const loopbackTemplate = `
 
 <body>
 	<a class="branding" href="https://code.visualstudio.com/">
-		Visual Studio Code
+		Pragma
 	</a>
 	<div class="message-container">
 		<div class="message">

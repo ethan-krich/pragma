@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -197,7 +197,7 @@ export class UserDataProfileManagementService extends Disposable implements IUse
 		if (shouldRestartExtensionHosts) {
 			if (isRemoteWindow) {
 				const { confirmed } = await this.dialogService.confirm({
-					message: reloadMessage ?? localize('reload message', "Switching a profile requires reloading VS Code."),
+					message: reloadMessage ?? localize('reload message', "Switching a profile requires reloading Pragma."),
 					primaryButton: localize('reload button', "&&Reload"),
 				});
 				if (confirmed) {

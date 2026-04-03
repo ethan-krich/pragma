@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -159,7 +159,7 @@ export const walkthroughsExtensionPoint = ExtensionsRegistry.registerExtensionPo
 									defaultSnippets: [
 										{
 											label: 'onCommand',
-											description: localize('walkthroughs.steps.completionEvents.onCommand', 'Check off step when a given command is executed anywhere in VS Code.'),
+											description: localize('walkthroughs.steps.completionEvents.onCommand', 'Check off step when a given command is executed anywhere in Pragma.'),
 											body: 'onCommand:${1:commandId}'
 										},
 										{

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -62,7 +62,7 @@ impl ServerPaths {
 		})
 	}
 
-	// VS Code Server pid
+	// Pragma Server pid
 	pub fn write_pid(&self, pid: u32) -> Result<(), WrappedError> {
 		write(&self.pidfile, format!("{pid}")).map_err(|e| {
 			wrap(

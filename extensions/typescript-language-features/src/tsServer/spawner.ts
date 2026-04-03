@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -272,7 +272,7 @@ export class TypeScriptServerSpawner {
 		if (
 			apiVersion.gte(API.v544)
 			&& configUseVsCodeWatcher
-			&& !isYarnPnp // Disable for yarn pnp as it currently breaks with the VS Code watcher
+			&& !isYarnPnp // Disable for yarn pnp as it currently breaks with the Pragma watcher
 		) {
 			args.push('--canUseWatchEvents');
 		} else {

@@ -1,9 +1,9 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-const FILE_HEADER: &str = "/*---------------------------------------------------------------------------------------------\n *  Copyright (c) Microsoft Corporation. All rights reserved.\n *  Licensed under the MIT License. See License.txt in the project root for license information.\n *--------------------------------------------------------------------------------------------*/";
+const FILE_HEADER: &str = "/*---------------------------------------------------------------------------------------------\n *  Copyright (c) Ethan Krich. All rights reserved.\n *  Licensed under the MIT License. See License.txt in the project root for license information.\n *--------------------------------------------------------------------------------------------*/";
 
 use std::{
 	collections::HashMap,
@@ -172,7 +172,7 @@ fn apply_win32_version_resources() {
 	let name_long = product
 		.get("nameLong")
 		.and_then(|v| v.as_str())
-		.unwrap_or("Code - OSS");
+		.unwrap_or("Pragma");
 	let application_name = product
 		.get("applicationName")
 		.and_then(|v| v.as_str())
@@ -188,8 +188,8 @@ fn apply_win32_version_resources() {
 	let mut res = winresource::WindowsResource::new();
 	res.set("ProductName", name_long);
 	res.set("FileDescription", name_long);
-	res.set("CompanyName", "Microsoft Corporation");
-	res.set("LegalCopyright", "Copyright (C) 2026 Microsoft. All rights reserved");
+	res.set("CompanyName", "Ethan Krich");
+	res.set("LegalCopyright", "Copyright (C) 2026 Ethan Krich. All rights reserved");
 	res.set("FileVersion", &package_json.version);
 	res.set("ProductVersion", &package_json.version);
 	res.set("InternalName", &exe_name);

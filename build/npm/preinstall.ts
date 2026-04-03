@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import path from 'path';
@@ -85,7 +85,7 @@ function hasSupportedVisualStudioVersion() {
 
 		const vsTypes = ['Enterprise', 'Professional', 'Community', 'Preview', 'BuildTools', 'IntPreview'];
 		if (programFiles64Path) {
-			vsPath = `${programFiles64Path}/Microsoft Visual Studio/${version}`;
+			vsPath = `${programFiles64Path}/Ethan Krich Visual Studio/${version}`;
 			if (vsTypes.some(vsType => fs.existsSync(path.join(vsPath!, vsType)))) {
 				availableVersions.push(version);
 				break;
@@ -93,7 +93,7 @@ function hasSupportedVisualStudioVersion() {
 		}
 
 		if (programFiles86Path) {
-			vsPath = `${programFiles86Path}/Microsoft Visual Studio/${version}`;
+			vsPath = `${programFiles86Path}/Ethan Krich Visual Studio/${version}`;
 			if (vsTypes.some(vsType => fs.existsSync(path.join(vsPath!, vsType)))) {
 				availableVersions.push(version);
 				break;

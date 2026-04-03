@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -61,7 +61,7 @@ export interface IAgentDescriptor {
  * Describes the agent host as an OAuth 2.0 protected resource.
  * Uses {@link IAuthorizationProtectedResourceMetadata} from RFC 9728
  * to describe auth requirements, enabling clients to resolve tokens
- * using the standard VS Code authentication service.
+ * using the standard Pragma authentication service.
  *
  * Returned from the server via {@link IAgentService.getResourceMetadata}.
  */

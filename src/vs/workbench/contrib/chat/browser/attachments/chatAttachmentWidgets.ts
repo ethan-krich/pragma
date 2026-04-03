@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -1024,7 +1024,7 @@ export class ElementChatAttachmentWidget extends AbstractChatAttachmentWidget {
 
 		const hoverElement = dom.$('div.chat-attached-context-hover.chat-element-hover');
 
-		// Wrap all sections in a scrollable container for VS Code styled scrollbar
+		// Wrap all sections in a scrollable container for Pragma styled scrollbar
 		const scrollableContent = dom.$('div.chat-element-hover-content');
 		const innerScrollables: DomScrollableElement[] = [];
 

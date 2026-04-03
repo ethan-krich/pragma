@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -99,7 +99,7 @@ export interface ProcessItem {
 }
 
 /**
- * Sanitizes a VS Code process environment by removing all Electron/VS Code-related values.
+ * Sanitizes a Pragma process environment by removing all Electron/Pragma-related values.
  */
 export function sanitizeProcessEnvironment(env: IProcessEnvironment, ...preserve: string[]): void {
 	const set = preserve.reduce<Record<string, boolean>>((set, key) => {

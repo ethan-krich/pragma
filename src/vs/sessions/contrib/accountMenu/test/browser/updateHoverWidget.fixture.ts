@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -41,7 +41,7 @@ function renderHoverWidget(ctx: ComponentFixtureContext, state: State): void {
 	const updateService = createMockUpdateService(state);
 	const productService = new class extends mock<IProductService>() {
 		override readonly version = '1.99.0';
-		override readonly nameShort = 'VS Code Insiders';
+		override readonly nameShort = 'Pragma Insiders';
 		override readonly commit = 'f0e1d2c3b4a5';
 		override readonly date = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 	};

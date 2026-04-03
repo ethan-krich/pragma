@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -28,7 +28,7 @@ export function applyProfilerTools(server: McpServer, appService: ApplicationSer
 	// - checkHeapLeaks(classNames, fn): Check for heap leaks during function execution
 
 	// Note: These methods require function parameters and cannot be executed directly via MCP.
-	// They are primarily used within VS Code's automation test framework.`
+	// They are primarily used within Pragma's automation test framework.`
 	// 				}]
 	// 			};
 	// 		}

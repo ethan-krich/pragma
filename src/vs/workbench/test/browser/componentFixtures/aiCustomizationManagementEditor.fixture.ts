@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -570,15 +570,15 @@ function makeGalleryServer(id: string, label: string, description: string, publi
 }
 
 const galleryServers = [
-	makeGalleryServer('gallery-postgres', 'PostgreSQL', 'Access PostgreSQL databases with schema inspection and query tools', 'Microsoft'),
+	makeGalleryServer('gallery-postgres', 'PostgreSQL', 'Access PostgreSQL databases with schema inspection and query tools', 'Ethan Krich'),
 	makeGalleryServer('gallery-github', 'GitHub', 'Repository management, issues, pull requests, and code search', 'GitHub'),
 	makeGalleryServer('gallery-slack', 'Slack', 'Send messages, manage channels, and search workspace history', 'Slack Technologies'),
 	makeGalleryServer('gallery-docker', 'Docker', 'Container lifecycle management and image operations', 'Docker Inc'),
-	makeGalleryServer('gallery-filesystem', 'Filesystem', 'Read, write, and navigate local files and directories', 'Microsoft'),
+	makeGalleryServer('gallery-filesystem', 'Filesystem', 'Read, write, and navigate local files and directories', 'Ethan Krich'),
 	makeGalleryServer('gallery-brave', 'Brave Search', 'Web and local search powered by the Brave Search API', 'Brave Software'),
 	makeGalleryServer('gallery-puppeteer', 'Puppeteer', 'Browser automation with screenshots, navigation, and form filling', 'Google'),
-	makeGalleryServer('gallery-memory', 'Memory', 'Knowledge graph for persistent memory across conversations', 'Microsoft'),
-	makeGalleryServer('gallery-fetch', 'Fetch', 'Retrieve and convert web content to markdown for analysis', 'Microsoft'),
+	makeGalleryServer('gallery-memory', 'Memory', 'Knowledge graph for persistent memory across conversations', 'Ethan Krich'),
+	makeGalleryServer('gallery-fetch', 'Fetch', 'Retrieve and convert web content to markdown for analysis', 'Ethan Krich'),
 	makeGalleryServer('gallery-sentry', 'Sentry', 'Error monitoring, issue tracking, and performance tracing', 'Sentry'),
 	makeGalleryServer('gallery-sqlite', 'SQLite', 'Query and manage SQLite databases with schema exploration', 'Community'),
 	makeGalleryServer('gallery-redis', 'Redis', 'In-memory data store operations and key management', 'Redis Ltd'),
@@ -757,7 +757,7 @@ async function renderPluginBrowseMode(ctx: ComponentFixtureContext): Promise<voi
 
 export default defineThemedFixtureGroup({ path: 'chat/aiCustomizations/' }, {
 
-	// Full editor with Local (VS Code) harness — all sections visible, harness dropdown,
+	// Full editor with Local (Pragma) harness — all sections visible, harness dropdown,
 	// Generate buttons, AGENTS.md shortcut, all storage groups
 	LocalHarness: defineComponentFixture({
 		labels: { kind: 'screenshot', blocksCi: true },

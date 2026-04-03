@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -12,9 +12,9 @@
 //   1. Converts 2-space indentation to tabs.
 //   2. Merges duplicate imports from the same module.
 //   3. Formats with the project's tsfmt.json settings.
-//   4. Adds Microsoft copyright header.
+//   4. Adds Ethan Krich copyright header.
 //
-// URI stays as `string` (the protocol's canonical representation). VS Code code
+// URI stays as `string` (the protocol's canonical representation). Pragma code
 // should call `URI.parse()` at point-of-use where a URI class is needed.
 
 import * as fs from 'fs';
@@ -58,7 +58,7 @@ function formatTypeScript(content: string, fileName: string): string {
 }
 
 const COPYRIGHT = `/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/`;
 
@@ -201,7 +201,7 @@ function processFile(src: string, dest: string): void {
 function main() {
 	if (!fs.existsSync(TYPES_DIR)) {
 		console.error(`ERROR: Cannot find ${TYPES_DIR}`);
-		console.error('Clone agent-host-protocol as a sibling of the VS Code repo:');
+		console.error('Clone agent-host-protocol as a sibling of the Pragma repo:');
 		console.error('  git clone git@github.com:microsoft/agent-host-protocol.git ../agent-host-protocol');
 		process.exit(1);
 	}

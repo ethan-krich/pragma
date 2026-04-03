@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -65,7 +65,7 @@ async function queryVersions(serviceUrl: string, languageId: string): Promise<Ve
 		headers: {
 			'Accept': 'application/json;api-version=3.0-preview.1',
 			'Content-Type': 'application/json',
-			'User-Agent': 'VS Code Build',
+			'User-Agent': 'Pragma Build',
 		},
 		body: JSON.stringify({
 			filters: [{ criteria: [{ filterType: 7, value: `ms-ceintl.vscode-language-pack-${languageId}` }] }],

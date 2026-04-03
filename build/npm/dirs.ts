@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -44,7 +44,6 @@ export const dirs = [
 	'extensions/references-view',
 	'extensions/search-result',
 	'extensions/simple-browser',
-	'extensions/tunnel-forwarding',
 	'extensions/terminal-suggest',
 	'extensions/typescript-language-features',
 	'extensions/vscode-api-tests',

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -118,7 +118,7 @@ export class SetupAgent extends Disposable implements IChatAgentImplementation {
 			const disposables = new DisposableStore();
 
 			// Register VSCode agent
-			const { disposable: vscodeDisposable } = SetupAgent.doRegisterAgent(instantiationService, chatAgentService, 'setup.vscode', 'vscode', false, localize2('vscodeAgentDescription', "Ask questions about VS Code").value, ChatAgentLocation.Chat, ChatModeKind.Agent, context, controller);
+			const { disposable: vscodeDisposable } = SetupAgent.doRegisterAgent(instantiationService, chatAgentService, 'setup.vscode', 'vscode', false, localize2('vscodeAgentDescription', "Ask questions about Pragma").value, ChatAgentLocation.Chat, ChatModeKind.Agent, context, controller);
 			disposables.add(vscodeDisposable);
 
 			// Register workspace agent
@@ -135,8 +135,8 @@ export class SetupAgent extends Disposable implements IChatAgentImplementation {
 				source: ToolDataSource.Internal,
 				icon: Codicon.newFolder,
 				displayName: localize('setupToolDisplayName', "New Workspace"),
-				modelDescription: 'Scaffold a new workspace in VS Code',
-				userDescription: localize('setupToolsDescription', "Scaffold a new workspace in VS Code"),
+				modelDescription: 'Scaffold a new workspace in Pragma',
+				userDescription: localize('setupToolsDescription', "Scaffold a new workspace in Pragma"),
 				canBeReferencedInPrompt: true,
 				toolReferenceName: 'new',
 				when: ContextKeyExpr.true(),

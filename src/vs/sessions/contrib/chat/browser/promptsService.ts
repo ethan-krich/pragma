@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -191,7 +191,7 @@ export class AgenticPromptsService extends PromptsService {
 
 	/**
 	 * Override to use ~/.copilot as the user-level source folder for creation,
-	 * instead of the VS Code profile's promptsHome.
+	 * instead of the Pragma profile's promptsHome.
 	 */
 	public override async getSourceFolders(type: PromptsType): Promise<readonly IPromptPath[]> {
 		const folders = await super.getSourceFolders(type);
@@ -280,7 +280,7 @@ class AgenticPromptFilesLocator extends PromptFilesLocator {
  * Returns the subfolder name under ~/.copilot/ for a given customization type.
  * Used to determine the CLI-accessible user creation target.
  *
- * Prompts are a VS Code concept and use the standard profile promptsHome,
+ * Prompts are a Pragma concept and use the standard profile promptsHome,
  * so they are intentionally excluded here.
  */
 function getCliUserSubfolder(type: PromptsType): string | undefined {

@@ -3,7 +3,7 @@
     <View>
       <Name>PSReadLine-KeyBindings</Name>
       <ViewSelectedBy>
-        <TypeName>Microsoft.PowerShell.KeyHandler</TypeName>
+        <TypeName>Ethan Krich.PowerShell.KeyHandler</TypeName>
       </ViewSelectedBy>
       <GroupBy>
         <PropertyName>Group</PropertyName>
@@ -13,7 +13,7 @@
               <CustomItem>
                 <ExpressionBinding>
                   <ScriptBlock>
-$d = [Microsoft.PowerShell.KeyHandler]::GetGroupingDescription($_.Group)
+$d = [Ethan Krich.PowerShell.KeyHandler]::GetGroupingDescription($_.Group)
 "{0}`n{1}" -f $d,('='*$d.Length)
 </ScriptBlock>
                 </ExpressionBinding>
@@ -55,7 +55,7 @@ $d = [Microsoft.PowerShell.KeyHandler]::GetGroupingDescription($_.Group)
     <View>
       <Name>PSReadLine-HistoryItem</Name>
       <ViewSelectedBy>
-        <TypeName>Microsoft.PowerShell.PSConsoleReadLine+HistoryItem</TypeName>
+        <TypeName>Ethan Krich.PowerShell.PSConsoleReadLine+HistoryItem</TypeName>
       </ViewSelectedBy>
       <ListControl>
         <ListEntries>
@@ -81,7 +81,7 @@ $d = [Microsoft.PowerShell.KeyHandler]::GetGroupingDescription($_.Group)
     <View>
       <Name>PSReadLine-Options</Name>
       <ViewSelectedBy>
-        <TypeName>Microsoft.PowerShell.PSConsoleReadLineOptions</TypeName>
+        <TypeName>Ethan Krich.PowerShell.PSConsoleReadLineOptions</TypeName>
       </ViewSelectedBy>
       <ListControl>
         <ListEntries>
@@ -169,79 +169,79 @@ $d = [Microsoft.PowerShell.KeyHandler]::GetGroupingDescription($_.Group)
               </ListItem>
               <ListItem>
                 <Label>CommandColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.CommandColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.CommandColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>CommentColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.CommentColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.CommentColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>ContinuationPromptColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.ContinuationPromptColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.ContinuationPromptColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>DefaultTokenColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.DefaultTokenColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.DefaultTokenColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>EmphasisColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.EmphasisColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.EmphasisColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>ErrorColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.ErrorColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.ErrorColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>InlinePredictionColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.InlinePredictionColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.InlinePredictionColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>KeywordColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.KeywordColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.KeywordColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>ListPredictionColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.ListPredictionColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.ListPredictionColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>ListPredictionSelectedColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.ListPredictionSelectedColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.ListPredictionSelectedColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>ListPredictionTooltipColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.ListPredictionTooltipColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.ListPredictionTooltipColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>MemberColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.MemberColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.MemberColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>NumberColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.NumberColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.NumberColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>OperatorColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.OperatorColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.OperatorColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>ParameterColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.ParameterColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.ParameterColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>SelectionColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.SelectionColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.SelectionColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>StringColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.StringColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.StringColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>TypeColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.TypeColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.TypeColor)</ScriptBlock>
               </ListItem>
               <ListItem>
                 <Label>VariableColor</Label>
-                <ScriptBlock>[Microsoft.PowerShell.VTColorUtils]::FormatColor($_.VariableColor)</ScriptBlock>
+                <ScriptBlock>[Ethan Krich.PowerShell.VTColorUtils]::FormatColor($_.VariableColor)</ScriptBlock>
               </ListItem>
             </ListItems>
           </ListEntry>

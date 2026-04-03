@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -39,7 +39,7 @@ const browserArgs: [name: string, arg: string][] = [
 type FileChangeEvent = { uri: vscode.Uri; removed: boolean };
 
 export async function activate(context: vscode.ExtensionContext) {
-	const ctrl = vscode.tests.createTestController('selfhost-test-controller', 'VS Code Tests');
+	const ctrl = vscode.tests.createTestController('selfhost-test-controller', 'Pragma Tests');
 	const fileChangedEmitter = new vscode.EventEmitter<FileChangeEvent>();
 
 	context.subscriptions.push(vscode.tests.registerTestFollowupProvider({

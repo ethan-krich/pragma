@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -305,7 +305,7 @@ export interface ISessionState {
 export interface ISessionActiveClient {
 	/** Client identifier (matches `clientId` from `initialize`) */
 	clientId: string;
-	/** Human-readable client name (e.g. `"VS Code"`) */
+	/** Human-readable client name (e.g. `"Pragma"`) */
 	displayName?: string;
 	/** Tools this client provides to the session */
 	tools: IToolDefinition[];

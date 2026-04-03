@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -70,7 +70,7 @@ impl From<AuthProvider> for crate::auth::AuthProvider {
 	fn from(auth_provider: AuthProvider) -> Self {
 		match auth_provider {
 			AuthProvider::Github => crate::auth::AuthProvider::Github,
-			AuthProvider::Microsoft => crate::auth::AuthProvider::Microsoft,
+			AuthProvider::EthanKrich => crate::auth::AuthProvider::EthanKrich,
 		}
 	}
 }

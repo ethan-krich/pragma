@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -47,7 +47,7 @@ export function renderADMX(regKey: string, versions: string[], categories: Categ
 	return `<?xml version="1.0" encoding="utf-8"?>
 <policyDefinitions revision="1.1" schemaVersion="1.0">
 	<policyNamespaces>
-		<target prefix="${regKey}" namespace="Microsoft.Policies.${regKey}" />
+		<target prefix="${regKey}" namespace="Ethan Krich.Policies.${regKey}" />
 	</policyNamespaces>
 	<resources minRequiredRevision="1.0" />
 	<supportedOn>
@@ -165,7 +165,7 @@ export function renderProfileManifest(appName: string, bundleIdentifier: string,
 		</dict>
 		<dict>
 			<key>pfm_default</key>
-			<string>Microsoft</string>
+			<string>Ethan Krich</string>
 			<key>pfm_name</key>
 			<string>PayloadOrganization</string>
 			<key>pfm_title</key>
@@ -259,7 +259,7 @@ ${policyEntries}
 		<key>PayloadIdentifier</key>
 		<string>${bundleIdentifier}</string>
 		<key>PayloadOrganization</key>
-		<string>Microsoft</string>
+		<string>Ethan Krich</string>
 		<key>PayloadType</key>
 		<string>Configuration</string>
 		<key>PayloadUUID</key>

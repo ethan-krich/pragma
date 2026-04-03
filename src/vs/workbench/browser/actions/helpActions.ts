@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -162,7 +162,7 @@ class OpenNewsletterSignupUrlAction extends Action2 {
 	constructor() {
 		super({
 			id: OpenNewsletterSignupUrlAction.ID,
-			title: localize2('newsletterSignup', 'Signup for the VS Code Newsletter'),
+			title: localize2('newsletterSignup', 'Signup for the Pragma Newsletter'),
 			category: Categories.Help,
 			f1: true
 		});
@@ -355,15 +355,17 @@ class AskVSCodeCopilot extends Action2 {
 	}
 }
 
-MenuRegistry.appendMenuItem(MenuId.MenubarHelpMenu, {
-	command: {
-		id: AskVSCodeCopilot.ID,
-		title: localize2('askVScode', 'Ask @vscode'),
-	},
-	order: 7,
-	group: '1_welcome',
-	when: ContextKeyExpr.and(ContextKeyExpr.equals('chatSetupHidden', false), IsSessionsWindowContext.negate())
-});
+if (product.defaultChatAgent?.chatExtensionId) {
+	MenuRegistry.appendMenuItem(MenuId.MenubarHelpMenu, {
+		command: {
+			id: AskVSCodeCopilot.ID,
+			title: localize2('askVScode', 'Ask @vscode'),
+		},
+		order: 7,
+		group: '1_welcome',
+		when: ContextKeyExpr.and(ContextKeyExpr.equals('chatSetupHidden', false), IsSessionsWindowContext.negate())
+	});
+}
 
 // --- Actions Registration
 
@@ -405,4 +407,6 @@ if (OpenPrivacyStatementUrlAction.AVAILABLE) {
 
 registerAction2(GetStartedWithAccessibilityFeatures);
 
-registerAction2(AskVSCodeCopilot);
+if (product.defaultChatAgent?.chatExtensionId) {
+	registerAction2(AskVSCodeCopilot);
+}

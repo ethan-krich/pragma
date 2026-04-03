@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -15,7 +15,7 @@ export class ScopeData {
 	/**
 	 * The full list of scopes including:
 	 * * the original scopes passed to the constructor
-	 * * internal VS Code scopes (e.g. `VSCODE_CLIENT_ID:...`)
+	 * * internal Pragma scopes (e.g. `VSCODE_CLIENT_ID:...`)
 	 * * the default scopes (`openid`, `email`, `profile`, `offline_access`)
 	 */
 	readonly allScopes: string[];
@@ -26,7 +26,7 @@ export class ScopeData {
 	readonly scopeStr: string;
 
 	/**
-	 * The list of scopes to send to the token endpoint. This is the same as `scopes` but without the internal VS Code scopes.
+	 * The list of scopes to send to the token endpoint. This is the same as `scopes` but without the internal Pragma scopes.
 	 */
 	readonly scopesToSend: string[];
 

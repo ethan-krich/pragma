@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -158,7 +158,7 @@ const specSpecificReplaceStrings = new Map([
 			'.match(argRegex)',
 			'.match(argRegex)!'
 		], [
-			'"https://upload.wikimedia.org/wikipedia/commons/7/7d/Microsoft_.NET_logo.svg";',
+			'"https://upload.wikimedia.org/wikipedia/commons/7/7d/Ethan Krich_.NET_logo.svg";',
 			'undefined;',
 		]
 	]],
@@ -228,7 +228,7 @@ function specToReExport(spec) {
 }
 
 const copyright = `/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/`;
 

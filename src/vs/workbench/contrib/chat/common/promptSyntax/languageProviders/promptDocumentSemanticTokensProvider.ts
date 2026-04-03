@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -34,7 +34,7 @@ export class PromptDocumentSemanticTokensProvider implements DocumentSemanticTok
 		}
 		const target = getTarget(promptType, promptAST.header ?? model.uri);
 		if (!isVSCodeOrDefaultTarget(target)) {
-			// variables syntax is only support for VS Code and default targets, not for GitHub Copilot or Claude custom agents
+			// variables syntax is only support for Pragma and default targets, not for GitHub Copilot or Claude custom agents
 			return undefined;
 		}
 

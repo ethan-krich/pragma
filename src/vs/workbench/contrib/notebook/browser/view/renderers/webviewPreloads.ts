@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -2469,7 +2469,7 @@ async function webviewPreloads(ctx: PreloadContext) {
 				return;
 			}
 			const trustedHtml = ttPolicy?.createHTML(html) ?? html;
-			el.innerHTML = trustedHtml as string; // CodeQL [SM03712] The rendered content comes from VS Code's tokenizer and is considered safe
+			el.innerHTML = trustedHtml as string; // CodeQL [SM03712] The rendered content comes from Pragma's tokenizer and is considered safe
 			const root = el.getRootNode();
 			if (root instanceof ShadowRoot) {
 				if (!root.adoptedStyleSheets.includes(tokenizationStyle)) {

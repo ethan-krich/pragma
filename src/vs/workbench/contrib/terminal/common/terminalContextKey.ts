@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -138,7 +138,7 @@ export namespace TerminalContextKeys {
 	/** Whether the terminal run command picker is currently open. */
 	export const inTerminalRunCommandPicker = new RawContextKey<boolean>(TerminalContextKeyStrings.InTerminalRunCommandPicker, false, localize('inTerminalRunCommandPickerContextKey', "Whether the terminal run command picker is currently open."));
 
-	/** Whether shell integration is enabled in the active terminal. This only considers full VS Code shell integration. */
+	/** Whether shell integration is enabled in the active terminal. This only considers full Pragma shell integration. */
 	export const terminalShellIntegrationEnabled = new RawContextKey<boolean>(TerminalContextKeyStrings.TerminalShellIntegrationEnabled, false, localize('terminalShellIntegrationEnabled', "Whether shell integration is enabled in the active terminal"));
 
 	/** Whether a speech to text (dictation) session is in progress. */

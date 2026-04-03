@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/devcontainers/base:ubuntu
-MAINTAINER Microsoft
+MAINTAINER Ethan Krich
 
 RUN apt-get install -y software-properties-common python
 RUN add-apt-repository ppa:chris-lea/node.js

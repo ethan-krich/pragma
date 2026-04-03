@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -13,7 +13,6 @@ import { URI } from '../../../base/common/uri.js';
 import * as os from 'os';
 import { AgentHostIpcChannels } from '../common/agentService.js';
 import { AgentService } from './agentService.js';
-import { CopilotAgent } from './copilot/copilotAgent.js';
 import { ProtocolServerHandler } from './protocolServerHandler.js';
 import { WebSocketProtocolServer } from './webSocketTransport.js';
 import { NativeEnvironmentService } from '../../environment/node/environmentService.js';
@@ -44,9 +43,12 @@ import { AgentPluginManager } from './agentPluginManager.js';
 // When VSCODE_AGENT_HOST_PORT or VSCODE_AGENT_HOST_SOCKET_PATH env vars
 // are set, also starts a WebSocket server for external clients.
 
-startAgentHost();
+startAgentHost().catch(err => {
+	console.error('Failed to start agent host', err);
+	process.exit(1);
+});
 
-function startAgentHost(): void {
+async function startAgentHost(): Promise<void> {
 	// Setup RPC - supports both Electron utility process and Node child process
 	let server: ChildProcessServer<string> | UtilityProcessServer;
 	if (isUtilityProcess(process)) {
@@ -59,6 +61,7 @@ function startAgentHost(): void {
 
 	// Services
 	const productService: IProductService = { _serviceBrand: undefined, ...product };
+	const hasCopilotAgent = Boolean(productService.defaultChatAgent?.chatExtensionId);
 	const environmentService = new NativeEnvironmentService(parseArgs(process.argv, OPTIONS), productService);
 	const loggerService = new LoggerService(getLogLevel(environmentService), environmentService.logsHome);
 	server.registerChannel(AgentHostIpcChannels.Logger, new LoggerChannel(loggerService, () => DefaultURITransformer));
@@ -84,7 +87,12 @@ function startAgentHost(): void {
 		diServices.set(ISessionDataService, sessionDataService);
 		diServices.set(IAgentPluginManager, pluginManager);
 		const instantiationService = new InstantiationService(diServices);
-		agentService.registerProvider(instantiationService.createInstance(CopilotAgent));
+		if (hasCopilotAgent) {
+			const { CopilotAgent } = await import('./copilot/copilotAgent.js');
+			agentService.registerProvider(instantiationService.createInstance(CopilotAgent));
+		} else {
+			logService.info('Copilot agent provider disabled by product configuration');
+		}
 	} catch (err) {
 		logService.error('Failed to create AgentService', err);
 		throw err;

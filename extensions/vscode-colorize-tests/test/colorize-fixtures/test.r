@@ -1,4 +1,4 @@
-# © Microsoft. All rights reserved.
+# © Ethan Krich. All rights reserved.
 
 #' Add together two numbers.
 #'

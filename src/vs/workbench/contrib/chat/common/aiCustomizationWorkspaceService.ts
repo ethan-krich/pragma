@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -103,7 +103,7 @@ export interface IAICustomizationWorkspaceService {
 	getStorageSourceFilter(type: PromptsType): IStorageSourceFilter;
 
 	/**
-	 * Whether this is a sessions window (vs core VS Code).
+	 * Whether this is a sessions window (vs core Pragma).
 	 */
 	readonly isSessionsWindow: boolean;
 

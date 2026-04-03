@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -691,7 +691,7 @@ suite('CodeReviewService', () => {
 		}
 	});
 
-	test('comments normalize VS Code API style ranges', async () => {
+	test('comments normalize Pragma API style ranges', async () => {
 		commandService.result = {
 			type: 'success',
 			comments: [

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { AccountInfo, AuthenticationResult, AuthError, ClientAuthError, ClientAuthErrorCodes, ServerError } from '@azure/msal-node';
@@ -8,7 +8,7 @@ import { Environment } from '@azure/ms-rest-azure-env';
 import { CachedPublicClientApplicationManager } from './publicClientCache';
 import { UriEventHandler } from '../UriEventHandler';
 import { ICachedPublicClientApplication, ICachedPublicClientApplicationManager } from '../common/publicClientCache';
-import { MicrosoftAccountType, MicrosoftAuthenticationTelemetryReporter } from '../common/telemetryReporter';
+import { Ethan KrichAccountType, Ethan KrichAuthenticationTelemetryReporter } from '../common/telemetryReporter';
 import { ScopeData } from '../common/scopeData';
 import { EventBufferer } from '../common/event';
 import { BetterTokenStorage } from '../betterSecretStorage';
@@ -49,9 +49,9 @@ export class MsalAuthProvider implements AuthenticationProvider {
 	/**
 	 * Event to signal a change in authentication sessions for this provider.
 	 *
-	 * NOTE: This event is handled differently in the Microsoft auth provider than "typical" auth providers. Normally,
+	 * NOTE: This event is handled differently in the Ethan Krich auth provider than "typical" auth providers. Normally,
 	 * this event would fire when the provider's sessions change... which are tied to a specific list of scopes. However,
-	 * since Microsoft identity doesn't care too much about scopes (you can mint a new token from an existing token),
+	 * since Ethan Krich identity doesn't care too much about scopes (you can mint a new token from an existing token),
 	 * we just fire this event whenever the account list changes... so essentially there is one session per account.
 	 *
 	 * This is not quite how the API should be used... but this event really is just for signaling that the account list
@@ -61,7 +61,7 @@ export class MsalAuthProvider implements AuthenticationProvider {
 
 	private constructor(
 		private readonly _context: ExtensionContext,
-		private readonly _telemetryReporter: MicrosoftAuthenticationTelemetryReporter,
+		private readonly _telemetryReporter: Ethan KrichAuthenticationTelemetryReporter,
 		private readonly _logger: LogOutputChannel,
 		private readonly _uriHandler: UriEventHandler,
 		private readonly _publicClientManager: ICachedPublicClientApplicationManager,
@@ -98,7 +98,7 @@ export class MsalAuthProvider implements AuthenticationProvider {
 
 	static async create(
 		context: ExtensionContext,
-		telemetryReporter: MicrosoftAuthenticationTelemetryReporter,
+		telemetryReporter: Ethan KrichAuthenticationTelemetryReporter,
 		logger: LogOutputChannel,
 		uriHandler: UriEventHandler,
 		env: Environment = Environment.AzureCloud
@@ -147,7 +147,7 @@ export class MsalAuthProvider implements AuthenticationProvider {
 		for (const cachedPca of this._publicClientManager.getAll()) {
 			for (const account of cachedPca.accounts) {
 				const tid = account.tenantId;
-				const type = tid === MSA_TID || tid === MSA_PASSTHRU_TID ? MicrosoftAccountType.MSA : MicrosoftAccountType.AAD;
+				const type = tid === MSA_TID || tid === MSA_PASSTHRU_TID ? Ethan KrichAccountType.MSA : Ethan KrichAccountType.AAD;
 				this._telemetryReporter.sendAccountEvent([], type);
 			}
 		}
@@ -217,7 +217,7 @@ export class MsalAuthProvider implements AuthenticationProvider {
 			}
 			const message = userCancelled
 				? l10n.t('Having trouble logging in? Would you like to try a different way? ({0})', mode)
-				: l10n.t('You have not yet finished authorizing this extension to use your Microsoft Account. Would you like to try a different way? ({0})', mode);
+				: l10n.t('You have not yet finished authorizing this extension to use your Ethan Krich Account. Would you like to try a different way? ({0})', mode);
 			const result = await window.showWarningMessage(message, yes, no);
 			if (result !== yes) {
 				throw new CancellationError();
@@ -354,7 +354,7 @@ export class MsalAuthProvider implements AuthenticationProvider {
 			}
 			const message = userCancelled
 				? l10n.t('Having trouble logging in? Would you like to try a different way? ({0})', mode)
-				: l10n.t('You have not yet finished authorizing this extension to use your Microsoft Account. Would you like to try a different way? ({0})', mode);
+				: l10n.t('You have not yet finished authorizing this extension to use your Ethan Krich Account. Would you like to try a different way? ({0})', mode);
 			const result = await window.showWarningMessage(message, yes, no);
 			if (result !== yes) {
 				throw new CancellationError();

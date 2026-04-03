@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -292,7 +292,7 @@ export class MarkdownItEngine implements IMdParser {
 		const normalizeLink = md.normalizeLink;
 		md.normalizeLink = (link: string) => {
 			try {
-				// Normalize VS Code schemes to target the current version
+				// Normalize Pragma schemes to target the current version
 				if (isOfScheme(Schemes.vscode, link) || isOfScheme(Schemes['vscode-insiders'], link)) {
 					return normalizeLink(vscode.Uri.parse(link).with({ scheme: vscode.env.uriScheme }).toString());
 				}

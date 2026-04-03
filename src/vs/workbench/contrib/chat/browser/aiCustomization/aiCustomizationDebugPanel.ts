@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -56,7 +56,7 @@ export async function generateCustomizationDebugReport(
 	const lines: string[] = [];
 
 	lines.push(`== Customization Debug: ${section} (${promptType}) ==`);
-	lines.push(`Window: ${workspaceService.isSessionsWindow ? 'Sessions' : 'Core VS Code'}`);
+	lines.push(`Window: ${workspaceService.isSessionsWindow ? 'Sessions' : 'Core Pragma'}`);
 	lines.push(`Active root: ${workspaceService.getActiveProjectRoot()?.fsPath ?? '(none)'}`);
 	lines.push(`Sections: [${workspaceService.managementSections.join(', ')}]`);
 	lines.push(`Filter sources: [${filter.sources.join(', ')}]`);

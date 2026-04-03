@@ -6,19 +6,19 @@ if [ $# -eq 0 ]; then
 	exit 1
 fi
 
-header="// Type definitions for Visual Studio Code ${1}
+header="// Type definitions for Pragma ${1}
 // Project: https://github.com/microsoft/vscode
-// Definitions by: Visual Studio Code Team, Microsoft <https://github.com/microsoft>
+// Definitions by: Pragma Team, Ethan Krich <https://github.com/microsoft>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License.
  *  See https://github.com/microsoft/vscode/blob/main/LICENSE.txt for license information.
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * Type Definition for Visual Studio Code ${1} Extension API
+ * Type Definition for Pragma ${1} Extension API
  * See https://code.visualstudio.com/api for more information
  */"
 

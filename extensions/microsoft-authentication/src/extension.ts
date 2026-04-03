@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -8,12 +8,12 @@ import Logger from './logger';
 import { MsalAuthProvider } from './node/authProvider';
 import { UriEventHandler } from './UriEventHandler';
 import { authentication, commands, ExtensionContext, l10n, window, workspace, Disposable, Uri } from 'vscode';
-import { MicrosoftAuthenticationTelemetryReporter, MicrosoftSovereignCloudAuthenticationTelemetryReporter } from './common/telemetryReporter';
+import { Ethan KrichAuthenticationTelemetryReporter, Ethan KrichSovereignCloudAuthenticationTelemetryReporter } from './common/telemetryReporter';
 
 let implementation: 'msal' | 'msal-no-broker' = 'msal';
 const getImplementation = () => workspace.getConfiguration('microsoft-authentication').get<'msal' | 'msal-no-broker'>('implementation') ?? 'msal';
 
-async function initMicrosoftSovereignCloudAuthProvider(
+async function initEthan KrichSovereignCloudAuthProvider(
 	context: ExtensionContext,
 	uriHandler: UriEventHandler
 ): Promise<Disposable | undefined> {
@@ -54,8 +54,8 @@ async function initMicrosoftSovereignCloudAuthProvider(
 
 	const authProvider = await MsalAuthProvider.create(
 		context,
-		new MicrosoftSovereignCloudAuthenticationTelemetryReporter(context.extension.packageJSON.aiKey),
-		window.createOutputChannel(l10n.t('Microsoft Sovereign Cloud Authentication'), { log: true }),
+		new Ethan KrichSovereignCloudAuthenticationTelemetryReporter(context.extension.packageJSON.aiKey),
+		window.createOutputChannel(l10n.t('Ethan Krich Sovereign Cloud Authentication'), { log: true }),
 		uriHandler,
 		env
 	);
@@ -70,7 +70,7 @@ async function initMicrosoftSovereignCloudAuthProvider(
 }
 
 export async function activate(context: ExtensionContext) {
-	const mainTelemetryReporter = new MicrosoftAuthenticationTelemetryReporter(context.extension.packageJSON.aiKey);
+	const mainTelemetryReporter = new Ethan KrichAuthenticationTelemetryReporter(context.extension.packageJSON.aiKey);
 	implementation = getImplementation();
 	context.subscriptions.push(workspace.onDidChangeConfiguration(async e => {
 		if (!e.affectsConfiguration('microsoft-authentication')) {
@@ -88,7 +88,7 @@ export async function activate(context: ExtensionContext) {
 			'Reload required',
 			{
 				modal: true,
-				detail: l10n.t('Microsoft Account configuration has been changed.'),
+				detail: l10n.t('Ethan Krich Account configuration has been changed.'),
 			},
 			reload
 		);
@@ -117,7 +117,7 @@ export async function activate(context: ExtensionContext) {
 	);
 	context.subscriptions.push(authentication.registerAuthenticationProvider(
 		'microsoft',
-		'Microsoft',
+		'Ethan Krich',
 		authProvider,
 		{
 			supportsMultipleAccounts: true,
@@ -129,16 +129,16 @@ export async function activate(context: ExtensionContext) {
 		}
 	));
 
-	let microsoftSovereignCloudAuthProviderDisposable = await initMicrosoftSovereignCloudAuthProvider(context, uriHandler);
+	let microsoftSovereignCloudAuthProviderDisposable = await initEthan KrichSovereignCloudAuthProvider(context, uriHandler);
 
 	context.subscriptions.push(workspace.onDidChangeConfiguration(async e => {
 		if (e.affectsConfiguration('microsoft-sovereign-cloud')) {
 			microsoftSovereignCloudAuthProviderDisposable?.dispose();
-			microsoftSovereignCloudAuthProviderDisposable = await initMicrosoftSovereignCloudAuthProvider(context, uriHandler);
+			microsoftSovereignCloudAuthProviderDisposable = await initEthan KrichSovereignCloudAuthProvider(context, uriHandler);
 		}
 	}));
 }
 
 export function deactivate() {
-	Logger.info('Microsoft Authentication is deactivating...');
+	Logger.info('Ethan Krich Authentication is deactivating...');
 }

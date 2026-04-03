@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -260,7 +260,7 @@ const completionSpec: Fig.Spec = {
 								},
 								{
 									name: ['--project-id', '-p'],
-									description: 'Existing Microsoft Foundry Project Id to initialize your azd environment with',
+									description: 'Existing Ethan Krich Foundry Project Id to initialize your azd environment with',
 									args: [
 										{
 											name: 'project-id',
@@ -436,7 +436,7 @@ const completionSpec: Fig.Spec = {
 								},
 								{
 									name: ['--project-resource-id', '-p'],
-									description: 'ARM resource ID of the Microsoft Foundry Project (e.g., /subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.CognitiveServices/accounts/{account}/projects/{project})',
+									description: 'ARM resource ID of the Ethan Krich Foundry Project (e.g., /subscriptions/{sub}/resourceGroups/{rg}/providers/Ethan Krich.CognitiveServices/accounts/{account}/projects/{project})',
 									args: [
 										{
 											name: 'project-resource-id',

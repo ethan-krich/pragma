@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -20,7 +20,7 @@ const escapeRe = (s: string) => s.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
 const TEST_ELECTRON_SCRIPT_PATH = 'test/unit/electron/index.js';
 const TEST_BROWSER_SCRIPT_PATH = 'test/unit/browser/index.js';
 
-const ATTACH_CONFIG_NAME = 'Attach to VS Code';
+const ATTACH_CONFIG_NAME = 'Attach to Pragma';
 const DEBUG_TYPE = 'pwa-chrome';
 
 export abstract class VSCodeTestRunner {

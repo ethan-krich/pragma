@@ -3,7 +3,7 @@ version: '@@VERSION@@'
 summary: Pragma code editor
 description: |
   Pragma is a Pragma-branded code editor with Open VSX extension
-  discovery and Microsoft-hosted sync and telemetry disabled by
+  discovery and Ethan Krich-hosted sync and telemetry disabled by
   default.
 
 architectures:

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -227,7 +227,7 @@ export class Model implements IBranchProtectionProviderRegistry, IRemoteSourcePu
 	/**
 	 * We maintain a map containing both the path and the canonical path of the
 	 * workspace folders. We are doing this as `git.exe` expands the symbolic links
-	 * while there are scenarios in which VS Code does not.
+	 * while there are scenarios in which Pragma does not.
 	 *
 	 * Key   - path of the workspace folder
 	 * Value - canonical path of the workspace folder

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -69,7 +69,6 @@ import './controller/editActions.js';
 import './controller/cellOutputActions.js';
 import './controller/apiActions.js';
 import './controller/foldingController.js';
-import './controller/chat/notebook.chat.contribution.js';
 import './controller/variablesActions.js';
 
 // Editor Contribution

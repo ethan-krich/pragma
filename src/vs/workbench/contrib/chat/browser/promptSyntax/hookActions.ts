@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -400,7 +400,7 @@ export async function showConfigureHooksQuickPick(
 							.filter(([hookType]) => targetHookTypes.has(hookType))
 							.map(makeItem);
 					} else {
-						// No target: group into Default (shared), VS Code Only, Copilot CLI Only
+						// No target: group into Default (shared), Pragma Only, Copilot CLI Only
 						const vscodeTypes = new Set(Object.values(HOOKS_BY_TARGET[Target.VSCode]));
 						const copilotTypes = new Set(Object.values(HOOKS_BY_TARGET[Target.GitHubCopilot]));
 						const allEntries = Object.entries(HOOK_METADATA) as [HookType, IHookTypeMeta][];

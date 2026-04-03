@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -205,7 +205,7 @@ export class CopyPasteController extends Disposable implements IEditorContributi
 		const dataTransfer = new VSDataTransfer();
 		const providerCopyMimeTypes = providers.flatMap(x => x.copyMimeTypes ?? []);
 
-		// Save off a handle pointing to data that VS Code maintains.
+		// Save off a handle pointing to data that Pragma maintains.
 		const handle = generateUuid();
 		this.setCopyMetadata(e.clipboardData, {
 			id: handle,

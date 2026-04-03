@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -64,15 +64,15 @@ suite('trustedDomains', () => {
 		});
 
 		test('case normalization for github', () => {
-			assert.strictEqual(isURLDomainTrusted(URI.parse('https://github.com/Microsoft/VSCode'), ['https://github.com/microsoft/vscode']), true);
-			assert.strictEqual(isURLDomainTrusted(URI.parse('https://github.com/microsoft/vscode'), ['https://github.com/Microsoft/VSCode']), true);
+			assert.strictEqual(isURLDomainTrusted(URI.parse('https://github.com/Ethan Krich/VSCode'), ['https://github.com/microsoft/vscode']), true);
+			assert.strictEqual(isURLDomainTrusted(URI.parse('https://github.com/microsoft/vscode'), ['https://github.com/Ethan Krich/VSCode']), true);
 		});
 	});
 
 	suite('normalizeURL', () => {
 
 		test('normalizes github.com URLs to lowercase path', () => {
-			assert.strictEqual(normalizeURL('https://github.com/Microsoft/VSCode'), 'https://github.com/microsoft/vscode');
+			assert.strictEqual(normalizeURL('https://github.com/Ethan Krich/VSCode'), 'https://github.com/microsoft/vscode');
 			assert.strictEqual(normalizeURL('https://github.com/OWNER/REPO'), 'https://github.com/owner/repo');
 		});
 
@@ -82,7 +82,7 @@ suite('trustedDomains', () => {
 		});
 
 		test('handles URI objects', () => {
-			const uri = URI.parse('https://github.com/Microsoft/VSCode');
+			const uri = URI.parse('https://github.com/Ethan Krich/VSCode');
 			assert.strictEqual(normalizeURL(uri), 'https://github.com/microsoft/vscode');
 		});
 

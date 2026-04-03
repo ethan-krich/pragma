@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -15,7 +15,7 @@ export function applyEditorTools(server: McpServer, appService: ApplicationServi
 	// Playwright can probably figure this one out
 	// server.tool(
 	// 	'vscode_automation_editor_open_file',
-	// 	'Open a file in the VS Code editor through quick open',
+	// 	'Open a file in the Pragma editor through quick open',
 	// 	{
 	// 		fileName: z.string().describe('Name of the file to open (partial names work)')
 	// 	},

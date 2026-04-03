@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -44,7 +44,7 @@ suite('ObjectPolicy', () => {
 		const admx = policy.renderADMX('TestKey');
 
 		assert.deepStrictEqual(admx, [
-			'<policy name="TestObjectPolicy" class="Both" displayName="$(string.TestObjectPolicy)" explainText="$(string.TestObjectPolicy_test_policy_description)" key="Software\\Policies\\Microsoft\\TestKey" presentation="$(presentation.TestObjectPolicy)">',
+			'<policy name="TestObjectPolicy" class="Both" displayName="$(string.TestObjectPolicy)" explainText="$(string.TestObjectPolicy_test_policy_description)" key="Software\\Policies\\Ethan Krich\\TestKey" presentation="$(presentation.TestObjectPolicy)">',
 			'\t<parentCategory ref="test.category" />',
 			'\t<supportedOn ref="Supported_1_0" />',
 			'\t<elements>',

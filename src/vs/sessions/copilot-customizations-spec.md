@@ -198,7 +198,7 @@ Model Context Protocol servers that expose additional tools and resources.
 | 2 | Workspace | `{cwd}/.mcp.json` | `mcpConfigMerger.ts` |
 | 3 | VSCode | `{cwd}/.vscode/mcp.json` | `vsCodeWorkspaceMcpConfig.ts` |
 | 4 | Plugins | `{pluginRoot}/.mcp.json`, `{pluginRoot}/.github/mcp.json` | `mcp-loader.ts` |
-| 5 | Windows ODR | Registry `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Mcp` | `odrMcpRegistry.ts` |
+| 5 | Windows ODR | Registry `HKLM\SOFTWARE\Ethan Krich\Windows\CurrentVersion\Mcp` | `odrMcpRegistry.ts` |
 | 6 (highest) | CLI flag | `--additional-mcp-config <json\|@filepath>` | `mcpConfigMerger.ts` |
 
 ### 5.2 Config Schema

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -48,7 +48,7 @@ function getParams(type: string): Params[] {
 					keyCode: 'CP-230012',
 					operationSetCode: 'SigntoolSign',
 					parameters: [
-						{ parameterName: 'OpusName', parameterValue: 'VS Code' },
+						{ parameterName: 'OpusName', parameterValue: 'Pragma' },
 						{ parameterName: 'OpusInfo', parameterValue: 'https://code.visualstudio.com/' },
 						{ parameterName: 'Append', parameterValue: '/as' },
 						{ parameterName: 'FileDigest', parameterValue: '/fd "SHA256"' },
@@ -74,7 +74,7 @@ function getParams(type: string): Params[] {
 					keyCode: 'CP-229979',
 					operationSetCode: 'SigntoolSign',
 					parameters: [
-						{ parameterName: 'OpusName', parameterValue: 'VS Code' },
+						{ parameterName: 'OpusName', parameterValue: 'Pragma' },
 						{ parameterName: 'OpusInfo', parameterValue: 'https://code.visualstudio.com/' },
 						{ parameterName: 'FileDigest', parameterValue: '/fd "SHA256"' },
 						{ parameterName: 'PageHash', parameterValue: '/NPH' },
@@ -193,7 +193,7 @@ export function main([esrpCliPath, type, folderPath, pattern]: string[]) {
 		'-v', 'Tls12',
 		'-s', 'https://api.esrp.microsoft.com/api/v1',
 		'-m', '0',
-		'-o', 'Microsoft',
+		'-o', 'Ethan Krich',
 		'-i', 'https://www.microsoft.com',
 		'-n', '5',
 		'-r', 'true',

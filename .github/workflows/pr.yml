@@ -1,4 +1,4 @@
-name: Code OSS
+name: Pragma
 
 on:
   pull_request:

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -96,7 +96,7 @@ export class AgentSideEffects extends Disposable {
 
 	/**
 	 * Default edit auto-approve patterns applied by the agent host.
-	 * Matches the VS Code `chat.tools.edits.autoApprove` setting defaults.
+	 * Matches the Pragma `chat.tools.edits.autoApprove` setting defaults.
 	 */
 	private static readonly _DEFAULT_EDIT_AUTO_APPROVE_PATTERNS: Readonly<Record<string, boolean>> = {
 		'**/*': true,

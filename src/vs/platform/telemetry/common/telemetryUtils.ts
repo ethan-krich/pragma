@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -12,7 +12,7 @@ import { IEnvironmentService } from '../../environment/common/environment.js';
 import { LoggerGroup } from '../../log/common/log.js';
 import { IProductService } from '../../product/common/productService.js';
 import { getRemoteName } from '../../remote/common/remoteHosts.js';
-import { verifyMicrosoftInternalDomain } from './commonProperties.js';
+import { verifyEthanKrichInternalDomain } from './commonProperties.js';
 import { ICustomEndpointTelemetryService, ITelemetryData, ITelemetryEndpoint, ITelemetryService, TelemetryConfiguration, TelemetryLevel, TELEMETRY_CRASH_REPORTER_SETTING_ID, TELEMETRY_OLD_SETTING_ID, TELEMETRY_SETTING_ID } from './telemetry.js';
 
 /**
@@ -267,7 +267,7 @@ function flatten(obj: unknown, result: Record<string, unknown>, order: number = 
 export function isInternalTelemetry(productService: IProductService, configService: IConfigurationService) {
 	const msftInternalDomains = productService.msftInternalDomains || [];
 	const internalTesting = configService.getValue<boolean>('telemetry.internalTesting');
-	return verifyMicrosoftInternalDomain(msftInternalDomains) || internalTesting;
+	return verifyEthanKrichInternalDomain(msftInternalDomains) || internalTesting;
 }
 
 interface IPathEnvironment {
@@ -312,7 +312,7 @@ function anonymizeFilePaths(stack: string, cleanupPatterns: RegExp[]): string {
 
 	// Match node_modules or node_modules.asar at any position in the path, capturing the node_modules/... suffix
 	const nodeModulesRegex = /(?:^|[\\\/])((node_modules|node_modules\.asar)[\\\/].*)$/;
-	// Match VS Code extension paths:
+	// Match Pragma extension paths:
 	// 1. User extensions: .vscode/extensions/, .vscode-insiders/extensions/, .vscode-server/extensions/, .vscode-server-insiders/extensions/, etc.
 	// 2. Built-in extensions: resources/app/extensions/
 	// Capture everything from the vscode folder or resources/app/extensions onwards
@@ -332,7 +332,7 @@ function anonymizeFilePaths(stack: string, cleanupPatterns: RegExp[]): string {
 
 		// anoynimize user file paths that do not need to be retained or cleaned up.
 		if (!overlappingRange) {
-			// Check if this is a VS Code extension path - if so, preserve the .vscode*/extensions/... portion
+			// Check if this is a Pragma extension path - if so, preserve the .vscode*/extensions/... portion
 			const vscodeExtMatch = vscodeExtensionsPathRegex.exec(result[0]);
 			if (vscodeExtMatch) {
 				// Keep ".vscode[-variant]/extensions/extension-name/..." but redact the parent folder
@@ -375,7 +375,7 @@ function removePropertiesWithPossibleUserInfo(property: string): string {
 		{ label: 'GitHub Token', regex: /(gh[psuro]_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9]{22}_[a-zA-Z0-9]{59})/ },
 		{ label: 'Generic Secret', regex: /(key|token|sig|secret|signature|password|passwd|pwd|android:value)[^a-zA-Z0-9]/i },
 		{ label: 'CLI Credentials', regex: /((login|psexec|(certutil|psexec)\.exe).{1,50}(\s-u(ser(name)?)?\s+.{3,100})?\s-(admin|user|vm|root)?p(ass(word)?)?\s+["']?[^$\-\/\s]|(^|[\s\r\n\\])net(\.exe)?.{1,5}(user\s+|share\s+\/user:| user -? secrets ? set) \s + [^ $\s \/])/ },
-		{ label: 'Microsoft Entra ID', regex: /eyJ(?:0eXAiOiJKV1Qi|hbGci|[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+\.)/ },
+		{ label: 'Ethan Krich Entra ID', regex: /eyJ(?:0eXAiOiJKV1Qi|hbGci|[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+\.)/ },
 		{ label: 'Email', regex: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/ }
 	];
 

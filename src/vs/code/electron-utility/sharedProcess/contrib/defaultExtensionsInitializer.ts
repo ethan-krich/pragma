@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -73,12 +73,12 @@ export class DefaultExtensionsInitializer extends Disposable {
 
 	private getDefaultExtensionVSIXsLocation(): URI {
 		if (this.productService.win32VersionedUpdate) {
-			// appRoot = C:\Users\<name>\AppData\Local\Programs\Microsoft VS Code Insiders\<version>\resources\app
-			// extensionsPath = C:\Users\<name>\AppData\Local\Programs\Microsoft VS Code Insiders\<version>\bootstrap\extensions
+			// appRoot = C:\Users\<name>\AppData\Local\Programs\Pragma Insiders\<version>\resources\app
+			// extensionsPath = C:\Users\<name>\AppData\Local\Programs\Pragma Insiders\<version>\bootstrap\extensions
 			return URI.file(join(dirname(dirname(dirname(this.environmentService.appRoot))), 'bootstrap', 'extensions'));
 		} else {
-			// appRoot = C:\Users\<name>\AppData\Local\Programs\Microsoft VS Code Insiders\resources\app
-			// extensionsPath = C:\Users\<name>\AppData\Local\Programs\Microsoft VS Code Insiders\bootstrap\extensions
+			// appRoot = C:\Users\<name>\AppData\Local\Programs\Pragma Insiders\resources\app
+			// extensionsPath = C:\Users\<name>\AppData\Local\Programs\Pragma Insiders\bootstrap\extensions
 			return URI.file(join(dirname(dirname(this.environmentService.appRoot)), 'bootstrap', 'extensions'));
 		}
 	}

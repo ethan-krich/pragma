@@ -7,6 +7,6 @@
 	<url type="homepage">https://github.com/ethan-krich/pragma</url>
 	<summary>Pragma is a Pragma-branded code editor for local and remote development.</summary>
 	<description>
-		<p>Pragma is a Pragma-branded code editor with Open VSX extension discovery and Microsoft-hosted account sync and telemetry disabled by default.</p>
+		<p>Pragma is a Pragma-branded code editor with Open VSX extension discovery and Ethan Krich-hosted account sync and telemetry disabled by default.</p>
 	</description>
 </component>

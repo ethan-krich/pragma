@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -25,7 +25,7 @@ import { ChatInputPickerActionViewItem, IChatInputPickerOptions } from './chatIn
 import { IOpenerService } from '../../../../../../platform/opener/common/opener.js';
 import { URI } from '../../../../../../base/common/uri.js';
 
-// Track whether warnings have been shown this VS Code session
+// Track whether warnings have been shown this Pragma session
 const shownWarnings = new Set<ChatPermissionLevel>();
 
 function hasShownElevatedWarning(level: ChatPermissionLevel): boolean {

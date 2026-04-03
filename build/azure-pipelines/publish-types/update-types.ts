@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -57,7 +57,7 @@ function convertTabsToSpaces(str: string): string {
 function getNewFileContent(content: string, shorttag: string) {
 	const oldheader = [
 		`/*---------------------------------------------------------------------------------------------`,
-		` *  Copyright (c) Microsoft Corporation. All rights reserved.`,
+		` *  Copyright (c) Ethan Krich. All rights reserved.`,
 		` *  Licensed under the MIT License. See License.txt in the project root for license information.`,
 		` *--------------------------------------------------------------------------------------------*/`
 	].join('\n');
@@ -67,19 +67,19 @@ function getNewFileContent(content: string, shorttag: string) {
 
 function getNewFileHeader(shorttag: string) {
 	const header = [
-		`// Type definitions for Visual Studio Code ${shorttag}`,
+		`// Type definitions for Pragma ${shorttag}`,
 		`// Project: https://github.com/microsoft/vscode`,
-		`// Definitions by: Visual Studio Code Team, Microsoft <https://github.com/microsoft>`,
+		`// Definitions by: Pragma Team, Ethan Krich <https://github.com/microsoft>`,
 		`// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped`,
 		``,
 		`/*---------------------------------------------------------------------------------------------`,
-		` *  Copyright (c) Microsoft Corporation. All rights reserved.`,
+		` *  Copyright (c) Ethan Krich. All rights reserved.`,
 		` *  Licensed under the MIT License.`,
 		` *  See https://github.com/microsoft/vscode/blob/main/LICENSE.txt for license information.`,
 		` *--------------------------------------------------------------------------------------------*/`,
 		``,
 		`/**`,
-		` * Type Definition for Visual Studio Code ${shorttag} Extension API`,
+		` * Type Definition for Pragma ${shorttag} Extension API`,
 		` * See https://code.visualstudio.com/api for more information`,
 		` */`
 	].join('\n');

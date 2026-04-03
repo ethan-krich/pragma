@@ -62,7 +62,7 @@ This mapping lives in `copilotToolDisplay.ts` and is the only place that knows a
 
 ## Model ownership
 
-The SDK makes its own LM requests using the GitHub token. VS Code does not make direct LM calls for agent-host sessions.
+The SDK makes its own LM requests using the GitHub token. Pragma does not make direct LM calls for agent-host sessions.
 
 Each agent's models are published to root state via the `root/agentsChanged` action. The renderer's `AgentHostLanguageModelProvider` exposes these in the model picker. The selected model ID is passed to `createSession({ model })`. The `sendChatRequest` method throws - agent-host models aren't usable for direct LM calls, only for the agent loop.
 

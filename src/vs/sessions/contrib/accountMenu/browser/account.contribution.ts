@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -114,9 +114,9 @@ async function runSessionsUpdateAction(
 ): Promise<void> {
 	if (state.type === StateType.AvailableForDownload && state.canInstall === false) {
 		const { confirmed } = await dialogService.confirm({
-			message: localize('sessionsUpdateFromVSCode.title', "Update from VS Code"),
-			detail: localize('sessionsUpdateFromVSCode.detail', "This will close the Agents app and open VS Code so you can install the update.\n\nLaunch Agents again after the update is complete."),
-			primaryButton: localize('sessionsUpdateFromVSCode.open', "Close and Open VS Code"),
+			message: localize('sessionsUpdateFromVSCode.title', "Update from Pragma"),
+			detail: localize('sessionsUpdateFromVSCode.detail', "This will close the Agents app and open Pragma so you can install the update.\n\nLaunch Agents again after the update is complete."),
+			primaryButton: localize('sessionsUpdateFromVSCode.open', "Close and Open Pragma"),
 		});
 
 		if (confirmed) {

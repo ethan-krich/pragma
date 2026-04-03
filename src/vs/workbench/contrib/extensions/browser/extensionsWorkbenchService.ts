@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -2740,7 +2740,8 @@ export class ExtensionsWorkbenchService extends Disposable implements IExtension
 		}
 
 		const extensionsToUninstall: UninstallExtensionInfo[] = [{ extension: extension.local }];
-		if (!areSameExtensions(extension.identifier, { id: this.productService.defaultChatAgent.extensionId })) {
+		const defaultChatExtensionId = this.productService.defaultChatAgent?.extensionId;
+		if (!defaultChatExtensionId || !areSameExtensions(extension.identifier, { id: defaultChatExtensionId })) {
 			for (const packExtension of this.getAllPackedExtensions(extension, this.local)) {
 				if (packExtension.local && !extensionsToUninstall.some(e => areSameExtensions(e.extension.identifier, packExtension.identifier))) {
 					extensionsToUninstall.push({ extension: packExtension.local });

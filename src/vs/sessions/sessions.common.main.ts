@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -206,13 +206,11 @@ import '../workbench/contrib/notebook/browser/notebook.contribution.js';
 // Speech
 import '../workbench/contrib/speech/browser/speech.contribution.js';
 
-// Chat
+// Chat foundation
 import '../workbench/contrib/chat/browser/chat.contribution.js';
-//import '../workbench/contrib/inlineChat/browser/inlineChat.contribution.js';
+
+// MCP
 import '../workbench/contrib/mcp/browser/mcp.contribution.js';
-import '../workbench/contrib/chat/browser/chatSessions/chatSessions.contribution.js';
-import '../workbench/contrib/chat/browser/contextContrib/chatContext.contribution.js';
-import '../workbench/contrib/imageCarousel/browser/imageCarousel.contribution.js';
 
 // Interactive
 import '../workbench/contrib/interactive/browser/interactive.contribution.js';
@@ -450,10 +448,6 @@ import './browser/paneCompositePartService.js';
 import './browser/layoutActions.js';
 
 import './contrib/accountMenu/browser/account.contribution.js';
-import './contrib/aiCustomizationTreeView/browser/aiCustomizationTreeView.contribution.js';
-import './contrib/chat/browser/chat.contribution.js';
-import './contrib/chat/browser/customizationsDebugLog.contribution.js';
-import './contrib/copilotChatSessions/browser/copilotChatSessions.contribution.js';
 import './contrib/sessions/browser/sessions.contribution.js';
 import './contrib/sessions/browser/customizationsToolbar.contribution.js';
 import './contrib/changes/browser/changesView.contribution.js';
@@ -467,7 +461,6 @@ import './contrib/configuration/browser/configuration.contribution.js';
 
 import './contrib/terminal/browser/sessionsTerminalContribution.js';
 import './contrib/logs/browser/logs.contribution.js';
-import './contrib/chatDebug/browser/chatDebug.contribution.js';
 import './contrib/workspace/browser/workspace.contribution.js';
 import './contrib/welcome/browser/welcome.contribution.js';
 

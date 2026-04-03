@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -110,7 +110,7 @@ export class TypeScriptVersionManager extends Disposable {
 		return {
 			label: (!this.useWorkspaceTsdkSetting || !vscode.workspace.isTrusted
 				? '• '
-				: '') + vscode.l10n.t("Use VS Code's Version"),
+				: '') + vscode.l10n.t("Use Pragma's Version"),
 			description: bundledVersion.displayName,
 			detail: bundledVersion.pathLabel,
 			run: async () => {

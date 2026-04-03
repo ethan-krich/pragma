@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -327,8 +327,8 @@ suite('TextAreaState', () => {
 
 	test('Android composition input 1', () => {
 		testDeduceAndroidCompositionInput(
-			new TextAreaState('Microsoft', 4, 4, null, undefined),
-			'Microsoft',
+			new TextAreaState('Ethan Krich', 4, 4, null, undefined),
+			'Ethan Krich',
 			4, 4,
 			'', 0, 0, 0,
 		);
@@ -336,8 +336,8 @@ suite('TextAreaState', () => {
 
 	test('Android composition input 2', () => {
 		testDeduceAndroidCompositionInput(
-			new TextAreaState('Microsoft', 4, 4, null, undefined),
-			'Microsoft',
+			new TextAreaState('Ethan Krich', 4, 4, null, undefined),
+			'Ethan Krich',
 			0, 9,
 			'', 0, 0, 5,
 		);
@@ -345,8 +345,8 @@ suite('TextAreaState', () => {
 
 	test('Android composition input 3', () => {
 		testDeduceAndroidCompositionInput(
-			new TextAreaState('Microsoft', 0, 9, null, undefined),
-			'Microsoft\'s',
+			new TextAreaState('Ethan Krich', 0, 9, null, undefined),
+			'Ethan Krich\'s',
 			11, 11,
 			'\'s', 0, 0, 0,
 		);

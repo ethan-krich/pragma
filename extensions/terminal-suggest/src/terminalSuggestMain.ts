@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -11,9 +11,6 @@ import azdSpec from './completions/azd';
 import cdSpec from './completions/cd';
 import codeCompletionSpec from './completions/code';
 import codeInsidersCompletionSpec from './completions/code-insiders';
-import codeTunnelCompletionSpec from './completions/code-tunnel';
-import codeTunnelInsidersCompletionSpec from './completions/code-tunnel-insiders';
-import copilotSpec from './completions/copilot';
 import gitCompletionSpec from './completions/git';
 import ghCompletionSpec from './completions/gh';
 import npmCompletionSpec from './completions/npm';
@@ -67,9 +64,6 @@ export const availableSpecs: Fig.Spec[] = [
 	cdSpec,
 	codeInsidersCompletionSpec,
 	codeCompletionSpec,
-	codeTunnelCompletionSpec,
-	codeTunnelInsidersCompletionSpec,
-	copilotSpec,
 	gitCompletionSpec,
 	ghCompletionSpec,
 	npmCompletionSpec,

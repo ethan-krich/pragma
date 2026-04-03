@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -866,7 +866,7 @@ export class CodeCellLayout {
 		const editor = this.templateData.editor;
 		const editorLayout = this.templateData.editor.getLayoutInfo();
 		// If we've already initialized once, we should use the viewCell layout info for editor width.
-		// E.g. when resizing VS Code window or notebook editor (horizontal space changes).
+		// E.g. when resizing Pragma window or notebook editor (horizontal space changes).
 		const editorWidth = this._initialized && (reason === 'nbLayoutChange' || reason === 'viewCellLayoutChange') ? this.viewCell.layoutInfo.editorWidth : editorLayout.width;
 		const editorHeight = this.viewCell.layoutInfo.editorHeight;
 		const scrollTop = this.notebookEditor.scrollTop;

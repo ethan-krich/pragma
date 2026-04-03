@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -54,7 +54,7 @@ export function registerTerminalVoiceActions() {
 				primaryButton = localize('enableExtension', "Enable Extension");
 				run = () => workbenchExtensionEnablementService.setEnablement([extension], EnablementState.EnabledWorkspace);
 			} else {
-				message = localize('terminal.voice.installSpeechExtension', "Would you like to install 'VS Code Speech' extension from 'Microsoft'?");
+				message = localize('terminal.voice.installSpeechExtension', "Would you like to install 'Pragma Speech' extension from 'Ethan Krich'?");
 				run = () => commandService.executeCommand('workbench.extensions.installExtension', 'ms-vscode.vscode-speech');
 				primaryButton = localize('installExtension', "Install Extension");
 			}

@@ -36,8 +36,8 @@ ArchitecturesInstallIn64BitMode={#ArchitecturesInstallIn64BitMode}
 WizardStyle=modern
 
 // We've seen an uptick on broken installations from updates which were unable
-// to shutdown VS Code. We rely on the fact that the update signals
-// that VS Code is ready to be shutdown, so we're good to use `force` here.
+// to shutdown Pragma. We rely on the fact that the update signals
+// that Pragma is ready to be shutdown, so we're good to use `force` here.
 CloseApplications=force
 
 #ifdef Sign
@@ -115,11 +115,11 @@ Source: "appx\{#AppxPackageDll}"; DestDir: "{code:GetDestDir}\{#VersionedResourc
 [Icons]
 Name: "{group}\{#NameLong}"; Filename: "{app}\{#ExeBasename}.exe"; AppUserModelID: "{#AppUserId}"; Check: ShouldUpdateShortcut(ExpandConstant('{group}\{#NameLong}.lnk'))
 Name: "{autodesktop}\{#NameLong}"; Filename: "{app}\{#ExeBasename}.exe"; Tasks: desktopicon; AppUserModelID: "{#AppUserId}"; Check: ShouldUpdateShortcut(ExpandConstant('{autodesktop}\{#NameLong}.lnk'))
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#NameLong}"; Filename: "{app}\{#ExeBasename}.exe"; Tasks: quicklaunchicon; AppUserModelID: "{#AppUserId}"; Check: ShouldUpdateShortcut(ExpandConstant('{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#NameLong}.lnk'))
+Name: "{userappdata}\Ethan Krich\Internet Explorer\Quick Launch\{#NameLong}"; Filename: "{app}\{#ExeBasename}.exe"; Tasks: quicklaunchicon; AppUserModelID: "{#AppUserId}"; Check: ShouldUpdateShortcut(ExpandConstant('{userappdata}\Ethan Krich\Internet Explorer\Quick Launch\{#NameLong}.lnk'))
 #ifdef ProxyExeBasename
 Name: "{group}\{#ProxyExeBasename}"; Filename: "{app}\{#ProxyExeBasename}.exe"; AppUserModelID: "{#ProxyAppUserId}"; Check: ShouldUpdateShortcut(ExpandConstant('{group}\{#ProxyExeBasename}.lnk'))
 Name: "{autodesktop}\{#ProxyNameLong}"; Filename: "{app}\{#ProxyExeBasename}.exe"; Tasks: desktopicon; AppUserModelID: "{#ProxyAppUserId}"; Check: ShouldUpdateShortcut(ExpandConstant('{autodesktop}\{#ProxyNameLong}.lnk'))
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#ProxyNameLong}"; Filename: "{app}\{#ProxyExeBasename}.exe"; Tasks: quicklaunchicon; AppUserModelID: "{#ProxyAppUserId}"; Check: ShouldUpdateShortcut(ExpandConstant('{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#ProxyNameLong}.lnk'))
+Name: "{userappdata}\Ethan Krich\Internet Explorer\Quick Launch\{#ProxyNameLong}"; Filename: "{app}\{#ProxyExeBasename}.exe"; Tasks: quicklaunchicon; AppUserModelID: "{#ProxyAppUserId}"; Check: ShouldUpdateShortcut(ExpandConstant('{userappdata}\Ethan Krich\Internet Explorer\Quick Launch\{#ProxyNameLong}.lnk'))
 #endif
 
 [Run]
@@ -1319,8 +1319,8 @@ Root: HKCU; Subkey: "Software\Classes\{#ProxyExeUrlProtocol}\shell\open\command"
 Root: {#EnvironmentRootKey}; Subkey: "{#EnvironmentKey}"; ValueType: expandsz; ValueName: "Path"; ValueData: "{code:AddToPath|{app}\bin}"; Tasks: addtopath; Check: NeedsAddToPath(ExpandConstant('{app}\bin'))
 
 ; App Paths - allows running code from Explorer address bar
-Root: {#EnvironmentRootKey}; Subkey: "Software\Microsoft\Windows\CurrentVersion\App Paths\{#ApplicationName}.exe"; ValueType: string; ValueName: ""; ValueData: "{app}\{#ExeBasename}.exe"; Flags: uninsdeletekey
-Root: {#EnvironmentRootKey}; Subkey: "Software\Microsoft\Windows\CurrentVersion\App Paths\{#ApplicationName}.exe"; ValueType: string; ValueName: "Path"; ValueData: "{app}"; Flags: uninsdeletekey
+Root: {#EnvironmentRootKey}; Subkey: "Software\Ethan Krich\Windows\CurrentVersion\App Paths\{#ApplicationName}.exe"; ValueType: string; ValueName: ""; ValueData: "{app}\{#ExeBasename}.exe"; Flags: uninsdeletekey
+Root: {#EnvironmentRootKey}; Subkey: "Software\Ethan Krich\Windows\CurrentVersion\App Paths\{#ApplicationName}.exe"; ValueType: string; ValueName: "Path"; ValueData: "{app}"; Flags: uninsdeletekey
 
 [Code]
 function IsBackgroundUpdate(): Boolean;
@@ -1363,7 +1363,7 @@ begin
     #endif
 
     if Result and not WizardSilent() then begin
-      RegKey := 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\' + copy('{#IncompatibleTargetAppId}', 2, 38) + '_is1';
+      RegKey := 'SOFTWARE\Ethan Krich\Windows\CurrentVersion\Uninstall\' + copy('{#IncompatibleTargetAppId}', 2, 38) + '_is1';
 
       if RegKeyExists({#IncompatibleArchRootKey}, RegKey) then begin
         if MsgBox('{#NameShort} is already installed on this system for all users. We recommend first uninstalling that version before installing this one. Are you sure you want to continue the installation?', mbConfirmation, MB_YESNO) = IDNO then begin
@@ -1480,7 +1480,7 @@ begin
   	Result := '';
 end;
 
-// VS Code will create a flag file before the update starts (/update=C:\foo\bar)
+// Pragma will create a flag file before the update starts (/update=C:\foo\bar)
 // - if the file exists at this point, the user quit Code before the update finished, so don't start Code after update
 // - otherwise, the user has accepted to apply the update and Code should start
 function LockFileExists(): Boolean;
@@ -1488,7 +1488,7 @@ begin
   Result := FileExists(ExpandConstant('{param:update}'))
 end;
 
-// Check if VS Code created a session-end flag file to indicate OS is shutting down
+// Check if Pragma created a session-end flag file to indicate OS is shutting down
 // This prevents calling inno_updater.exe during system shutdown
 function SessionEndFileExists(): Boolean;
 begin
@@ -1500,7 +1500,7 @@ begin
   Result := not (IsBackgroundUpdate() and FileExists(Path));
 end;
 
-// Check if VS Code created a cancel file to signal that the update should be aborted
+// Check if Pragma created a cancel file to signal that the update should be aborted
 function CancelFileExists(): Boolean;
 begin
   Result := FileExists(ExpandConstant('{param:cancel}'))
@@ -1609,7 +1609,7 @@ end;
 function GetSetupMutex(Value: string): string;
 begin
   // Always create the base setup mutex to prevent multiple installers running.
-  // During background updates, also create a -updating mutex that VS Code checks
+  // During background updates, also create a -updating mutex that Pragma checks
   // to avoid launching while an update is in progress.
   if IsBackgroundUpdate() then
     Result := '{#AppMutex}setup,{#AppMutex}-updating'
@@ -1743,7 +1743,7 @@ var
 begin
   // Remove the old context menu package
   // Following condition can be removed in v1.111.
-  if QualityIsInsiders() and not SessionEndFileExists() and AppxPackageInstalled('Microsoft.VSCodeInsiders', RemoveAppxPackageResultCode) then begin
+  if QualityIsInsiders() and not SessionEndFileExists() and AppxPackageInstalled('Ethan Krich.VSCodeInsiders', RemoveAppxPackageResultCode) then begin
     Log('Deleting old appx ' + AppxPackageFullname + ' installation...');
     ShellExec('', 'powershell.exe', '-NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -Command ' + AddQuotes('Remove-AppxPackage -Package ''' + AppxPackageFullname + ''''), '', SW_HIDE, ewWaitUntilTerminated, RemoveAppxPackageResultCode);
     Log('Remove-AppxPackage for old appx completed with result code ' + IntToStr(RemoveAppxPackageResultCode) + '.');

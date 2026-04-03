@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -911,7 +911,7 @@ suite('PromptInputModel', () => {
 			test('input with ignored ghost text', async () => {
 				return runWithFakedTimers({}, async () => {
 					await replayEvents([
-						'[?25l[2J[m[H]0;C:\\Program Files\\WindowsApps\\Microsoft.PowerShell_7.4.2.0_x64__8wekyb3d8bbwe\\pwsh.exe[?25h',
+						'[?25l[2J[m[H]0;C:\\Program Files\\WindowsApps\\Ethan Krich.PowerShell_7.4.2.0_x64__8wekyb3d8bbwe\\pwsh.exe[?25h',
 						'[?25l[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K[H[?25h',
 						']633;P;IsWindows=True',
 						']633;P;ContinuationPrompt=\x1b[38\x3b5\x3b8m∙\x1b[0m ',
@@ -935,7 +935,7 @@ suite('PromptInputModel', () => {
 			test('input with accepted and run ghost text', async () => {
 				return runWithFakedTimers({}, async () => {
 					await replayEvents([
-						'[?25l[2J[m[H]0;C:\\Program Files\\WindowsApps\\Microsoft.PowerShell_7.4.2.0_x64__8wekyb3d8bbwe\\pwsh.exe[?25h',
+						'[?25l[2J[m[H]0;C:\\Program Files\\WindowsApps\\Ethan Krich.PowerShell_7.4.2.0_x64__8wekyb3d8bbwe\\pwsh.exe[?25h',
 						'[?25l[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K[H[?25h',
 						']633;P;IsWindows=True',
 						']633;P;ContinuationPrompt=\x1b[38\x3b5\x3b8m∙\x1b[0m ',
@@ -1006,7 +1006,7 @@ suite('PromptInputModel', () => {
 			test('input, go to start (ctrl+home), delete word in front (ctrl+delete)', async () => {
 				return runWithFakedTimers({}, async () => {
 					await replayEvents([
-						'[?25l[2J[m[H]0;C:\Program Files\WindowsApps\Microsoft.PowerShell_7.4.2.0_x64__8wekyb3d8bbwe\pwsh.exe[?25h',
+						'[?25l[2J[m[H]0;C:\Program Files\WindowsApps\Ethan Krich.PowerShell_7.4.2.0_x64__8wekyb3d8bbwe\pwsh.exe[?25h',
 						'[?25l[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K\r\n[K[H[?25h',
 						']633;P;IsWindows=True',
 						']633;P;ContinuationPrompt=\x1b[38\x3b5\x3b8m∙\x1b[0m ',

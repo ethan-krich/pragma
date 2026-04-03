@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -150,7 +150,7 @@ export class McpSandboxService extends Disposable implements IMcpSandboxService 
 		return {
 			message: localize(
 				'mcpSandboxSuggestion.message',
-				"The MCP server {0} reported potential sandbox blocks. VS Code found possible sandbox configuration updates:\n{1}",
+				"The MCP server {0} reported potential sandbox blocks. Pragma found possible sandbox configuration updates:\n{1}",
 				serverLabel,
 				suggestionLines.join('\n')
 			),

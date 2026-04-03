@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -623,10 +623,10 @@ export class ReleaseNotesManager extends Disposable {
  * ```
  *
  * Supported conditions:
- * - `IN_PRODUCT` - Content shown in VS Code (both Stable and Insiders)
+ * - `IN_PRODUCT` - Content shown in Pragma (both Stable and Insiders)
  * - `WEB` - Content shown on the website only
- * - `STABLE` - Content shown in VS Code Stable only
- * - `INSIDERS` - Content shown in VS Code Insiders only
+ * - `STABLE` - Content shown in Pragma Stable only
+ * - `INSIDERS` - Content shown in Pragma Insiders only
  *
  * On the website, the entire block is a single HTML comment, so the
  * content is hidden by default. The website renderer would activate

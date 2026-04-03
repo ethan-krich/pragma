@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -29,7 +29,6 @@ import product from '../../product/common/product.js';
 import { IProductService } from '../../product/common/productService.js';
 import { InstantiationService } from '../../instantiation/common/instantiationService.js';
 import { ServiceCollection } from '../../instantiation/common/serviceCollection.js';
-import { CopilotAgent } from './copilot/copilotAgent.js';
 import { AgentService } from './agentService.js';
 import { WebSocketProtocolServer } from './webSocketTransport.js';
 import { ProtocolServerHandler } from './protocolServerHandler.js';
@@ -124,6 +123,7 @@ async function main(): Promise<void> {
 
 	// Services
 	const productService: IProductService = { _serviceBrand: undefined, ...product };
+	const hasCopilotAgent = Boolean(productService.defaultChatAgent?.chatExtensionId);
 	const args = parseArgs(process.argv.slice(2), OPTIONS);
 	const environmentService = new NativeEnvironmentService(args, productService);
 
@@ -158,7 +158,7 @@ async function main(): Promise<void> {
 	disposables.add(agentService);
 
 	// Register agents
-	if (!options.quiet) {
+	if (!options.quiet && hasCopilotAgent) {
 		// Production agents (require DI)
 		const diServices = new ServiceCollection();
 		const pluginManager = new AgentPluginManager(URI.file(environmentService.userDataPath), fileService, logService);
@@ -169,9 +169,12 @@ async function main(): Promise<void> {
 		diServices.set(ISessionDataService, sessionDataService);
 		diServices.set(IAgentPluginManager, pluginManager);
 		const instantiationService = new InstantiationService(diServices);
+		const { CopilotAgent } = await import('./copilot/copilotAgent.js');
 		const copilotAgent = disposables.add(instantiationService.createInstance(CopilotAgent));
 		agentService.registerProvider(copilotAgent);
 		log('CopilotAgent registered');
+	} else if (!hasCopilotAgent) {
+		log('Copilot agent provider disabled by product configuration');
 	}
 
 	if (options.enableMockAgent) {

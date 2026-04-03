@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -361,7 +361,7 @@ class ExtHostPseudoterminal implements ITerminalChildProcess {
 
 	acknowledgeDataEvent(charCount: number): void {
 		// No-op, flow control is not supported in extension owned terminals. If this is ever
-		// implemented it will need new pause and resume VS Code APIs.
+		// implemented it will need new pause and resume Pragma APIs.
 	}
 
 	async setUnicodeVersion(version: '6' | '11'): Promise<void> {

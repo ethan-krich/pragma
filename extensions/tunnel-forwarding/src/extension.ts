@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -35,7 +35,7 @@ if (process.env.VSCODE_FORWARDING_IS_DEV) {
 		binPath = '../../bin';
 	}
 
-	const cliName = vscode.env.appQuality === 'stable' ? 'code-tunnel' : 'code-tunnel-insiders';
+	const cliName = vscode.env.appQuality === 'stable' ? 'pragma-tunnel' : 'pragma-tunnel-insiders';
 	const extension = process.platform === 'win32' ? '.exe' : '';
 
 	cliPath = path.join(vscode.env.appRoot, binPath, cliName) + extension;

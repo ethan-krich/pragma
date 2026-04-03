@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -2578,16 +2578,16 @@ For more information about output formatting flags, see 'gh help formatting'`,
 			subcommands: [
 				{
 					name: "code",
-					description: "Open a codespace in Visual Studio Code",
+					description: "Open a codespace in Pragma",
 					options: [
 						codespaceOption,
 						{
 							name: "--insiders",
-							description: "Use the insiders version of Visual Studio Code",
+							description: "Use the insiders version of Pragma",
 						},
 						{
 							name: ["-w", "--web"],
-							description: "Use the web version of Visual Studio Code",
+							description: "Use the web version of Pragma",
 						},
 					],
 				},

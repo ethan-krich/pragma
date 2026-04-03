@@ -18,10 +18,10 @@ AutoReq:  0
 %global __brp_strip_comment_note %{nil}
 
 %description
-Pragma is a Pragma-branded code editor with Open VSX extension discovery and Microsoft-hosted sync and telemetry disabled by default.
+Pragma is a Pragma-branded code editor with Open VSX extension discovery and Ethan Krich-hosted sync and telemetry disabled by default.
 
 # Don't generate build_id links to prevent conflicts when installing multiple
-# versions of VS Code alongside each other (e.g. `code` and `code-insiders`)
+# versions of Pragma alongside each other (e.g. `code` and `code-insiders`)
 %define _build_id_links none
 %define __strip @@STRIP@@
 

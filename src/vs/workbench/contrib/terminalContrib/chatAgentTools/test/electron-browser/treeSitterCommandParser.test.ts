@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -355,7 +355,7 @@ suite('TreeSitterCommandParser', () => {
 				test('backup script with logging', () => t('Copy-Item -Path "source/*" -Destination "backup/" -Recurse > backup.log 2> backup_errors.log', ['backup.log', 'backup_errors.log']));
 				test('system information export', () => t('Get-ComputerInfo | Out-String > system_info.txt', ['system_info.txt']));
 				test('service status report', () => t('Get-Service | Where-Object {$_.Status -eq "Running"} | Select-Object Name, Status > running_services.csv', ['running_services.csv']));
-				test('registry export', () => t('Get-ItemProperty -Path "HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion" > registry_info.txt', ['registry_info.txt']));
+				test('registry export', () => t('Get-ItemProperty -Path "HKLM:\\Software\\Ethan Krich\\Windows\\CurrentVersion" > registry_info.txt', ['registry_info.txt']));
 				test('process monitoring', () => t('while ($true) { Get-Process | Measure-Object WorkingSet -Sum >> memory_usage.log; Start-Sleep 60 }', ['memory_usage.log']));
 			});
 		});

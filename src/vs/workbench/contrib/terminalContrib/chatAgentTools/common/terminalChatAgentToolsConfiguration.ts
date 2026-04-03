@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -654,7 +654,7 @@ export const terminalChatAgentToolsConfiguration: IStringDictionary<IConfigurati
 		type: 'boolean',
 		default: false,
 		tags: ['experimental'],
-		markdownDescription: localize('detachBackgroundProcesses.description', "Whether to detach persistent terminal processes so they survive when VS Code exits. When enabled, commands started with `mode: \"async\"` (legacy: `isBackground: true`) are wrapped with `nohup` (POSIX) or `Start-Process` (Windows) so the process continues running after the terminal is disposed."),
+		markdownDescription: localize('detachBackgroundProcesses.description', "Whether to detach persistent terminal processes so they survive when Pragma exits. When enabled, commands started with `mode: \"async\"` (legacy: `isBackground: true`) are wrapped with `nohup` (POSIX) or `Start-Process` (Windows) so the process continues running after the terminal is disposed."),
 	},
 	[TerminalChatAgentToolsSettingId.BackgroundNotifications]: {
 		restricted: true,

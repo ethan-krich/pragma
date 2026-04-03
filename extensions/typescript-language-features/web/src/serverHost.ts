@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -363,7 +363,7 @@ function createServerHost(
 
 		const isNm = looksLikeNodeModules(path)
 			&& !path.startsWith('/vscode-global-typings/')
-			// Handle the case where a local folder has been opened in VS Code
+			// Handle the case where a local folder has been opened in Pragma
 			// In these cases we do not want to use the mapped node_module
 			&& !path.startsWith('/file/');
 

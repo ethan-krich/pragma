@@ -13,5 +13,5 @@ Conflicts: visual-studio-@@NAME@@
 Replaces: visual-studio-@@NAME@@
 Description: Pragma code editor
  Pragma is a Pragma-branded code editor.
- It uses Open VSX for extension discovery and disables Microsoft-hosted
+ It uses Open VSX for extension discovery and disables Ethan Krich-hosted
  sync and telemetry by default.

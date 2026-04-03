@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -52,8 +52,8 @@ function registerVariableCompletions(pattern: string): vscode.Disposable {
 				}
 
 				return [
-					{ label: 'workspaceFolder', detail: vscode.l10n.t("The path of the folder opened in VS Code") },
-					{ label: 'workspaceFolderBasename', detail: vscode.l10n.t("The name of the folder opened in VS Code without any slashes (/)") },
+					{ label: 'workspaceFolder', detail: vscode.l10n.t("The path of the folder opened in Pragma") },
+					{ label: 'workspaceFolderBasename', detail: vscode.l10n.t("The name of the folder opened in Pragma without any slashes (/)") },
 					{ label: 'fileWorkspaceFolderBasename', detail: vscode.l10n.t("The current opened file workspace folder name without any slashes (/)") },
 					{ label: 'relativeFile', detail: vscode.l10n.t("The current opened file relative to ${workspaceFolder}") },
 					{ label: 'relativeFileDirname', detail: vscode.l10n.t("The current opened file's dirname relative to ${workspaceFolder}") },

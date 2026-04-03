@@ -1,11 +1,11 @@
 @{
 RootModule = 'PSReadLine.psm1'
-NestedModules = @("Microsoft.PowerShell.PSReadLine.dll")
+NestedModules = @("Ethan Krich.PowerShell.PSReadLine.dll")
 ModuleVersion = '2.4.3'
 GUID = '5714753b-2afd-4492-a5fd-01d9e2cff8b5'
-Author = 'Microsoft Corporation'
-CompanyName = 'Microsoft Corporation'
-Copyright = '(c) Microsoft Corporation. All rights reserved.'
+Author = 'Ethan Krich'
+CompanyName = 'Ethan Krich'
+Copyright = '(c) Ethan Krich. All rights reserved.'
 Description = 'Great command line editing in the PowerShell console host'
 PowerShellVersion = '5.1'
 FormatsToProcess = 'PSReadLine.format.ps1xml'

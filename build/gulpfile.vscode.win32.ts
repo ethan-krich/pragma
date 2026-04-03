@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import assert from 'assert';
@@ -118,9 +118,9 @@ function buildWin32Setup(arch: string, target: string): task.CallbackTask {
 			: undefined;
 
 		if (embedded) {
-			// VS Code's sibling is the embedded app.
+			// Pragma's sibling is the embedded app.
 			productJson['win32SiblingExeBasename'] = embedded.nameShort;
-			// The embedded app's sibling is VS Code.
+			// The embedded app's sibling is Pragma.
 			if (productJson['embedded']) {
 				productJson['embedded']['win32SiblingExeBasename'] = product.nameShort;
 			}

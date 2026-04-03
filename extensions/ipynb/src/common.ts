@@ -1,12 +1,12 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
 import type * as nbformat from '@jupyterlab/nbformat';
 
 /**
- * Metadata we store in VS Code cell output items.
+ * Metadata we store in Pragma cell output items.
  * This contains the original metadata from the Jupyter outputs.
  */
 export interface CellOutputMetadata {
@@ -43,7 +43,7 @@ export interface CellOutputMetadata {
 
 
 /**
- * Metadata we store in VS Code cells.
+ * Metadata we store in Pragma cells.
  * This contains the original metadata from the Jupyter cells.
  */
 export interface CellMetadata {

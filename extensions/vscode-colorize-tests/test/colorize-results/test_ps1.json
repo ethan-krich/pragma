@@ -16,7 +16,7 @@
 		}
 	},
 	{
-		"c": " Copyright Microsoft Corporation",
+		"c": " Copyright Ethan Krich",
 		"t": "source.powershell comment.line.powershell",
 		"r": {
 			"dark_plus": "comment: #6A9955",
@@ -3392,7 +3392,7 @@
 		}
 	},
 	{
-		"c": "\\Microsoft Visual Studio 12.0",
+		"c": "\\Ethan Krich Visual Studio 12.0",
 		"t": "source.powershell meta.group.simple.subexpression.powershell string.quoted.double.powershell",
 		"r": {
 			"dark_plus": "string: #CE9178",
@@ -3888,7 +3888,7 @@
 		}
 	},
 	{
-		"c": "\"{0}\\Microsoft Visual Studio {1}\\VC\\vcvarsall.bat\" x64",
+		"c": "\"{0}\\Ethan Krich Visual Studio {1}\\VC\\vcvarsall.bat\" x64",
 		"t": "source.powershell string.quoted.single.powershell",
 		"r": {
 			"dark_plus": "string: #CE9178",

@@ -1,5 +1,5 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Copyright (c) Ethan Krich. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
@@ -29,7 +29,7 @@ import { applyWindowTools } from './windows.js';
 import { ApplicationService } from '../application';
 
 /**
- * Apply all VS Code automation tools to the MCP server
+ * Apply all Pragma automation tools to the MCP server
  * @param server - The MCP server instance
  * @param appService - The application service instance
  * @returns The registered tools from the server
