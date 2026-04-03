@@ -9,6 +9,7 @@ import { RunOnceScheduler } from '../../../../base/common/async.js';
 import { Codicon } from '../../../../base/common/codicons.js';
 import { onUnexpectedError } from '../../../../base/common/errors.js';
 import { Disposable } from '../../../../base/common/lifecycle.js';
+import { Event } from '../../../../base/common/event.js';
 import { URI } from '../../../../base/common/uri.js';
 import { localize, localize2 } from '../../../../nls.js';
 import { Action2, MenuId, registerAction2 } from '../../../../platform/actions/common/actions.js';
@@ -105,6 +106,11 @@ class ProjectCanvasRunnerContribution extends Disposable implements IWorkbenchCo
 	private registerListeners(): void {
 		this._register(this.workspaceContextService.onDidChangeWorkbenchState(() => this.scheduleEnsureProjectCanvas()));
 		this._register(this.editorService.onDidVisibleEditorsChange(() => this.scheduleEnsureProjectCanvas()));
+		this._register(Event.filter(this.contextKeyService.onDidChangeContext, e => e.affectsSome(new Set([AuxiliaryBarMaximizedContext.key])))(() => {
+			if (!AuxiliaryBarMaximizedContext.getValue(this.contextKeyService)) {
+				this.scheduleEnsureProjectCanvas();
+			}
+		}));
 	}
 
 	private scheduleEnsureProjectCanvas(): void {
@@ -127,7 +133,7 @@ class ProjectCanvasRunnerContribution extends Disposable implements IWorkbenchCo
 			return;
 		}
 
-		await this.openProjectCanvas(this.projectCanvasService.consumePendingCanvasOpenRequest() ? 'command' : 'startup');
+		await this.openProjectCanvas(await this.projectCanvasService.consumePendingCanvasOpenRequest() ? 'command' : 'startup');
 	}
 
 	private async openProjectCanvas(initiator: 'startup' | 'command'): Promise<void> {
@@ -157,6 +163,7 @@ class ProjectCanvasEmptyWorkbenchContribution extends Disposable implements IWor
 
 	constructor(
 		@IContextKeyService contextKeyService: IContextKeyService,
+		@IEditorService private readonly editorService: IEditorService,
 		@IWorkbenchLayoutService private readonly layoutService: IWorkbenchLayoutService,
 		@IWorkspaceContextService private readonly workspaceContextService: IWorkspaceContextService,
 	) {
@@ -166,10 +173,14 @@ class ProjectCanvasEmptyWorkbenchContribution extends Disposable implements IWor
 		this.update();
 
 		this._register(this.workspaceContextService.onDidChangeWorkbenchState(() => this.update()));
+		this._register(this.editorService.onDidActiveEditorChange(() => this.update()));
+		this._register(this.editorService.onDidVisibleEditorsChange(() => this.update()));
 	}
 
 	private update(): void {
-		const isEmptyWorkbench = this.workspaceContextService.getWorkbenchState() === WorkbenchState.EMPTY;
+		const hasNonCanvasEditors = this.editorService.visibleEditors.some(editor => !(editor instanceof ProjectCanvasInput))
+			|| (!!this.editorService.activeEditor && !(this.editorService.activeEditor instanceof ProjectCanvasInput));
+		const isEmptyWorkbench = this.workspaceContextService.getWorkbenchState() === WorkbenchState.EMPTY && !hasNonCanvasEditors;
 		this.emptyWorkbenchContext.set(isEmptyWorkbench);
 		this.layoutService.getContainer(mainWindow).classList.toggle('project-canvas-empty-workbench', isEmptyWorkbench);
 	}

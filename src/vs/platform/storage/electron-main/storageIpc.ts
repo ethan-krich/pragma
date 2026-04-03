@@ -113,6 +113,20 @@ export class StorageDatabaseChannel extends Disposable implements IServerChannel
 				return Array.from(storage.items.entries());
 			}
 
+			case 'consume': {
+				const key = arg.payload as string | undefined;
+				if (typeof key === 'string') {
+					const value = storage.get(key);
+					if (value !== undefined) {
+						storage.delete(key);
+					}
+
+					return value;
+				}
+
+				return undefined;
+			}
+
 			case 'updateItems': {
 				const items: ISerializableUpdateRequest = arg;
 

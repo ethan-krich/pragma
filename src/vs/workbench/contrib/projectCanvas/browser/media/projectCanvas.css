@@ -71,6 +71,7 @@
 	justify-content: center;
 	flex-wrap: wrap;
 	max-width: 1500px;
+	padding: 4px;
 	gap: 8px;
 }
 

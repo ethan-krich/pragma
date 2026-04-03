@@ -54,6 +54,7 @@ export class ProjectCanvasPage extends EditorPane {
 	static readonly ID = "projectCanvasPage";
 
 	private rootElement!: HTMLElement;
+	private openFolderButton!: HTMLButtonElement;
 	private projectsElement!: HTMLElement;
 	private projectsScrollableElement!: DomScrollableElement;
 	private emptyStateElement!: HTMLElement;
@@ -124,17 +125,17 @@ export class ProjectCanvasPage extends EditorPane {
 		);
 
 		const footerElement = append(contentElement, $(".project-canvas-footer"));
-		const openFolderButton = append(
+		this.openFolderButton = append(
 			footerElement,
 			$("button.project-canvas-open-folder", {
 				type: "button",
 			}),
-		);
-		openFolderButton.appendChild(renderIcon(Codicon.folderOpened));
-		append(openFolderButton, $("span", undefined, localize("openFolder", "Open Folder")));
+		) as HTMLButtonElement;
+		this.openFolderButton.appendChild(renderIcon(Codicon.folderOpened));
+		append(this.openFolderButton, $("span", undefined, localize("openFolder", "Open Folder")));
 
 		this._register(
-			addDisposableListener(openFolderButton, EventType.CLICK, (event) => {
+			addDisposableListener(this.openFolderButton, EventType.CLICK, (event) => {
 				EventHelper.stop(event, true);
 				this.commandService.executeCommand(ProjectCanvasCommandIds.AddProject);
 			}),
@@ -177,7 +178,7 @@ export class ProjectCanvasPage extends EditorPane {
 
 	override focus(): void {
 		super.focus();
-		this.rootElement.focus();
+		this.getPrimaryFocusableElement()?.focus();
 	}
 
 	override dispose(): void {
@@ -206,6 +207,10 @@ export class ProjectCanvasPage extends EditorPane {
 		}
 
 		this.projectsScrollableElement.scanDomNode();
+	}
+
+	private getPrimaryFocusableElement(): HTMLElement | undefined {
+		return this.projectsElement?.querySelector<HTMLElement>('.project-canvas-project') ?? this.openFolderButton;
 	}
 
 	private renderProjectTile(project: IProjectCanvasProject): HTMLElement {

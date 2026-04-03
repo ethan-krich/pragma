@@ -54,7 +54,7 @@ export interface IProjectCanvasService {
 	removeProject(resource: URI): void;
 	flagCanvasToOpenOnNextEmptyWindow(): void;
 	clearPendingCanvasOpenRequest(): void;
-	consumePendingCanvasOpenRequest(): boolean;
+	consumePendingCanvasOpenRequest(): Promise<boolean>;
 }
 
 export class ProjectCanvasService extends Disposable implements IProjectCanvasService {
@@ -130,13 +130,9 @@ export class ProjectCanvasService extends Disposable implements IProjectCanvasSe
 		this.storageService.remove(ProjectCanvasStorageKeys.OpenOnNextEmptyWindow, StorageScope.APPLICATION);
 	}
 
-	consumePendingCanvasOpenRequest(): boolean {
-		const shouldOpen = this.storageService.getBoolean(ProjectCanvasStorageKeys.OpenOnNextEmptyWindow, StorageScope.APPLICATION, false);
-		if (shouldOpen) {
-			this.clearPendingCanvasOpenRequest();
-		}
-
-		return shouldOpen;
+	async consumePendingCanvasOpenRequest(): Promise<boolean> {
+		const value = await this.storageService.consume(ProjectCanvasStorageKeys.OpenOnNextEmptyWindow, StorageScope.APPLICATION);
+		return value === 'true';
 	}
 
 	private trackCurrentWorkspace(): void {
