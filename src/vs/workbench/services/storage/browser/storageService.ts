@@ -377,6 +377,29 @@ export class IndexedDBStorageDatabase extends Disposable implements IIndexedDBSt
 		return db.getKeyValues<string>(IndexedDBStorageDatabase.STORAGE_OBJECT_STORE, isValid);
 	}
 
+	async consume(key: string): Promise<string | undefined> {
+		const db = await this.whenConnected;
+
+		let value: string | undefined;
+		await db.runInTransaction(IndexedDBStorageDatabase.STORAGE_OBJECT_STORE, 'readwrite', objectStore => {
+			const getRequest = objectStore.get(key);
+			getRequest.onsuccess = () => {
+				value = typeof getRequest.result === 'string' ? getRequest.result : undefined;
+				if (value !== undefined) {
+					objectStore.delete(key);
+				}
+			};
+
+			return getRequest;
+		});
+
+		if (this.broadcastChannel && value !== undefined) {
+			this.broadcastChannel.postData({ deleted: new Set([key]) });
+		}
+
+		return value;
+	}
+
 	async updateItems(request: IUpdateRequest): Promise<void> {
 
 		// Run the update

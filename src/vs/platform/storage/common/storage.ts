@@ -136,6 +136,11 @@ export interface IStorageService {
 	getObject<T extends object>(key: string, scope: StorageScope, fallbackValue?: T): T | undefined;
 
 	/**
+	 * Atomically retrieves and removes a value from storage.
+	 */
+	consume(key: string, scope: StorageScope): Promise<string | undefined>;
+
+	/**
 	 * Store a value under the given key to storage. The value will be
 	 * converted to a `string`. Storing either `undefined` or `null` will
 	 * remove the entry under the key.
@@ -445,6 +450,10 @@ export abstract class AbstractStorageService extends Disposable implements IStor
 	getObject(key: string, scope: StorageScope): object | undefined;
 	getObject(key: string, scope: StorageScope, fallbackValue?: object): object | undefined {
 		return this.getStorage(scope)?.getObject(key, fallbackValue);
+	}
+
+	consume(key: string, scope: StorageScope): Promise<string | undefined> {
+		return this.getStorage(scope)?.consume(key) ?? Promise.resolve(undefined);
 	}
 
 	storeAll(entries: Array<IStorageEntry>, external: boolean): void {

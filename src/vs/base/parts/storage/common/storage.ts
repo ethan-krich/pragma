@@ -47,6 +47,7 @@ export interface IStorageDatabase {
 	readonly onDidChangeItemsExternal: Event<IStorageItemsChangeEvent>;
 
 	getItems(): Promise<Map<string, string>>;
+	consume(key: string): Promise<string | undefined>;
 	updateItems(request: IUpdateRequest): Promise<void>;
 
 	optimize(): Promise<void>;
@@ -95,6 +96,7 @@ export interface IStorage extends IDisposable {
 	getObject<T extends object>(key: string, fallbackValue: T): T;
 	getObject<T extends object>(key: string, fallbackValue?: T): T | undefined;
 
+	consume(key: string): Promise<string | undefined>;
 	set(key: string, value: StorageValue, external?: boolean): Promise<void>;
 	delete(key: string, external?: boolean): Promise<void>;
 
@@ -261,6 +263,25 @@ export class Storage extends Disposable implements IStorage {
 		return parse(value);
 	}
 
+	async consume(key: string): Promise<string | undefined> {
+		if (this.state === StorageState.Closed) {
+			return undefined;
+		}
+
+		await this.flush(0);
+
+		const value = await this.database.consume(key);
+		const hadValue = this.cache.delete(key);
+
+		if (hadValue) {
+			this.pendingInserts.delete(key);
+			this.pendingDeletes.delete(key);
+			this._onDidChangeStorage.fire({ key });
+		}
+
+		return value;
+	}
+
 	async set(key: string, value: string | boolean | number | null | undefined | object, external = false): Promise<void> {
 		if (this.state === StorageState.Closed) {
 			return; // Return early if we are already closed
@@ -423,6 +444,15 @@ export class InMemoryStorageDatabase implements IStorageDatabase {
 
 	async getItems(): Promise<Map<string, string>> {
 		return this.items;
+	}
+
+	async consume(key: string): Promise<string | undefined> {
+		const value = this.items.get(key);
+		if (value !== undefined) {
+			this.items.delete(key);
+		}
+
+		return value;
 	}
 
 	async updateItems(request: IUpdateRequest): Promise<void> {

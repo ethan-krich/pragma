@@ -154,6 +154,10 @@ class NullStorageService implements IStorageService {
 		return fallbackValue;
 	}
 
+	consume(_key: string, _scope: StorageScope): Promise<string | undefined> {
+		return Promise.resolve(undefined);
+	}
+
 	store(_key: string, _value: string | boolean | number | undefined | null, _scope: StorageScope, _target: StorageTarget): void {
 		// no-op
 	}

@@ -68,6 +68,46 @@ export class SQLiteStorageDatabase implements IStorageDatabase {
 		return items;
 	}
 
+	async consume(key: string): Promise<string | undefined> {
+		const connection = await this.whenConnected;
+
+		if (this.logger.isTracing) {
+			this.logger.trace(`[storage ${this.name}] consume(${key})`);
+		}
+
+		return new Promise<string | undefined>((resolve, reject) => {
+			connection.db.serialize(() => {
+				connection.db.run('BEGIN TRANSACTION');
+
+				connection.db.get('SELECT value FROM ItemTable WHERE key = ?', [key], (selectError, row: { value: string } | undefined): void => {
+					if (selectError) {
+						this.handleSQLiteError(connection, `[storage ${this.name}] consume(): ${selectError}`);
+						connection.db.run('ROLLBACK', () => reject(selectError));
+						return;
+					}
+
+					connection.db.run('DELETE FROM ItemTable WHERE key = ?', [key], (deleteError): void => {
+						if (deleteError) {
+							this.handleSQLiteError(connection, `[storage ${this.name}] consume(): ${deleteError}`);
+							connection.db.run('ROLLBACK', () => reject(deleteError));
+							return;
+						}
+
+						connection.db.run('END TRANSACTION', (endError): void => {
+							if (endError) {
+								this.handleSQLiteError(connection, `[storage ${this.name}] consume(): ${endError}`);
+								reject(endError);
+								return;
+							}
+
+							resolve(row?.value);
+						});
+					});
+				});
+			});
+		});
+	}
+
 	async updateItems(request: IUpdateRequest): Promise<void> {
 		const connection = await this.whenConnected;
 

@@ -40,6 +40,7 @@ export const HasWebFileSystemAccess = new RawContextKey<boolean>('hasWebFileSyst
 export const EmbedderIdentifierContext = new RawContextKey<string | undefined>('embedderIdentifier', undefined, localize('embedderIdentifier', 'The identifier of the embedder according to the product service, if one is defined'));
 
 export const InAutomationContext = new RawContextKey<boolean>('inAutomation', false, localize('inAutomation', "Whether Pragma is running under automation/smoke test"));
+export const ProjectCanvasEmptyWorkbenchContext = new RawContextKey<boolean>('projectCanvasEmptyWorkbench', false, localize('projectCanvasEmptyWorkbench', "Whether the window is showing the empty-workbench project canvas."));
 
 //#endregion
 
