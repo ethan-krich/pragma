@@ -14,7 +14,7 @@ import { createDecorator } from '../../../../platform/instantiation/common/insta
 import { InstantiationType, registerSingleton } from '../../../../platform/instantiation/common/extensions.js';
 import { IStorageService, StorageScope, StorageTarget } from '../../../../platform/storage/common/storage.js';
 import { IWorkspaceTrustManagementService } from '../../../../platform/workspace/common/workspaceTrust.js';
-import { IGitRepository, IGitService } from '../../git/common/gitService.js';
+import { GitRepositoryState, IGitRepository, IGitService } from '../../git/common/gitService.js';
 import { ICreateWorktreeResult, IGitBranchBaseInfo, IGitWorktreeInfo, IWorktreeBranchContext, IWorktreeBranchEntry, WorktreeManagerError, WorktreeManagerErrorCode } from './worktreeManagerTypes.js';
 
 export interface IMergeWorktreeIntoBaseOptions {
@@ -177,6 +177,7 @@ export class WorktreeManagerService extends Disposable implements IWorktreeManag
 
 		const currentRepository = await this.gitService.openRepository(currentRoot) ?? context.repository;
 		const gitState = currentRepository.state.get();
+		const canonicalGitState = context.repository.state.get();
 		const canStageAll = gitState.workingTreeChanges.length > 0 || gitState.untrackedChanges.length > 0 || gitState.mergeChanges.length > 0;
 		const canCommit = canStageAll || gitState.indexChanges.length > 0;
 		const hasUpstream = !!gitState.HEAD?.upstream;
@@ -187,22 +188,22 @@ export class WorktreeManagerService extends Disposable implements IWorktreeManag
 				return undefined;
 			}
 
-			return {
-				canonicalRoot: context.canonicalRoot,
-				currentRoot,
-				currentBranch,
-				visibleBranch,
-				isManagedWorktree: true,
-				linkedWorktreePath: currentRoot,
-				hasLinkedWorktree: true,
-				isLinkedWorktreeMerged: false,
-				canStageAll,
-				canCommit,
-				canMerge: !canCommit,
-				canPush: false,
-				canRecreate: false,
-				hasUpstream,
-			};
+				return {
+					canonicalRoot: context.canonicalRoot,
+					currentRoot,
+					currentBranch,
+					visibleBranch,
+					isManagedWorktree: true,
+					linkedWorktreePath: currentRoot,
+					hasLinkedWorktree: true,
+					isLinkedWorktreeMerged: false,
+					canStageAll,
+					canCommit,
+					canMerge: !canCommit && !this.hasRepositoryChanges(canonicalGitState),
+					canPush: false,
+					canRecreate: false,
+					hasUpstream,
+				};
 		}
 
 		if (this.isDirectNavigationBranch(currentBranch)) {
@@ -349,7 +350,16 @@ export class WorktreeManagerService extends Disposable implements IWorktreeManag
 		}
 
 		const currentBranch = await this.getCurrentBranch(context.canonicalRoot.fsPath);
+		const canonicalRepository = await this.gitService.openRepository(context.canonicalRoot) ?? context.repository;
+		if (this.hasRepositoryChanges(canonicalRepository.state.get())) {
+			throw new WorktreeManagerError(
+				WorktreeManagerErrorCode.DirtyTargetBranch,
+				localize('worktreeManager.targetBranchDirty', "The currently checked out branch at \"{0}\" has uncommitted changes. Clean it up before merging the worktree.", context.canonicalRoot.fsPath),
+			);
+		}
+
 		if (currentBranch !== visibleBranch) {
+
 			await this.commandService.executeCommand('_git.checkout', context.canonicalRoot.fsPath, visibleBranch);
 		}
 
@@ -449,6 +459,13 @@ export class WorktreeManagerService extends Disposable implements IWorktreeManag
 		} catch {
 			return false;
 		}
+	}
+
+	private hasRepositoryChanges(state: GitRepositoryState): boolean {
+		return state.mergeChanges.length > 0 ||
+			state.indexChanges.length > 0 ||
+			state.workingTreeChanges.length > 0 ||
+			state.untrackedChanges.length > 0;
 	}
 
 	private getVisibleBaseBranch(baseInfo: IGitBranchBaseInfo | undefined): string | undefined {

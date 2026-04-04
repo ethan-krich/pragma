@@ -207,14 +207,17 @@ suite('WorktreeManagerService', () => {
 		readonly branchBases?: Readonly<Record<string, IGitBranchBaseInfo | undefined>>;
 		readonly revListCounts?: Readonly<Record<string, number>>;
 		readonly repositoryState?: GitRepositoryState;
+		readonly repositoryStatesByPath?: Readonly<Record<string, GitRepositoryState | undefined>>;
 		readonly currentBranch?: string;
+		readonly currentBranchesByPath?: Readonly<Record<string, string | undefined>>;
 		readonly createWorktreeResult?: { readonly path: string; readonly branch: string; readonly commitish: string };
 		readonly accessibleRepositories?: readonly URI[];
 		readonly trustedUris?: readonly URI[];
 	}): { readonly service: WorktreeManagerService; readonly commandService: TestCommandService } {
 		const repository = new TestGitRepository(projectRoot, options.refs.map(createHeadRef));
-		if (options.repositoryState) {
-			repository.updateState(options.repositoryState);
+		const projectRepositoryState = options.repositoryStatesByPath?.[projectRoot.fsPath] ?? options.repositoryState;
+		if (projectRepositoryState) {
+			repository.updateState(projectRepositoryState);
 		}
 		gitService.registerRepository(projectRoot, repository);
 		for (const uri of options.trustedUris ?? []) {
@@ -222,14 +225,19 @@ suite('WorktreeManagerService', () => {
 		}
 
 		for (const uri of options.accessibleRepositories ?? []) {
-			gitService.registerRepository(uri, new TestGitRepository(uri, options.refs.map(createHeadRef)));
+			const accessibleRepository = new TestGitRepository(uri, options.refs.map(createHeadRef));
+			const accessibleRepositoryState = options.repositoryStatesByPath?.[uri.fsPath];
+			if (accessibleRepositoryState) {
+				accessibleRepository.updateState(accessibleRepositoryState);
+			}
+			gitService.registerRepository(uri, accessibleRepository);
 		}
 
 		const commandService = new TestCommandService({
 			'_git.getWorktrees': () => options.worktrees ?? [createWorktree(projectRoot.fsPath, 'main', true)],
 			'_git.getBranchBase': (_repositoryPath: string, branchName: string) => options.branchBases?.[branchName],
 			'_git.revListCount': (_repositoryPath: string, fromRef: string, toRef: string) => options.revListCounts?.[`${fromRef}..${toRef}`] ?? 1,
-			'_git.revParseAbbrevRef': () => options.currentBranch ?? 'main',
+				'_git.revParseAbbrevRef': (repositoryPath: string) => options.currentBranchesByPath?.[repositoryPath] ?? options.currentBranch ?? 'main',
 			'_git.createWorktree': (_repositoryPath: string, commitish: string, branch: string, requestedWorktreePath: string) => options.createWorktreeResult ?? {
 				path: requestedWorktreePath,
 				branch,
@@ -394,6 +402,84 @@ suite('WorktreeManagerService', () => {
 		assert.deepStrictEqual(mergeCall?.args, [projectRoot.fsPath, managedFeatureBranchName]);
 	});
 
+	test('refuses to merge when the currently checked out canonical branch has uncommitted changes', async () => {
+		storageService.store(STORAGE_KEY_MAPPINGS, {
+			[projectRoot.toString()]: {
+				[featureBranchName]: {
+					managedBranchName: managedFeatureBranchName,
+					worktreePath: worktreeRoot.fsPath,
+				},
+			},
+		}, StorageScope.APPLICATION, StorageTarget.MACHINE);
+
+		const { service, commandService } = createService({
+			refs: ['main', featureBranchName, managedFeatureBranchName],
+			worktrees: [
+				createWorktree(projectRoot.fsPath, 'main', true),
+				createWorktree(worktreeRoot.fsPath, managedFeatureBranchName),
+			],
+			accessibleRepositories: [worktreeRoot],
+			currentBranch: 'feature/other',
+			repositoryState: {
+				HEAD: {
+					type: GitRefType.Head,
+					name: 'feature/other',
+					commit: '123',
+				},
+				mergeChanges: [],
+				indexChanges: [],
+				workingTreeChanges: [{ uri: URI.file('/repo/dirty.ts'), originalUri: undefined, modifiedUri: undefined }],
+				untrackedChanges: [],
+			},
+		});
+
+		await assert.rejects(
+			() => service.mergeWorktreeIntoBase(projectRoot, featureBranchName),
+			(error: unknown) => error instanceof WorktreeManagerError && error.code === WorktreeManagerErrorCode.DirtyTargetBranch,
+		);
+		assert.strictEqual(commandService.calls.some(call => call.id === '_git.checkout'), false);
+		assert.strictEqual(commandService.calls.some(call => call.id === '_git.mergeBranch'), false);
+	});
+
+	test('refuses to merge when the target canonical branch already checked out has uncommitted changes', async () => {
+		storageService.store(STORAGE_KEY_MAPPINGS, {
+			[projectRoot.toString()]: {
+				[featureBranchName]: {
+					managedBranchName: managedFeatureBranchName,
+					worktreePath: worktreeRoot.fsPath,
+				},
+			},
+		}, StorageScope.APPLICATION, StorageTarget.MACHINE);
+
+		const { service, commandService } = createService({
+			refs: ['main', featureBranchName, managedFeatureBranchName],
+			worktrees: [
+				createWorktree(projectRoot.fsPath, 'main', true),
+				createWorktree(worktreeRoot.fsPath, managedFeatureBranchName),
+			],
+			accessibleRepositories: [worktreeRoot],
+			currentBranch: featureBranchName,
+			repositoryState: {
+				HEAD: {
+					type: GitRefType.Head,
+					name: featureBranchName,
+					commit: '123',
+				},
+				mergeChanges: [],
+				indexChanges: [],
+				workingTreeChanges: [{ uri: URI.file('/repo/dirty.ts'), originalUri: undefined, modifiedUri: undefined }],
+				untrackedChanges: [],
+			},
+		});
+
+		await assert.rejects(
+			() => service.mergeWorktreeIntoBase(projectRoot, featureBranchName),
+			(error: unknown) => error instanceof WorktreeManagerError && error.code === WorktreeManagerErrorCode.DirtyTargetBranch,
+		);
+		assert.strictEqual(commandService.calls.some(call => call.id === '_git.checkout'), false);
+		assert.strictEqual(commandService.calls.some(call => call.id === '_git.mergeBranch'), false);
+	});
+
 	test('returns managed worktree branch context for the active worktree', async () => {
 		storageService.store(STORAGE_KEY_MAPPINGS, {
 			[projectRoot.toString()]: {
@@ -430,6 +516,46 @@ suite('WorktreeManagerService', () => {
 			canMerge: true,
 			canRecreate: false,
 		});
+	});
+
+	test('disables merge in managed worktree context when the canonical repository is dirty', async () => {
+		storageService.store(STORAGE_KEY_MAPPINGS, {
+			[projectRoot.toString()]: {
+				[featureBranchName]: {
+					managedBranchName: managedFeatureBranchName,
+					worktreePath: worktreeRoot.fsPath,
+				},
+			},
+		}, StorageScope.APPLICATION, StorageTarget.MACHINE);
+
+		const { service } = createService({
+			refs: ['main', featureBranchName, managedFeatureBranchName],
+			worktrees: [
+				createWorktree(projectRoot.fsPath, 'main', true),
+				createWorktree(worktreeRoot.fsPath, managedFeatureBranchName),
+			],
+			accessibleRepositories: [worktreeRoot],
+			currentBranchesByPath: {
+				[projectRoot.fsPath]: 'feature/other',
+				[worktreeRoot.fsPath]: managedFeatureBranchName,
+			},
+			repositoryStatesByPath: {
+				[projectRoot.fsPath]: {
+					HEAD: {
+						type: GitRefType.Head,
+						name: 'feature/other',
+						commit: '123',
+					},
+					mergeChanges: [],
+					indexChanges: [],
+					workingTreeChanges: [{ uri: URI.file('/repo/dirty.ts'), originalUri: undefined, modifiedUri: undefined }],
+					untrackedChanges: [],
+				},
+			},
+		});
+
+		const branchContext = await service.getBranchContext(worktreeRoot);
+		assert.strictEqual(branchContext?.canMerge, false);
 	});
 
 	test('hides push and recreate while a linked worktree has not been merged yet', async () => {

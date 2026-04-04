@@ -1444,7 +1444,7 @@ export class Repository implements Disposable {
 					}
 
 					await this.repository.rebaseContinue();
-					await this.commitOperationCleanup(message, indexResources, workingGroupResources);
+					await this.commitOperationCleanup(indexResources, workingGroupResources);
 				},
 				() => this.commitOperationGetOptimisticResourceGroups(opts));
 		} else {
@@ -1470,7 +1470,7 @@ export class Repository implements Disposable {
 					message = await this.appendAICoAuthorTrailer(message, indexResources, workingGroupResources);
 
 					await this.repository.commit(message, opts);
-					await this.commitOperationCleanup(message, indexResources, workingGroupResources);
+					await this.commitOperationCleanup(indexResources, workingGroupResources);
 				},
 				() => this.commitOperationGetOptimisticResourceGroups(opts));
 
@@ -1481,10 +1481,11 @@ export class Repository implements Disposable {
 		}
 	}
 
-	private async commitOperationCleanup(message: string | undefined, indexResources: string[], workingGroupResources: string[]) {
-		if (message) {
-			this.inputBox.value = await this.getInputTemplate();
-		}
+	private async commitOperationCleanup(indexResources: string[], workingGroupResources: string[]) {
+		const inputTemplate = await this.getInputTemplate();
+		this._sourceControl.commitTemplate = inputTemplate;
+		this.inputBox.value = inputTemplate;
+
 		this.closeDiffEditors(indexResources, workingGroupResources);
 
 		// Accept working set changes across all chat sessions

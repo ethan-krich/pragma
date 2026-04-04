@@ -2313,7 +2313,7 @@ class SCMTreeDataSource extends Disposable implements IAsyncDataSource<ISCMViewS
 			const primaryActionButton = this.getActionButton(inputOrElement, actionButton, worktreeContext, resourceGroups);
 
 			// SCM Input
-			if (inputOrElement.input.visible) {
+			if (inputOrElement.input.visible && !this.shouldHideInput(primaryActionButton)) {
 				children.push(inputOrElement.input);
 			}
 
@@ -2404,6 +2404,10 @@ class SCMTreeDataSource extends Disposable implements IAsyncDataSource<ISCMViewS
 		}
 
 		return defaultActionButton;
+	}
+
+	private shouldHideInput(actionButton: ISCMActionButtonDescriptor | undefined): boolean {
+		return actionButton?.command.id === MERGE_CURRENT_WORKTREE_COMMAND_ID;
 	}
 
 	getParent(element: TreeElement): ISCMViewService | TreeElement {

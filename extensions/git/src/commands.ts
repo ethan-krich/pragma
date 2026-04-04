@@ -3939,6 +3939,17 @@ export class CommandCenter {
 		await commands.executeCommand('vscode.openFolder', uri, { forceNewWindow: true });
 	}
 
+	@command('git.copyWorktreePath')
+	async copyWorktreePath(): Promise<void> {
+		const repository = this.getCurrentWorktreeRepository();
+		if (!repository) {
+			await window.showErrorMessage(l10n.t('The current window does not have an open worktree to copy the path from.'));
+			return;
+		}
+
+		env.clipboard.writeText(this.escapePathForClipboard(repository.root));
+	}
+
 	@command('git.graph.deleteTag', { repository: true })
 	async deleteTag2(repository: Repository, historyItem?: SourceControlHistoryItem, historyItemRefId?: string): Promise<void> {
 		const historyItemRef = historyItem?.references?.find(r => r.id === historyItemRefId);
@@ -5594,7 +5605,7 @@ export class CommandCenter {
 			return;
 		}
 
-		env.clipboard.writeText(artifact.id);
+		env.clipboard.writeText(this.escapePathForClipboard(artifact.id));
 	}
 
 	@command('git.repositories.copyCommitHash', { repository: true })
@@ -5865,6 +5876,28 @@ export class CommandCenter {
 				|| repository.mergeGroup.resourceStates.filter(r => r.resourceUri.toString() === uriString)[0];
 		}
 		return undefined;
+	}
+
+	private getCurrentWorktreeRepository(): Repository | undefined {
+		const activeUri = window.activeTextEditor?.document.uri;
+		const activeRepository = activeUri ? this.model.getRepository(activeUri) : undefined;
+		if (activeRepository?.kind === 'worktree') {
+			return activeRepository;
+		}
+
+		const workspaceFolders = workspace.workspaceFolders ?? [];
+		if (workspaceFolders.length === 1) {
+			const workspaceRepository = this.model.getRepository(workspaceFolders[0].uri);
+			if (workspaceRepository?.kind === 'worktree') {
+				return workspaceRepository;
+			}
+		}
+
+		return undefined;
+	}
+
+	private escapePathForClipboard(path: string): string {
+		return path.replaceAll(' ', '\\ ');
 	}
 
 	private runByRepository<T>(resource: Uri, fn: (repository: Repository, resource: Uri) => Promise<T>): Promise<T[]>;
