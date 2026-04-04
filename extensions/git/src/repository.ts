@@ -702,6 +702,8 @@ export interface IRepositoryResolver {
 
 export class Repository implements Disposable {
 	static readonly WORKTREE_ROOT_STORAGE_KEY = 'worktreeRoot';
+	private static readonly MANAGED_WORKTREE_BRANCH_PREFIX = 'pragma/worktrees/';
+	private static readonly MANAGED_WORKTREE_SUFFIX_REGEX = /^(?<branch>.+)-[0-9a-f]{8}$/i;
 
 	private _onDidChangeRepository = new EventEmitter<Uri>();
 	readonly onDidChangeRepository: Event<Uri> = this._onDidChangeRepository.event;
@@ -772,6 +774,20 @@ export class Repository implements Disposable {
 		}
 
 		return (HEAD.commit || '').substr(0, 8);
+	}
+
+	private getDisplayedHeadName(): string | undefined {
+		const headName = this.HEAD?.name;
+		if (!headName) {
+			return this.headShortName;
+		}
+
+		if (!headName.startsWith(Repository.MANAGED_WORKTREE_BRANCH_PREFIX)) {
+			return headName;
+		}
+
+		const encodedVisibleBranch = headName.substring(Repository.MANAGED_WORKTREE_BRANCH_PREFIX.length);
+		return encodedVisibleBranch.match(Repository.MANAGED_WORKTREE_SUFFIX_REGEX)?.groups?.branch ?? encodedVisibleBranch;
 	}
 
 	private _remotes: Remote[] = [];
@@ -3213,7 +3229,7 @@ export class Repository implements Disposable {
 			return '';
 		}
 
-		const head = HEAD.name || (HEAD.commit || '').substr(0, 8);
+		const head = this.getDisplayedHeadName() || (HEAD.commit || '').substr(0, 8);
 
 		return head
 			+ (this.workingTreeGroup.resourceStates.length + this.untrackedGroup.resourceStates.length > 0 ? '*' : '')
@@ -3264,7 +3280,7 @@ export class Repository implements Disposable {
 	}
 
 	private updateInputBoxPlaceholder(): void {
-		const branchName = this.headShortName;
+		const branchName = this.getDisplayedHeadName();
 
 		if (branchName) {
 			// '{0}' will be replaced by the corresponding key-command later in the process, which is why it needs to stay.

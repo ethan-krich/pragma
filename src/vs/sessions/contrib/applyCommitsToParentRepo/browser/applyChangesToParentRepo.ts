@@ -10,7 +10,6 @@ import { autorun } from '../../../../base/common/observable.js';
 import { Codicon } from '../../../../base/common/codicons.js';
 import { localize, localize2 } from '../../../../nls.js';
 import { Action2, MenuId, MenuRegistry, registerAction2 } from '../../../../platform/actions/common/actions.js';
-import { ICommandService } from '../../../../platform/commands/common/commands.js';
 import { ContextKeyExpr, IContextKeyService, RawContextKey } from '../../../../platform/contextkey/common/contextkey.js';
 import { ServicesAccessor } from '../../../../platform/instantiation/common/instantiation.js';
 import { INotificationService, Severity } from '../../../../platform/notification/common/notification.js';
@@ -22,6 +21,7 @@ import { CHAT_CATEGORY } from '../../../../workbench/contrib/chat/browser/action
 import { ISessionsManagementService } from '../../sessions/browser/sessionsManagementService.js';
 import { ILogService } from '../../../../platform/log/common/log.js';
 import { URI } from '../../../../base/common/uri.js';
+import { IWorktreeManagerService } from '../../../../workbench/contrib/worktreeManager/browser/worktreeManagerService.js';
 
 const hasWorktreeAndRepositoryContextKey = new RawContextKey<boolean>('agentSessionHasWorktreeAndRepository', false, {
 	type: 'boolean',
@@ -79,11 +79,11 @@ class ApplyChangesToParentRepoAction extends Action2 {
 
 	override async run(accessor: ServicesAccessor): Promise<void> {
 		const sessionManagementService = accessor.get(ISessionsManagementService);
-		const commandService = accessor.get(ICommandService);
 		const notificationService = accessor.get(INotificationService);
 		const logService = accessor.get(ILogService);
 		const openerService = accessor.get(IOpenerService);
 		const productService = accessor.get(IProductService);
+		const worktreeManagerService = accessor.get(IWorktreeManagerService);
 
 		const activeSession = sessionManagementService.activeSession.get();
 		const repo = activeSession?.workspace.get()?.repositories[0];
@@ -93,6 +93,7 @@ class ApplyChangesToParentRepoAction extends Action2 {
 
 		const worktreeRoot = repo.workingDirectory;
 		const repoRoot = repo.uri;
+		const baseBranchName = repo.baseBranchName;
 
 		const openFolderAction = toAction({
 			id: 'applyChangesToParentRepo.openFolder',
@@ -118,37 +119,24 @@ class ApplyChangesToParentRepoAction extends Action2 {
 		});
 
 		try {
-			// Get the worktree branch name. Since the worktree and parent repo
-			// share the same git object store, the parent can directly reference
-			// this branch for a merge.
-			const worktreeBranch = await commandService.executeCommand<string>(
-				'_git.revParseAbbrevRef',
-				worktreeRoot.fsPath
-			);
-
-			if (!worktreeBranch) {
+			if (!baseBranchName) {
 				notificationService.notify({
 					severity: Severity.Warning,
-					message: localize('applyChangesNoBranch', "Could not determine worktree branch name."),
+					message: localize('applyChangesNoBranch', "Could not determine the parent branch for this worktree."),
 				});
 				return;
 			}
 
-			// Merge the worktree branch into the parent repo.
-			// This is idempotent: if already merged, git says "Already up to date."
-			// If new commits exist, they're brought in. Handles partial applies naturally.
-			const result = await commandService.executeCommand('_git.mergeBranch', repoRoot.fsPath, worktreeBranch);
-			if (!result) {
-				logService.warn('[ApplyChangesToParentRepo] No result from merge command');
-			} else {
-				notificationService.notify({
-					severity: Severity.Info,
-					message: typeof result === 'string' && result.startsWith('Already up to date')
-						? localize('alreadyUpToDate', 'Parent repository is up to date with worktree.')
-						: localize('applyChangesSuccess', 'Applied changes to parent repository.'),
-					actions: { primary: [openFolderAction] }
-				});
-			}
+			await worktreeManagerService.mergeWorktreeIntoBase(repoRoot, baseBranchName, {
+				worktreePath: worktreeRoot,
+				worktreeBranch: repo.detail,
+			});
+
+			notificationService.notify({
+				severity: Severity.Info,
+				message: localize('applyChangesSuccess', 'Applied changes to parent repository.'),
+				actions: { primary: [openFolderAction] }
+			});
 		} catch (err) {
 			logService.error('[ApplyChangesToParentRepo] Failed to apply changes', err);
 			notificationService.notify({

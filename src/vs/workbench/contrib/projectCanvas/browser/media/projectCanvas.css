@@ -31,6 +31,58 @@
 	letter-spacing: -0.01em;
 }
 
+.project-canvas-header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+}
+
+.project-canvas-title-container {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+}
+
+.project-canvas-subtitle {
+	margin: 0;
+	color: var(--vscode-descriptionForeground);
+	font-size: 12px;
+}
+
+.project-canvas-back {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 10px;
+	border: 1px solid var(--vscode-panel-border);
+	border-radius: 999px;
+	background: color-mix(
+		in srgb,
+		var(--vscode-editorWidget-background) 84%,
+		transparent
+	);
+	color: inherit;
+	cursor: pointer;
+	outline: none;
+}
+
+.project-canvas-back:hover,
+.project-canvas-back:focus {
+	border-color: var(--vscode-focusBorder);
+	background: color-mix(
+		in srgb,
+		var(--vscode-list-hoverBackground) 60%,
+		var(--vscode-editorWidget-background)
+	);
+}
+
+.project-canvas-back:focus {
+	outline: 1px solid var(--vscode-focusBorder);
+	outline-offset: 2px;
+}
+
 .project-canvas-open-folder {
 	display: inline-flex;
 	align-items: center;
@@ -92,7 +144,8 @@
 	);
 }
 
-.project-canvas-project {
+.project-canvas-project,
+.project-canvas-branch {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -119,12 +172,16 @@
 }
 
 .monaco-workbench.monaco-enable-motion .project-canvas-project:hover,
-.monaco-workbench.monaco-enable-motion .project-canvas-project:focus {
+.monaco-workbench.monaco-enable-motion .project-canvas-project:focus,
+.monaco-workbench.monaco-enable-motion .project-canvas-branch:hover,
+.monaco-workbench.monaco-enable-motion .project-canvas-branch:focus {
 	transform: translateY(-1px);
 }
 
 .project-canvas-project:hover,
-.project-canvas-project:focus {
+.project-canvas-project:focus,
+.project-canvas-branch:hover,
+.project-canvas-branch:focus {
 	border-color: var(--vscode-focusBorder);
 	background: color-mix(
 		in srgb,
@@ -133,7 +190,8 @@
 	);
 }
 
-.project-canvas-project:focus {
+.project-canvas-project:focus,
+.project-canvas-branch:focus {
 	outline: 1px solid var(--vscode-focusBorder);
 	outline-offset: 2px;
 }
@@ -175,7 +233,8 @@
 		gap: 10px;
 	}
 
-	.project-canvas-project {
+	.project-canvas-project,
+	.project-canvas-branch {
 		width: 80px;
 		height: 80px;
 	}

@@ -22,14 +22,16 @@ import { DomScrollableElement } from "../../../../base/browser/ui/scrollbar/scro
 import { Action } from "../../../../base/common/actions.js";
 import { CancellationToken } from "../../../../base/common/cancellation.js";
 import { Codicon } from "../../../../base/common/codicons.js";
+import { Emitter, Event } from "../../../../base/common/event.js";
 import { KeyCode } from "../../../../base/common/keyCodes.js";
-import { DisposableStore } from "../../../../base/common/lifecycle.js";
+import { Disposable, DisposableStore } from "../../../../base/common/lifecycle.js";
 import { ScrollbarVisibility } from "../../../../base/common/scrollable.js";
 import { ThemeIcon } from "../../../../base/common/themables.js";
 import { localize } from "../../../../nls.js";
 import { ICommandService } from "../../../../platform/commands/common/commands.js";
 import { IContextMenuService } from "../../../../platform/contextview/browser/contextView.js";
 import { IInstantiationService } from "../../../../platform/instantiation/common/instantiation.js";
+import { INotificationService } from "../../../../platform/notification/common/notification.js";
 import { IThemeService } from "../../../../platform/theme/common/themeService.js";
 import { ITelemetryService } from "../../../../platform/telemetry/common/telemetry.js";
 import { IStorageService } from "../../../../platform/storage/common/storage.js";
@@ -45,20 +47,117 @@ import {
 	IProjectCanvasService,
 	ProjectCanvasCommandIds,
 } from "./projectCanvasService.js";
+import { IWorktreeManagerService } from "../../worktreeManager/browser/worktreeManagerService.js";
+import { IWorktreeBranchEntry, WorktreeManagerError, WorktreeManagerErrorCode } from "../../worktreeManager/browser/worktreeManagerTypes.js";
 import {
 	ProjectCanvasEditorOptions,
 	ProjectCanvasInput,
 } from "./projectCanvasInput.js";
 
+export type ProjectCanvasViewState =
+	| { readonly kind: 'projects' }
+	| {
+		readonly kind: 'branches';
+		readonly project: IProjectCanvasProject;
+		readonly branches: readonly IWorktreeBranchEntry[];
+		readonly loading: boolean;
+	};
+
+export class ProjectCanvasPageModel extends Disposable {
+
+	private readonly _onDidChangeState = this._register(new Emitter<ProjectCanvasViewState>());
+	readonly onDidChangeState: Event<ProjectCanvasViewState> = this._onDidChangeState.event;
+
+	private _state: ProjectCanvasViewState = { kind: 'projects' };
+	get state(): ProjectCanvasViewState {
+		return this._state;
+	}
+
+	constructor(
+		private readonly hostService: IHostService,
+		private readonly notificationService: INotificationService,
+		private readonly worktreeManagerService: IWorktreeManagerService,
+	) {
+		super();
+	}
+
+	async showProjects(): Promise<void> {
+		this.setState({ kind: 'projects' });
+	}
+
+	async activateProject(project: IProjectCanvasProject): Promise<void> {
+		if (project.kind !== 'folder') {
+			await this.openProject(project);
+			return;
+		}
+
+		this.setState({ kind: 'branches', project, branches: [], loading: true });
+
+		try {
+			const branches = await this.worktreeManagerService.getGoodBranches(project.resource);
+			if (branches.length === 0) {
+				this.setState({ kind: 'projects' });
+				await this.openProject(project);
+				return;
+			}
+
+			this.setState({ kind: 'branches', project, branches, loading: false });
+		} catch (error) {
+			this.setState({ kind: 'projects' });
+			this.notificationService.error(error instanceof Error ? error.message : localize('projectCanvas.branchLoadFailed', "Failed to load branches for this project."));
+		}
+	}
+
+	async activateBranch(branch: IWorktreeBranchEntry): Promise<void> {
+		if (this._state.kind !== 'branches') {
+			return;
+		}
+
+		try {
+			const worktreePath = await this.worktreeManagerService.resolveOrCreateWorktree(this._state.project.resource, branch.branchName);
+			await this.hostService.openWindow([{ folderUri: worktreePath }], {
+				forceReuseWindow: true,
+			});
+		} catch (error) {
+			if (error instanceof WorktreeManagerError && error.code === WorktreeManagerErrorCode.BranchNotFound) {
+				await this.activateProject(this._state.project);
+				return;
+			}
+
+			this.notificationService.error(error instanceof Error ? error.message : localize('projectCanvas.openBranchFailed', "Failed to open a worktree for this branch."));
+		}
+	}
+
+	private setState(state: ProjectCanvasViewState): void {
+		this._state = state;
+		this._onDidChangeState.fire(state);
+	}
+
+	private async openProject(project: IProjectCanvasProject): Promise<void> {
+		if (project.kind === "folder") {
+			await this.hostService.openWindow([{ folderUri: project.resource }], {
+				forceReuseWindow: true,
+			});
+			return;
+		}
+
+		await this.hostService.openWindow([{ workspaceUri: project.resource }], {
+			forceReuseWindow: true,
+		});
+	}
+}
+
 export class ProjectCanvasPage extends EditorPane {
 	static readonly ID = "projectCanvasPage";
 
 	private rootElement!: HTMLElement;
+	private headerElement!: HTMLElement;
 	private openFolderButton!: HTMLButtonElement;
 	private projectsElement!: HTMLElement;
 	private projectsScrollableElement!: DomScrollableElement;
 	private emptyStateElement!: HTMLElement;
 	private readonly renderDisposables = this._register(new DisposableStore());
+	private readonly model: ProjectCanvasPageModel;
 
 	constructor(
 		group: IEditorGroup,
@@ -70,7 +169,9 @@ export class ProjectCanvasPage extends EditorPane {
 		private readonly contextMenuService: IContextMenuService,
 		@IProjectCanvasService
 		private readonly projectCanvasService: IProjectCanvasService,
-		@IHostService private readonly hostService: IHostService,
+		@IWorktreeManagerService worktreeManagerService: IWorktreeManagerService,
+		@IHostService hostService: IHostService,
+		@INotificationService notificationService: INotificationService,
 	) {
 		super(
 			ProjectCanvasPage.ID,
@@ -80,11 +181,12 @@ export class ProjectCanvasPage extends EditorPane {
 			storageService,
 		);
 
+		this.model = this._register(new ProjectCanvasPageModel(hostService, notificationService, worktreeManagerService));
+
 		this._register(
-			this.projectCanvasService.onDidChangeProjects(() =>
-				this.renderProjects(),
-			),
+			this.projectCanvasService.onDidChangeProjects(() => this.renderVisibleState()),
 		);
+		this._register(this.model.onDidChangeState(() => this.renderVisibleState()));
 	}
 
 	protected createEditor(parent: HTMLElement): void {
@@ -101,15 +203,7 @@ export class ProjectCanvasPage extends EditorPane {
 			this.rootElement,
 			$(".project-canvas-content"),
 		);
-		const headerElement = append(contentElement, $(".project-canvas-header"));
-		append(
-			headerElement,
-			$(
-				"h2.project-canvas-title",
-				undefined,
-				localize("projectCanvasTitle", "Projects"),
-			),
-		);
+		this.headerElement = append(contentElement, $(".project-canvas-header"));
 
 		this.projectsElement = $(".project-canvas-projects");
 		this.projectsScrollableElement = this._register(
@@ -161,11 +255,12 @@ export class ProjectCanvasPage extends EditorPane {
 		token: CancellationToken,
 	): Promise<void> {
 		await super.setInput(input, options, context, token);
-		this.renderProjects();
+		this.renderVisibleState();
 	}
 
 	override clearInput(): void {
 		this.renderDisposables.clear();
+		clearNode(this.headerElement);
 		clearNode(this.projectsElement);
 		this.projectsElement.appendChild(this.emptyStateElement);
 		super.clearInput();
@@ -186,56 +281,100 @@ export class ProjectCanvasPage extends EditorPane {
 		super.dispose();
 	}
 
-	private renderProjects(): void {
-		if (!this.projectsElement) {
+	private renderVisibleState(): void {
+		if (!this.projectsElement || !this.headerElement) {
 			return;
 		}
 
-		const projects = this.projectCanvasService.getProjects();
-
 		this.renderDisposables.clear();
+		clearNode(this.headerElement);
 		clearNode(this.projectsElement);
 
+		const state = this.model.state;
+		if (state.kind === 'projects') {
+			this.renderProjectsView();
+		} else {
+			this.renderBranchesView(state.project, state.branches, state.loading);
+		}
+
+		this.projectsScrollableElement.scanDomNode();
+	}
+
+	private renderProjectsView(): void {
+		append(
+			this.headerElement,
+			$(
+				"h2.project-canvas-title",
+				undefined,
+				localize("projectCanvasTitle", "Projects"),
+			),
+		);
+
+		const projects = this.projectCanvasService.getProjects();
 		if (projects.length === 0) {
 			this.projectsElement.appendChild(this.emptyStateElement);
-			this.projectsScrollableElement.scanDomNode();
 			return;
 		}
 
 		for (const project of projects) {
 			this.projectsElement.appendChild(this.renderProjectTile(project));
 		}
+	}
 
-		this.projectsScrollableElement.scanDomNode();
+	private renderBranchesView(project: IProjectCanvasProject, branches: readonly IWorktreeBranchEntry[], loading: boolean): void {
+		const backButton = append(
+			this.headerElement,
+			$("button.project-canvas-back", { type: 'button', 'aria-label': localize('projectCanvas.back', "Back to projects") }),
+		) as HTMLButtonElement;
+		backButton.appendChild(renderIcon(Codicon.arrowLeft));
+		append(backButton, $('span', undefined, localize('projectCanvas.backLabel', "Back")));
+		this.renderDisposables.add(addDisposableListener(backButton, EventType.CLICK, event => {
+			EventHelper.stop(event, true);
+			void this.model.showProjects();
+		}));
+
+		const titleContainer = append(this.headerElement, $('.project-canvas-title-container'));
+		append(
+			titleContainer,
+			$('h2.project-canvas-title', undefined, project.label),
+		);
+		append(
+			titleContainer,
+			$('p.project-canvas-subtitle', undefined, localize('projectCanvas.branchesSubtitle', "Branches")),
+		);
+
+		if (loading) {
+			this.projectsElement.appendChild(
+				$('.project-canvas-empty', undefined, localize('projectCanvas.loadingBranches', "Loading branches...")),
+			);
+			return;
+		}
+
+		for (const branch of branches) {
+			this.projectsElement.appendChild(this.renderBranchTile(branch));
+		}
 	}
 
 	private getPrimaryFocusableElement(): HTMLElement | undefined {
-		return this.projectsElement?.querySelector<HTMLElement>('.project-canvas-project') ?? this.openFolderButton;
+		return this.projectsElement?.querySelector<HTMLElement>('.project-canvas-project') ?? this.projectsElement?.querySelector<HTMLElement>('.project-canvas-branch') ?? this.openFolderButton;
 	}
 
 	private renderProjectTile(project: IProjectCanvasProject): HTMLElement {
-		const tile = $(".project-canvas-project", {
-			tabIndex: "0",
-			role: "button",
-			"aria-label": localize(
+		const tile = this.renderCanvasTile(
+			'project-canvas-project',
+			project.label,
+			Codicon.folder,
+			localize(
 				"projectTileAriaLabel",
 				"Open project {0}",
 				project.label,
 			),
-		});
-
-		const icon = append(tile, $(".project-canvas-project-icon"));
-		icon.appendChild(renderIcon(Codicon.folder));
-
-		append(
-			tile,
-			$("span.project-canvas-project-label", undefined, project.label),
 		);
 
 		this.renderDisposables.add(
 			addDisposableListener(tile, EventType.CLICK, (event) => {
 				EventHelper.stop(event, true);
-				this.openProject(project);
+				void this.model.activateProject(project);
 			}),
 		);
 
@@ -247,7 +386,7 @@ export class ProjectCanvasPage extends EditorPane {
 					keyboardEvent.equals(KeyCode.Space)
 				) {
 					EventHelper.stop(event, true);
-					this.openProject(project);
+					void this.model.activateProject(project);
 				}
 			}),
 		);
@@ -282,17 +421,47 @@ export class ProjectCanvasPage extends EditorPane {
 		return tile;
 	}
 
-	private async openProject(project: IProjectCanvasProject): Promise<void> {
-		if (project.kind === "folder") {
-			await this.hostService.openWindow([{ folderUri: project.resource }], {
-				forceReuseWindow: true,
-			});
-			return;
-		}
+	private renderBranchTile(branch: IWorktreeBranchEntry): HTMLElement {
+		const icon = branch.iconHint === 'branch' ? Codicon.gitBranch : Codicon.code;
+		const tile = this.renderCanvasTile(
+			'project-canvas-branch',
+			branch.branchName,
+			icon,
+			localize('projectCanvas.branchAriaLabel', "Open branch {0}", branch.branchName),
+		);
 
-		await this.hostService.openWindow([{ workspaceUri: project.resource }], {
-			forceReuseWindow: true,
+		this.renderDisposables.add(addDisposableListener(tile, EventType.CLICK, event => {
+			EventHelper.stop(event, true);
+			void this.model.activateBranch(branch);
+		}));
+
+		this.renderDisposables.add(addDisposableListener(tile, EventType.KEY_DOWN, event => {
+			const keyboardEvent = new StandardKeyboardEvent(event);
+			if (keyboardEvent.equals(KeyCode.Enter) || keyboardEvent.equals(KeyCode.Space)) {
+				EventHelper.stop(event, true);
+				void this.model.activateBranch(branch);
+			}
+		}));
+
+		return tile;
+	}
+
+	private renderCanvasTile(className: string, label: string, iconId: ThemeIcon, ariaLabel: string): HTMLElement {
+		const tile = $(`.${className}`, {
+			tabIndex: "0",
+			role: "button",
+			"aria-label": ariaLabel,
 		});
+
+		const icon = append(tile, $(".project-canvas-project-icon"));
+		icon.appendChild(renderIcon(iconId));
+
+		append(
+			tile,
+			$("span.project-canvas-project-label", undefined, label),
+		);
+
+		return tile;
 	}
 }
 

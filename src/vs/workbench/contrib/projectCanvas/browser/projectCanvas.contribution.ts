@@ -32,6 +32,7 @@ import { IWorkspaceContextService, WorkbenchState } from '../../../../platform/w
 import { ProjectCanvasPage, ProjectCanvasInputSerializer } from './projectCanvas.js';
 import { ProjectCanvasEditorOptions, ProjectCanvasInput } from './projectCanvasInput.js';
 import { IProjectCanvasService, ProjectCanvasCommandIds } from './projectCanvasService.js';
+import { IWorktreeManagerService } from '../../worktreeManager/browser/worktreeManagerService.js';
 
 Registry.as<IEditorFactoryRegistry>(EditorExtensions.EditorFactory)
 	.registerEditorSerializer(ProjectCanvasInput.ID, ProjectCanvasInputSerializer);
@@ -248,6 +249,7 @@ registerAction2(class AddProjectCanvasProjectAction extends Action2 {
 		const fileDialogService = accessor.get(IFileDialogService);
 		const hostService = accessor.get(IHostService);
 		const projectCanvasService = accessor.get(IProjectCanvasService);
+		const worktreeManagerService = accessor.get(IWorktreeManagerService);
 		const selectedFolders = await fileDialogService.showOpenDialog({
 			title: localize('openProjectFoldersDialogTitle', "Open Folder Projects"),
 			openLabel: localize('openProjectFoldersDialogLabel', "Open Projects"),
@@ -261,7 +263,7 @@ registerAction2(class AddProjectCanvasProjectAction extends Action2 {
 		}
 
 		for (const folder of selectedFolders) {
-			projectCanvasService.upsertProject(folder, 'folder');
+			projectCanvasService.upsertProject(await worktreeManagerService.getCanonicalProjectRoot(folder), 'folder');
 		}
 
 		if (selectedFolders.length === 1) {

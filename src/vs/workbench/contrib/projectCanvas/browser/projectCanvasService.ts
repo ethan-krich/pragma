@@ -12,6 +12,7 @@ import { createDecorator } from '../../../../platform/instantiation/common/insta
 import { InstantiationType, registerSingleton } from '../../../../platform/instantiation/common/extensions.js';
 import { IStorageService, StorageScope, StorageTarget } from '../../../../platform/storage/common/storage.js';
 import { IWorkspaceContextService, WorkbenchState, WORKSPACE_SUFFIX } from '../../../../platform/workspace/common/workspace.js';
+import { IWorktreeManagerService } from '../../worktreeManager/browser/worktreeManagerService.js';
 
 export const IProjectCanvasService = createDecorator<IProjectCanvasService>('projectCanvasService');
 
@@ -69,11 +70,13 @@ export class ProjectCanvasService extends Disposable implements IProjectCanvasSe
 	constructor(
 		@IStorageService private readonly storageService: IStorageService,
 		@IWorkspaceContextService private readonly workspaceContextService: IWorkspaceContextService,
+		@IWorktreeManagerService private readonly worktreeManagerService: IWorktreeManagerService,
 	) {
 		super();
 
 		this.projects = this.loadProjectsFromStorage();
-		this.trackCurrentWorkspace();
+		void this.normalizeProjects();
+		void this.trackCurrentWorkspace();
 
 		this._register(this.storageService.onDidChangeValue(StorageScope.APPLICATION, ProjectCanvasStorageKeys.Projects, this._store)(e => {
 			if (!e.external) {
@@ -84,7 +87,7 @@ export class ProjectCanvasService extends Disposable implements IProjectCanvasSe
 			this._onDidChangeProjects.fire(this.projects);
 		}));
 
-		this._register(this.workspaceContextService.onDidChangeWorkbenchState(() => this.trackCurrentWorkspace()));
+		this._register(this.workspaceContextService.onDidChangeWorkbenchState(() => void this.trackCurrentWorkspace()));
 	}
 
 	getProjects(): readonly IProjectCanvasProject[] {
@@ -135,12 +138,16 @@ export class ProjectCanvasService extends Disposable implements IProjectCanvasSe
 		return value === 'true';
 	}
 
-	private trackCurrentWorkspace(): void {
+	private async trackCurrentWorkspace(): Promise<void> {
 		switch (this.workspaceContextService.getWorkbenchState()) {
 			case WorkbenchState.FOLDER: {
 				const folder = this.workspaceContextService.getWorkspace().folders[0];
 				if (folder) {
-					this.upsertProject(folder.uri, 'folder');
+					const canonicalFolder = await this.worktreeManagerService.getCanonicalProjectRoot(folder.uri);
+					if (folder.uri.toString() !== canonicalFolder.toString()) {
+						this.removeProject(folder.uri);
+					}
+					this.upsertProject(canonicalFolder, 'folder');
 				}
 				break;
 			}
@@ -151,6 +158,34 @@ export class ProjectCanvasService extends Disposable implements IProjectCanvasSe
 				}
 				break;
 			}
+		}
+	}
+
+	private async normalizeProjects(): Promise<void> {
+		const normalizedProjects = new Map<string, IProjectCanvasProject>();
+
+		for (const project of this.projects) {
+			const normalizedResource = project.kind === 'folder'
+				? await this.worktreeManagerService.getCanonicalProjectRoot(project.resource)
+				: project.resource;
+			const comparisonKey = normalizedResource.toString();
+			const existingProject = normalizedProjects.get(comparisonKey);
+			const normalizedProject: IProjectCanvasProject = {
+				resource: normalizedResource,
+				kind: project.kind,
+				label: this.getProjectLabel(normalizedResource, project.kind),
+				description: this.getProjectDescription(normalizedResource),
+				lastOpened: existingProject ? Math.max(existingProject.lastOpened, project.lastOpened) : project.lastOpened,
+			};
+
+			normalizedProjects.set(comparisonKey, normalizedProject);
+		}
+
+		const nextProjects = [...normalizedProjects.values()].sort((a, b) => b.lastOpened - a.lastOpened);
+		if (!this.areProjectsEqual(this.projects, nextProjects)) {
+			this.projects = nextProjects;
+			this.saveProjects();
+			this._onDidChangeProjects.fire(this.projects);
 		}
 	}
 
@@ -205,6 +240,21 @@ export class ProjectCanvasService extends Disposable implements IProjectCanvasSe
 			&& typeof candidate.label === 'string'
 			&& typeof candidate.description === 'string'
 			&& typeof candidate.lastOpened === 'number';
+	}
+
+	private areProjectsEqual(currentProjects: readonly IProjectCanvasProject[], nextProjects: readonly IProjectCanvasProject[]): boolean {
+		if (currentProjects.length !== nextProjects.length) {
+			return false;
+		}
+
+		return currentProjects.every((project, index) => {
+			const candidate = nextProjects[index];
+			return project.resource.toString() === candidate.resource.toString()
+				&& project.kind === candidate.kind
+				&& project.label === candidate.label
+				&& project.description === candidate.description
+				&& project.lastOpened === candidate.lastOpened;
+		});
 	}
 }
 
