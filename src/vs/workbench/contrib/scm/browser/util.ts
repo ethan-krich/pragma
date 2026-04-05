@@ -193,9 +193,13 @@ export function getPrimaryRepository(
 	workspaceContextService: IWorkspaceContextService,
 	uriIdentityService: IUriIdentityService
 ): ISCMRepository | undefined {
-	const primaryRepository = activeRepository?.repository ?? focusedRepository;
-	if (primaryRepository && repositories.includes(primaryRepository)) {
-		return primaryRepository;
+	const activeRepositoryCandidate = activeRepository?.repository;
+	if (activeRepositoryCandidate && repositories.includes(activeRepositoryCandidate)) {
+		return activeRepositoryCandidate;
+	}
+
+	if (focusedRepository && repositories.includes(focusedRepository)) {
+		return focusedRepository;
 	}
 
 	const activeEditorUri = EditorResourceAccessor.getOriginalUri(activeEditor, { supportSideBySide: SideBySideEditor.PRIMARY });

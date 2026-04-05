@@ -925,7 +925,12 @@ export class AsyncDataTree<TInput, T, TFilterData = void> implements IDisposable
 
 		const elements: T[] = [];
 		while (!this.hasNode(element)) {
-			element = this.dataSource.getParent(element) as T;
+			const parent = this.dataSource.getParent(element);
+			if (typeof parent === 'undefined') {
+				return;
+			}
+
+			element = parent as T;
 
 			if (element !== this.root.element) {
 				elements.push(element);

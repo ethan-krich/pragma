@@ -374,6 +374,12 @@ export class WorktreeManagerService extends Disposable implements IWorktreeManag
 				localize('worktreeManager.currentWorktreeNotFound', "The current branch is not a managed worktree."),
 			);
 		}
+		if (!branchContext.canMerge) {
+			throw new WorktreeManagerError(
+				WorktreeManagerErrorCode.CannotMerge,
+				localize('worktreeManager.currentWorktreeCannotMerge', "The current worktree cannot be merged until both the worktree and its target branch are clean."),
+			);
+		}
 
 		await this.mergeWorktreeIntoBase(branchContext.canonicalRoot, branchContext.visibleBranch, {
 			worktreePath: branchContext.currentRoot,

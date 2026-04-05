@@ -84,6 +84,10 @@ import { IWorkspaceContextService } from '../../../../platform/workspace/common/
 const MERGE_CURRENT_WORKTREE_COMMAND_ID = 'workbench.scm.action.mergeCurrentWorktree';
 type TreeElement = ISCMRepository | ISCMInput | ISCMActionButton | ISCMResourceGroup | ISCMResource | IResourceNode<ISCMResource, ISCMResourceGroup>;
 
+function shouldShowRepositories(repositoryCount: number, configurationService: IConfigurationService): boolean {
+	return repositoryCount > 1 || (repositoryCount === 1 && configurationService.getValue<boolean>('scm.alwaysShowRepositories') === true);
+}
+
 function processResourceFilterData(uri: URI, filterData: FuzzyScore | LabelFuzzyScore | undefined): [IMatch[] | undefined, IMatch[] | undefined] {
 	if (!filterData) {
 		return [undefined, undefined];
@@ -2087,8 +2091,9 @@ export class SCMViewPane extends ViewPane {
 
 	private updateRepositoryCollapseAllContextKeys(): void {
 		const repositories = this.getDisplayedRepositories();
+		const showRepositories = shouldShowRepositories(repositories.length, this.configurationService);
 
-		if (!this.isBodyVisible() || repositories.length <= 1) {
+		if (!this.isBodyVisible() || !showRepositories) {
 			this.isAnyRepositoryCollapsibleContextKey.set(false);
 			this.areAllRepositoriesCollapsedContextKey.set(false);
 			return;
@@ -2273,10 +2278,11 @@ class SCMTreeDataSource extends Disposable implements IAsyncDataSource<ISCMViewS
 		const repositoryCount = repositories.length;
 
 		const showActionButton = this.configurationService.getValue<boolean>('scm.showActionButton') === true;
+		const showRepositories = shouldShowRepositories(repositoryCount, this.configurationService);
 
-		if (isSCMViewService(inputOrElement) && repositoryCount > 1) {
+		if (isSCMViewService(inputOrElement) && showRepositories) {
 			return repositories;
-		} else if ((isSCMViewService(inputOrElement) && repositoryCount === 1) || isSCMRepository(inputOrElement)) {
+		} else if ((isSCMViewService(inputOrElement) && repositoryCount === 1 && !showRepositories) || isSCMRepository(inputOrElement)) {
 			const children: TreeElement[] = [];
 
 			inputOrElement = isSCMRepository(inputOrElement) ? inputOrElement : repositories[0];
@@ -2288,7 +2294,7 @@ class SCMTreeDataSource extends Disposable implements IAsyncDataSource<ISCMViewS
 			const primaryActionButton = this.getActionButton(inputOrElement, actionButton, worktreeContext, resourceGroups);
 
 			// SCM Input
-			if (inputOrElement.input.visible && !this.shouldHideInput(primaryActionButton)) {
+			if (inputOrElement.input.visible && (!showActionButton || !this.shouldHideInput(primaryActionButton))) {
 				children.push(inputOrElement.input);
 			}
 
@@ -2385,7 +2391,7 @@ class SCMTreeDataSource extends Disposable implements IAsyncDataSource<ISCMViewS
 		return actionButton?.command.id === MERGE_CURRENT_WORKTREE_COMMAND_ID;
 	}
 
-	getParent(element: TreeElement): ISCMViewService | TreeElement {
+	getParent(element: TreeElement): ISCMViewService | TreeElement | undefined {
 		if (isSCMResourceNode(element)) {
 			if (element.parent === element.context.resourceTree.root) {
 				return element.context;
@@ -2416,12 +2422,8 @@ class SCMTreeDataSource extends Disposable implements IAsyncDataSource<ISCMViewS
 		} else if (isSCMActionButton(element)) {
 			return element.repository;
 		} else if (isSCMResourceGroup(element)) {
-			const repository = this.getDisplayedRepositories().find(r => r.provider === element.provider);
-			if (!repository) {
-				throw new Error('Invalid element passed to getParent');
-			}
-
-			return repository;
+			return this.getDisplayedRepositories().find(r => r.provider === element.provider)
+				?? this.scmViewService.repositories.find(r => r.provider === element.provider);
 		} else if (isSCMRepository(element)) {
 			return this.scmViewService;
 		} else {

@@ -54,6 +54,26 @@ suite('SCM Utilities', () => {
 
 		assert.deepStrictEqual(displayedRepositories.map(repository => repository.id), ['repo:/workspace/worktree']);
 	});
+
+	test('getDisplayedRepositories falls back to the focused repository when the active repository is not visible', () => {
+		const repositories = [
+			createRepository('/workspace/base'),
+			createRepository('/workspace/worktree'),
+		];
+		const focusedRepository = repositories[1];
+
+		const displayedRepositories = getDisplayedRepositories(
+			repositories,
+			{ repository: createRepository('/workspace/hidden'), pinned: false },
+			focusedRepository,
+			undefined,
+			createScmService(),
+			createWorkspaceContextService('/workspace/other'),
+			createUriIdentityService()
+		);
+
+		assert.deepStrictEqual(displayedRepositories.map(repository => repository.id), [focusedRepository.id]);
+	});
 });
 
 function createRepository(rootPath: string): ISCMRepository {

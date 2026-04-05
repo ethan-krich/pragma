@@ -55,6 +55,7 @@ export interface ICreateWorktreeResult {
 
 export const enum WorktreeManagerErrorCode {
 	BranchNotFound = 'branchNotFound',
+	CannotMerge = 'cannotMerge',
 	DirtyTargetBranch = 'dirtyTargetBranch',
 	NotAGitRepository = 'notAGitRepository',
 	WorktreeNotFound = 'worktreeNotFound',

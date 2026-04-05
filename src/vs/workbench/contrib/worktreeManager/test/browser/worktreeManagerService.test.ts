@@ -725,4 +725,41 @@ suite('WorktreeManagerService', () => {
 		const storedMappings = storageService.getObject(STORAGE_KEY_MAPPINGS, StorageScope.APPLICATION, {}) as Record<string, unknown>;
 		assert.deepStrictEqual(storedMappings, {});
 	});
+
+	test('refuses to merge the current managed worktree when canMerge is false', async () => {
+		storageService.store(STORAGE_KEY_MAPPINGS, {
+			[projectRoot.toString()]: {
+				[featureBranchName]: {
+					managedBranchName: managedFeatureBranchName,
+					worktreePath: worktreeRoot.fsPath,
+				},
+			},
+		}, StorageScope.APPLICATION, StorageTarget.MACHINE);
+
+		const { service, commandService } = createService({
+			refs: ['main', featureBranchName, managedFeatureBranchName],
+			worktrees: [
+				createWorktree(projectRoot.fsPath, 'main', true),
+				createWorktree(worktreeRoot.fsPath, managedFeatureBranchName),
+			],
+			accessibleRepositories: [worktreeRoot],
+			currentBranch: managedFeatureBranchName,
+			repositoryStatesByPath: {
+				[worktreeRoot.fsPath]: {
+					HEAD: undefined,
+					mergeChanges: [],
+					indexChanges: [],
+					workingTreeChanges: [{ uri: URI.file('/repo/dirty.ts'), originalUri: undefined, modifiedUri: undefined }],
+					untrackedChanges: [],
+				},
+			},
+		});
+
+		await assert.rejects(
+			() => service.mergeCurrentWorktreeIntoBranch(worktreeRoot),
+			(error: unknown) => error instanceof WorktreeManagerError && error.code === WorktreeManagerErrorCode.CannotMerge,
+		);
+		assert.strictEqual(commandService.calls.some(call => call.id === '_git.mergeBranch'), false);
+		assert.strictEqual(commandService.calls.some(call => call.id === '_git.deleteWorktree'), false);
+	});
 });

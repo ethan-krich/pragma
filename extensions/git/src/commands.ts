@@ -5897,7 +5897,7 @@ export class CommandCenter {
 	}
 
 	private escapePathForClipboard(path: string): string {
-		return path.replaceAll(' ', '\\ ');
+		return path;
 	}
 
 	private runByRepository<T>(resource: Uri, fn: (repository: Repository, resource: Uri) => Promise<T>): Promise<T[]>;

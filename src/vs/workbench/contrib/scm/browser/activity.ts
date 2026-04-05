@@ -31,6 +31,7 @@ const ActiveRepositoryContextKeys = {
 
 export class SCMActiveRepositoryController extends Disposable implements IWorkbenchContribution {
 	private readonly _visibleRepositories: IObservable<readonly ISCMRepository[]>;
+	private readonly _focusedRepository: IObservable<ISCMRepository | undefined>;
 	private readonly _activeRepositoryHistoryItemRefName: IObservable<string | undefined>;
 	private readonly _countBadgeConfig: IObservable<'all' | 'focused' | 'off'>;
 	private readonly _countBadgeRepositories: IObservable<readonly { provider: ISCMProvider; resourceCount: IObservable<number> }[]>;
@@ -65,6 +66,7 @@ export class SCMActiveRepositoryController extends Disposable implements IWorkbe
 		this._visibleRepositories = observableFromEvent(this,
 			Event.any(this.scmViewService.onDidChangeVisibleRepositories, this.scmService.onDidAddRepository, this.scmService.onDidRemoveRepository),
 			() => this.scmViewService.visibleRepositories);
+		this._focusedRepository = observableFromEvent(this, this.scmViewService.onDidFocusRepository, () => this.scmViewService.focusedRepository);
 
 		this._activeRepositoryHistoryItemRefName = derived(reader => {
 			const activeRepository = this.scmViewService.activeRepository.read(reader);
@@ -80,7 +82,7 @@ export class SCMActiveRepositoryController extends Disposable implements IWorkbe
 					const repositories = getDisplayedRepositories(
 						this._visibleRepositories.read(reader),
 						this.scmViewService.activeRepository.read(reader),
-						this.scmViewService.focusedRepository,
+						this._focusedRepository.read(reader),
 						undefined,
 						this.scmService,
 						this.workspaceContextService,
