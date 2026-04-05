@@ -24,7 +24,7 @@ import { MenuItemAction, IMenuService, registerAction2, MenuId, IAction2Options,
 import { IAction, ActionRunner, Separator, IActionRunner, toAction } from '../../../../base/common/actions.js';
 import { IActionViewItemProvider } from '../../../../base/browser/ui/actionbar/actionbar.js';
 import { IThemeService, IFileIconTheme } from '../../../../platform/theme/common/themeService.js';
-import { isSCMResource, isSCMResourceGroup, isSCMRepository, isSCMInput, collectContextMenuActions, getActionViewItemProvider, isSCMActionButton, isSCMViewService, isSCMResourceNode, connectPrimaryMenu } from './util.js';
+import { isSCMResource, isSCMResourceGroup, isSCMRepository, isSCMInput, collectContextMenuActions, getActionViewItemProvider, isSCMActionButton, isSCMViewService, isSCMResourceNode, connectPrimaryMenu, getDisplayedRepositories } from './util.js';
 import { WorkbenchCompressibleAsyncDataTree, IOpenEvent } from '../../../../platform/list/browser/listService.js';
 import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
 import { disposableTimeout, Sequencer, Throttler } from '../../../../base/common/async.js';
@@ -2052,40 +2052,15 @@ export class SCMViewPane extends ViewPane {
 	}
 
 	private getDisplayedRepositories(): readonly ISCMRepository[] {
-		const repositories = this.scmViewService.visibleRepositories;
-
-		if (repositories.length <= 1) {
-			return repositories;
-		}
-
-		const primaryRepository = this.getPrimaryDisplayedRepository(repositories);
-		return primaryRepository ? [primaryRepository] : repositories;
-	}
-
-	private getPrimaryDisplayedRepository(repositories: readonly ISCMRepository[]): ISCMRepository | undefined {
-		const activeRepository = this.scmViewService.activeRepository.get()?.repository ?? this.scmViewService.focusedRepository;
-		if (activeRepository && repositories.includes(activeRepository)) {
-			return activeRepository;
-		}
-
-		const activeEditorUri = EditorResourceAccessor.getOriginalUri(this.editorService.activeEditor, { supportSideBySide: SideBySideEditor.PRIMARY });
-		if (activeEditorUri) {
-			const activeEditorRepository = this.scmService.getRepository(activeEditorUri);
-			if (activeEditorRepository && repositories.includes(activeEditorRepository)) {
-				return activeEditorRepository;
-			}
-		}
-
-		for (const folder of this.workspaceContextService.getWorkspace().folders) {
-			const workspaceRepository = repositories.find(repository =>
-				repository.provider.rootUri && this.uriIdentityService.extUri.isEqual(repository.provider.rootUri, folder.uri));
-
-			if (workspaceRepository) {
-				return workspaceRepository;
-			}
-		}
-
-		return repositories[0];
+		return getDisplayedRepositories(
+			this.scmViewService.visibleRepositories,
+			this.scmViewService.activeRepository.get(),
+			this.scmViewService.focusedRepository,
+			this.editorService.activeEditor,
+			this.scmService,
+			this.workspaceContextService,
+			this.uriIdentityService
+		);
 	}
 
 	private updateIndentStyles(theme: IFileIconTheme): void {

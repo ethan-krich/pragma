@@ -27,11 +27,12 @@ class RecordingNotificationService extends TestNotificationService {
 }
 
 suite('ApplyChangesToParentRepoAction', () => {
-	test('delegates merges to the worktree manager service', async () => {
+	test('merges the current worktree and reopens the canonical repository without the session parameter', async () => {
 		const repoRoot = URI.file('/repo');
 		const worktreeRoot = URI.file('/repo.worktrees/main');
 		const notifications = new RecordingNotificationService();
-		const merges: Array<{ projectRoot: URI; visibleBranch: string; worktreePath: URI | undefined; worktreeBranch: string | undefined }> = [];
+		const mergeRoots: URI[] = [];
+		const opened: URI[] = [];
 
 		const activeSession = {
 			resource: URI.file('/session'),
@@ -59,20 +60,21 @@ suite('ApplyChangesToParentRepoAction', () => {
 			getExistingWorktree: async () => undefined,
 			getBranchContext: async () => undefined,
 			resolveOrCreateWorktree: async () => worktreeRoot,
-			mergeWorktreeIntoBase: async (projectRoot, visibleBranch, options) => {
-				merges.push({
-					projectRoot,
-					visibleBranch,
-					worktreePath: options?.worktreePath,
-					worktreeBranch: options?.worktreeBranch,
-				});
+			mergeWorktreeIntoBase: async () => undefined,
+			mergeCurrentWorktreeIntoBranch: async projectRoot => {
+				mergeRoots.push(projectRoot);
+				return repoRoot;
 			},
-			mergeCurrentWorktreeIntoBranch: async () => repoRoot,
 			recreateWorktree: async () => worktreeRoot,
 		} as IWorktreeManagerService);
 		instantiationService.set(IOpenerService, {
 			_serviceBrand: undefined,
-			open: async () => true,
+			open: async (resource: URI | string) => {
+				if (URI.isUri(resource)) {
+					opened.push(resource);
+				}
+				return true;
+			},
 		} as unknown as IOpenerService);
 		instantiationService.set(IProductService, {
 			_serviceBrand: undefined,
@@ -85,12 +87,17 @@ suite('ApplyChangesToParentRepoAction', () => {
 
 		await command!.handler(instantiationService);
 
-		assert.deepStrictEqual(merges, [{
-			projectRoot: repoRoot,
-			visibleBranch: 'main',
-			worktreePath: worktreeRoot,
-			worktreeBranch: 'pragma/worktrees/main-12345678',
-		}]);
+		assert.deepStrictEqual(mergeRoots, [worktreeRoot]);
 		assert.strictEqual(notifications.notifications[0].severity, Severity.Info);
+
+		const openAction = notifications.notifications[0].actions?.primary?.[0];
+		assert.ok(openAction);
+		await openAction!.run();
+
+		assert.strictEqual(opened.length, 1);
+		assert.strictEqual(opened[0].path, repoRoot.path);
+		const params = new URLSearchParams(opened[0].query);
+		assert.strictEqual(params.get('windowId'), '_blank');
+		assert.strictEqual(params.has('session'), false);
 	});
 });

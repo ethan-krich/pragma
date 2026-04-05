@@ -92,8 +92,7 @@ class ApplyChangesToParentRepoAction extends Action2 {
 		}
 
 		const worktreeRoot = repo.workingDirectory;
-		const repoRoot = repo.uri;
-		const baseBranchName = repo.baseBranchName;
+		let targetRoot = repo.uri;
 
 		const openFolderAction = toAction({
 			id: 'applyChangesToParentRepo.openFolder',
@@ -107,30 +106,18 @@ class ApplyChangesToParentRepoAction extends Action2 {
 
 				const params = new URLSearchParams();
 				params.set('windowId', '_blank');
-				params.set('session', activeSession.resource.toString());
 
 				openerService.open(URI.from({
 					scheme,
 					authority: Schemas.file,
-					path: repoRoot.path,
+					path: targetRoot.path,
 					query: params.toString(),
 				}), { openExternal: true });
 			}
 		});
 
 		try {
-			if (!baseBranchName) {
-				notificationService.notify({
-					severity: Severity.Warning,
-					message: localize('applyChangesNoBranch', "Could not determine the parent branch for this worktree."),
-				});
-				return;
-			}
-
-			await worktreeManagerService.mergeWorktreeIntoBase(repoRoot, baseBranchName, {
-				worktreePath: worktreeRoot,
-				worktreeBranch: repo.detail,
-			});
+			targetRoot = await worktreeManagerService.mergeCurrentWorktreeIntoBranch(worktreeRoot);
 
 			notificationService.notify({
 				severity: Severity.Info,

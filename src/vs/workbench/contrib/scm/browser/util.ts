@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ISCMHistoryItem, SCMHistoryItemChangeViewModelTreeElement, SCMHistoryItemLoadMoreTreeElement, SCMHistoryItemViewModelTreeElement } from '../common/history.js';
-import { ISCMResource, ISCMRepository, ISCMResourceGroup, ISCMInput, ISCMActionButton, ISCMViewService, ISCMProvider } from '../common/scm.js';
+import { ISCMResource, ISCMRepository, ISCMResourceGroup, ISCMInput, ISCMActionButton, ISCMViewService, ISCMProvider, ISCMService } from '../common/scm.js';
 import { IMenu, MenuItemAction } from '../../../../platform/actions/common/actions.js';
 import { IActionViewItemProvider } from '../../../../base/browser/ui/actionbar/actionbar.js';
 import { IDisposable } from '../../../../base/common/lifecycle.js';
@@ -21,6 +21,10 @@ import { IResourceNode, ResourceTree } from '../../../../base/common/resourceTre
 import { ThemeIcon } from '../../../../base/common/themables.js';
 import { Codicon } from '../../../../base/common/codicons.js';
 import { SCMArtifactGroupTreeElement, SCMArtifactTreeElement } from '../common/artifact.js';
+import { EditorInput } from '../../../common/editor/editorInput.js';
+import { EditorResourceAccessor, SideBySideEditor } from '../../../common/editor.js';
+import { IWorkspaceContextService } from '../../../../platform/workspace/common/workspace.js';
+import { IUriIdentityService } from '../../../../platform/uriIdentity/common/uriIdentity.js';
 
 export function isSCMViewService(element: unknown): element is ISCMViewService {
 	return Array.isArray((element as ISCMViewService).repositories) && Array.isArray((element as ISCMViewService).visibleRepositories);
@@ -178,6 +182,57 @@ export function getProviderKey(provider: ISCMProvider): string {
 
 export function getRepositoryResourceCount(provider: ISCMProvider): number {
 	return provider.groups.reduce<number>((r, g) => r + g.resources.length, 0);
+}
+
+export function getPrimaryRepository(
+	repositories: readonly ISCMRepository[],
+	activeRepository: { repository: ISCMRepository; pinned: boolean } | undefined,
+	focusedRepository: ISCMRepository | undefined,
+	activeEditor: EditorInput | undefined,
+	scmService: Pick<ISCMService, 'getRepository'>,
+	workspaceContextService: IWorkspaceContextService,
+	uriIdentityService: IUriIdentityService
+): ISCMRepository | undefined {
+	const primaryRepository = activeRepository?.repository ?? focusedRepository;
+	if (primaryRepository && repositories.includes(primaryRepository)) {
+		return primaryRepository;
+	}
+
+	const activeEditorUri = EditorResourceAccessor.getOriginalUri(activeEditor, { supportSideBySide: SideBySideEditor.PRIMARY });
+	if (activeEditorUri) {
+		const activeEditorRepository = scmService.getRepository(activeEditorUri);
+		if (activeEditorRepository && repositories.includes(activeEditorRepository)) {
+			return activeEditorRepository;
+		}
+	}
+
+	for (const folder of workspaceContextService.getWorkspace().folders) {
+		const workspaceRepository = repositories.find(repository =>
+			repository.provider.rootUri && uriIdentityService.extUri.isEqual(repository.provider.rootUri, folder.uri));
+
+		if (workspaceRepository) {
+			return workspaceRepository;
+		}
+	}
+
+	return repositories[0];
+}
+
+export function getDisplayedRepositories(
+	repositories: readonly ISCMRepository[],
+	activeRepository: { repository: ISCMRepository; pinned: boolean } | undefined,
+	focusedRepository: ISCMRepository | undefined,
+	activeEditor: EditorInput | undefined,
+	scmService: Pick<ISCMService, 'getRepository'>,
+	workspaceContextService: IWorkspaceContextService,
+	uriIdentityService: IUriIdentityService
+): readonly ISCMRepository[] {
+	if (repositories.length <= 1) {
+		return repositories;
+	}
+
+	const primaryRepository = getPrimaryRepository(repositories, activeRepository, focusedRepository, activeEditor, scmService, workspaceContextService, uriIdentityService);
+	return primaryRepository ? [primaryRepository] : repositories;
 }
 
 export function getHistoryItemEditorTitle(historyItem: ISCMHistoryItem): string {
