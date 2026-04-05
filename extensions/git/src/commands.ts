@@ -1109,6 +1109,141 @@ export class CommandCenter {
 		return result.stdout.trim();
 	}
 
+	@command('_git.getWorktrees')
+	async getRepositoryWorktrees(repositoryPath: string): Promise<Array<{ name: string; path: string; ref: string; main: boolean; detached: boolean; branchName: string | undefined }>> {
+		const dotGit = await this.git.getRepositoryDotGit(repositoryPath);
+		const repo = new GitRepository(this.git, repositoryPath, undefined, dotGit, this.logger);
+		const worktrees = await repo.getWorktrees();
+		return worktrees.map(worktree => ({
+			name: worktree.name,
+			path: worktree.path,
+			ref: worktree.ref,
+			main: worktree.main,
+			detached: worktree.detached,
+			branchName: worktree.detached ? undefined : worktree.ref.replace(/^refs\/heads\//, ''),
+		}));
+	}
+
+	@command('_git.getBranchBase')
+	async getRepositoryBranchBase(repositoryPath: string, branchName: string): Promise<{ name: string; isProtected: boolean; remote: string | undefined; localBranchName: string | undefined } | undefined> {
+		const dotGit = await this.git.getRepositoryDotGit(repositoryPath);
+		const repo = new GitRepository(this.git, repositoryPath, undefined, dotGit, this.logger);
+		const branch = await repo.getBranch(branchName);
+		const mergeBaseConfigKey = `branch.${branch.name}.vscode-merge-base`;
+
+		const resolveLocalBranchName = async (candidate: Branch): Promise<string | undefined> => {
+			const localName = candidate.remote ? candidate.name : candidate.name;
+			if (!localName) {
+				return undefined;
+			}
+
+			try {
+				const localBranch = await repo.getBranch(localName);
+				return localBranch.type === RefType.Head ? localBranch.name : undefined;
+			} catch {
+				return undefined;
+			}
+		};
+
+		const toBranchBaseResult = async (candidate: Branch | undefined): Promise<{ name: string; isProtected: boolean; remote: string | undefined; localBranchName: string | undefined } | undefined> => {
+			if (!candidate?.name) {
+				return undefined;
+			}
+
+			return {
+				name: candidate.remote ? `${candidate.remote}/${candidate.name}` : candidate.name,
+				isProtected: false,
+				remote: candidate.remote,
+				localBranchName: await resolveLocalBranchName(candidate),
+			};
+		};
+
+		const branchBaseFromConfig = await repo.config('get', 'local', mergeBaseConfigKey);
+		if (branchBaseFromConfig) {
+			try {
+				const configuredBranch = await repo.getBranch(branchBaseFromConfig);
+				const result = await toBranchBaseResult(configuredBranch);
+				if (result) {
+					return result;
+				}
+			} catch {
+				// Ignore stale merge-base config and continue with fallback heuristics.
+			}
+		}
+
+		try {
+			const reflogEntries = await repo.reflog(branchName, 'branch: Created from *.');
+			if (reflogEntries.length === 1) {
+				const explicitBranchMatch = reflogEntries[0].match(/branch: Created from (?<name>.*)$/);
+				if (explicitBranchMatch?.groups?.name && explicitBranchMatch.groups.name !== 'HEAD') {
+					const reflogBranch = await repo.getBranch(explicitBranchMatch.groups.name);
+					const result = await toBranchBaseResult(reflogBranch.type === RefType.Head && reflogBranch.upstream
+						? await repo.getBranch(`refs/remotes/${reflogBranch.upstream.remote}/${reflogBranch.upstream.name}`)
+						: reflogBranch);
+					if (result) {
+						return result;
+					}
+				}
+			}
+
+			const headReflogEntries = await repo.reflog('HEAD', `checkout: moving from .* to ${branchName.replace('refs/heads/', '')}`);
+			if (headReflogEntries.length > 0) {
+				const headReflogMatch = headReflogEntries[headReflogEntries.length - 1].match(/checkout: moving from ([^\s]+)\s/);
+				if (headReflogMatch?.[1]) {
+					const reflogBranch = await repo.getBranch(headReflogMatch[1]);
+					const result = await toBranchBaseResult(reflogBranch.type === RefType.Head && reflogBranch.upstream
+						? await repo.getBranch(`refs/remotes/${reflogBranch.upstream.remote}/${reflogBranch.upstream.name}`)
+						: reflogBranch);
+					if (result) {
+						return result;
+					}
+				}
+			}
+		} catch {
+			// Ignore reflog parsing errors and fall back to the default branch.
+		}
+
+		try {
+			const remotes = await repo.getRemotes();
+			const defaultRemote = remotes.find(remote => remote.name === 'origin') ?? remotes[0];
+			if (!defaultRemote) {
+				return undefined;
+			}
+
+			return await toBranchBaseResult(await repo.getDefaultBranch(defaultRemote.name));
+		} catch {
+			return undefined;
+		}
+	}
+
+	@command('_git.createWorktree')
+	async createManagedWorktree(repositoryPath: string, commitish: string, branch: string, worktreePath: string): Promise<{ path: string; branch: string; commitish: string }> {
+		const dotGit = await this.git.getRepositoryDotGit(repositoryPath);
+		const repo = new GitRepository(this.git, repositoryPath, undefined, dotGit, this.logger);
+		const worktrees = await repo.getWorktrees();
+
+		if (worktrees.some(worktree => pathEquals(path.normalize(worktree.path), path.normalize(worktreePath)))) {
+			let counter = 0;
+			let uniqueWorktreePath: string;
+			do {
+				uniqueWorktreePath = `${worktreePath}-${++counter}`;
+			} while (worktrees.some(worktree => pathEquals(path.normalize(worktree.path), path.normalize(uniqueWorktreePath))));
+
+			worktreePath = uniqueWorktreePath;
+		}
+
+		await repo.addWorktree({ path: worktreePath, commitish, branch });
+
+		return { path: worktreePath, branch, commitish };
+	}
+
+	@command('_git.deleteWorktree')
+	async deleteManagedWorktree(repositoryPath: string, worktreePath: string): Promise<void> {
+		const dotGit = await this.git.getRepositoryDotGit(repositoryPath);
+		const repo = new GitRepository(this.git, repositoryPath, undefined, dotGit, this.logger);
+		await repo.deleteWorktree(worktreePath);
+	}
+
 	@command('git.init')
 	async init(skipFolderPrompt = false): Promise<void> {
 		let repositoryPath: string | undefined = undefined;
@@ -3804,6 +3939,17 @@ export class CommandCenter {
 		await commands.executeCommand('vscode.openFolder', uri, { forceNewWindow: true });
 	}
 
+	@command('git.copyWorktreePath')
+	async copyWorktreePath(): Promise<void> {
+		const repository = this.getCurrentWorktreeRepository();
+		if (!repository) {
+			await window.showErrorMessage(l10n.t('The current window does not have an open worktree to copy the path from.'));
+			return;
+		}
+
+		env.clipboard.writeText(this.escapePathForClipboard(repository.root));
+	}
+
 	@command('git.graph.deleteTag', { repository: true })
 	async deleteTag2(repository: Repository, historyItem?: SourceControlHistoryItem, historyItemRefId?: string): Promise<void> {
 		const historyItemRef = historyItem?.references?.find(r => r.id === historyItemRefId);
@@ -5459,7 +5605,7 @@ export class CommandCenter {
 			return;
 		}
 
-		env.clipboard.writeText(artifact.id);
+		env.clipboard.writeText(this.escapePathForClipboard(artifact.id));
 	}
 
 	@command('git.repositories.copyCommitHash', { repository: true })
@@ -5730,6 +5876,28 @@ export class CommandCenter {
 				|| repository.mergeGroup.resourceStates.filter(r => r.resourceUri.toString() === uriString)[0];
 		}
 		return undefined;
+	}
+
+	private getCurrentWorktreeRepository(): Repository | undefined {
+		const activeUri = window.activeTextEditor?.document.uri;
+		const activeRepository = activeUri ? this.model.getRepository(activeUri) : undefined;
+		if (activeRepository?.kind === 'worktree') {
+			return activeRepository;
+		}
+
+		const workspaceFolders = workspace.workspaceFolders ?? [];
+		if (workspaceFolders.length === 1) {
+			const workspaceRepository = this.model.getRepository(workspaceFolders[0].uri);
+			if (workspaceRepository?.kind === 'worktree') {
+				return workspaceRepository;
+			}
+		}
+
+		return undefined;
+	}
+
+	private escapePathForClipboard(path: string): string {
+		return path;
 	}
 
 	private runByRepository<T>(resource: Uri, fn: (repository: Repository, resource: Uri) => Promise<T>): Promise<T[]>;

@@ -15,10 +15,11 @@ import { IStatusbarEntry, IStatusbarService, StatusbarAlignment as MainThreadSta
 import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
 import { EditorResourceAccessor } from '../../../common/editor.js';
 import { IUriIdentityService } from '../../../../platform/uriIdentity/common/uriIdentity.js';
+import { IWorkspaceContextService } from '../../../../platform/workspace/common/workspace.js';
 import { ITitleService } from '../../../services/title/browser/titleService.js';
 import { IEditorGroupContextKeyProvider, IEditorGroupsService } from '../../../services/editor/common/editorGroupsService.js';
 import { EditorInput } from '../../../common/editor/editorInput.js';
-import { getRepositoryResourceCount, getSCMRepositoryIcon, getStatusBarCommandGenericName } from './util.js';
+import { getDisplayedRepositories, getRepositoryResourceCount, getSCMRepositoryIcon, getStatusBarCommandGenericName } from './util.js';
 import { autorun, derived, IObservable, observableFromEvent } from '../../../../base/common/observable.js';
 import { observableConfigValue } from '../../../../platform/observable/common/platformObservableUtils.js';
 import { Command } from '../../../../editor/common/languages.js';
@@ -30,6 +31,7 @@ const ActiveRepositoryContextKeys = {
 
 export class SCMActiveRepositoryController extends Disposable implements IWorkbenchContribution {
 	private readonly _visibleRepositories: IObservable<readonly ISCMRepository[]>;
+	private readonly _focusedRepository: IObservable<ISCMRepository | undefined>;
 	private readonly _activeRepositoryHistoryItemRefName: IObservable<string | undefined>;
 	private readonly _countBadgeConfig: IObservable<'all' | 'focused' | 'off'>;
 	private readonly _countBadgeRepositories: IObservable<readonly { provider: ISCMProvider; resourceCount: IObservable<number> }[]>;
@@ -45,6 +47,8 @@ export class SCMActiveRepositoryController extends Disposable implements IWorkbe
 		@ISCMService private readonly scmService: ISCMService,
 		@ISCMViewService private readonly scmViewService: ISCMViewService,
 		@IStatusbarService private readonly statusbarService: IStatusbarService,
+		@IUriIdentityService private readonly uriIdentityService: IUriIdentityService,
+		@IWorkspaceContextService private readonly workspaceContextService: IWorkspaceContextService,
 		@ITitleService private readonly titleService: ITitleService
 	) {
 		super();
@@ -62,6 +66,7 @@ export class SCMActiveRepositoryController extends Disposable implements IWorkbe
 		this._visibleRepositories = observableFromEvent(this,
 			Event.any(this.scmViewService.onDidChangeVisibleRepositories, this.scmService.onDidAddRepository, this.scmService.onDidRemoveRepository),
 			() => this.scmViewService.visibleRepositories);
+		this._focusedRepository = observableFromEvent(this, this.scmViewService.onDidFocusRepository, () => this.scmViewService.focusedRepository);
 
 		this._activeRepositoryHistoryItemRefName = derived(reader => {
 			const activeRepository = this.scmViewService.activeRepository.read(reader);
@@ -74,7 +79,15 @@ export class SCMActiveRepositoryController extends Disposable implements IWorkbe
 		this._countBadgeRepositories = derived(this, reader => {
 			switch (this._countBadgeConfig.read(reader)) {
 				case 'all': {
-					const repositories = this._visibleRepositories.read(reader);
+					const repositories = getDisplayedRepositories(
+						this._visibleRepositories.read(reader),
+						this.scmViewService.activeRepository.read(reader),
+						this._focusedRepository.read(reader),
+						undefined,
+						this.scmService,
+						this.workspaceContextService,
+						this.uriIdentityService
+					);
 					return repositories.map(r => ({ provider: r.provider, resourceCount: this._getRepositoryResourceCount(r) }));
 				}
 				case 'focused': {

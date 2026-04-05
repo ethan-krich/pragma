@@ -702,6 +702,8 @@ export interface IRepositoryResolver {
 
 export class Repository implements Disposable {
 	static readonly WORKTREE_ROOT_STORAGE_KEY = 'worktreeRoot';
+	private static readonly MANAGED_WORKTREE_BRANCH_PREFIX = 'pragma/worktrees/';
+	private static readonly MANAGED_WORKTREE_SUFFIX_REGEX = /^(?<branch>.+)-[0-9a-f]{8}$/i;
 
 	private _onDidChangeRepository = new EventEmitter<Uri>();
 	readonly onDidChangeRepository: Event<Uri> = this._onDidChangeRepository.event;
@@ -772,6 +774,20 @@ export class Repository implements Disposable {
 		}
 
 		return (HEAD.commit || '').substr(0, 8);
+	}
+
+	private getDisplayedHeadName(): string | undefined {
+		const headName = this.HEAD?.name;
+		if (!headName) {
+			return this.headShortName;
+		}
+
+		if (!headName.startsWith(Repository.MANAGED_WORKTREE_BRANCH_PREFIX)) {
+			return headName;
+		}
+
+		const encodedVisibleBranch = headName.substring(Repository.MANAGED_WORKTREE_BRANCH_PREFIX.length);
+		return encodedVisibleBranch.match(Repository.MANAGED_WORKTREE_SUFFIX_REGEX)?.groups?.branch ?? encodedVisibleBranch;
 	}
 
 	private _remotes: Remote[] = [];
@@ -1428,7 +1444,7 @@ export class Repository implements Disposable {
 					}
 
 					await this.repository.rebaseContinue();
-					await this.commitOperationCleanup(message, indexResources, workingGroupResources);
+					await this.commitOperationCleanup(indexResources, workingGroupResources);
 				},
 				() => this.commitOperationGetOptimisticResourceGroups(opts));
 		} else {
@@ -1454,7 +1470,7 @@ export class Repository implements Disposable {
 					message = await this.appendAICoAuthorTrailer(message, indexResources, workingGroupResources);
 
 					await this.repository.commit(message, opts);
-					await this.commitOperationCleanup(message, indexResources, workingGroupResources);
+					await this.commitOperationCleanup(indexResources, workingGroupResources);
 				},
 				() => this.commitOperationGetOptimisticResourceGroups(opts));
 
@@ -1465,10 +1481,11 @@ export class Repository implements Disposable {
 		}
 	}
 
-	private async commitOperationCleanup(message: string | undefined, indexResources: string[], workingGroupResources: string[]) {
-		if (message) {
-			this.inputBox.value = await this.getInputTemplate();
-		}
+	private async commitOperationCleanup(indexResources: string[], workingGroupResources: string[]) {
+		const inputTemplate = await this.getInputTemplate();
+		this._sourceControl.commitTemplate = inputTemplate;
+		this.inputBox.value = inputTemplate;
+
 		this.closeDiffEditors(indexResources, workingGroupResources);
 
 		// Accept working set changes across all chat sessions
@@ -3213,7 +3230,7 @@ export class Repository implements Disposable {
 			return '';
 		}
 
-		const head = HEAD.name || (HEAD.commit || '').substr(0, 8);
+		const head = this.getDisplayedHeadName() || (HEAD.commit || '').substr(0, 8);
 
 		return head
 			+ (this.workingTreeGroup.resourceStates.length + this.untrackedGroup.resourceStates.length > 0 ? '*' : '')
@@ -3264,7 +3281,7 @@ export class Repository implements Disposable {
 	}
 
 	private updateInputBoxPlaceholder(): void {
-		const branchName = this.headShortName;
+		const branchName = this.getDisplayedHeadName();
 
 		if (branchName) {
 			// '{0}' will be replaced by the corresponding key-command later in the process, which is why it needs to stay.

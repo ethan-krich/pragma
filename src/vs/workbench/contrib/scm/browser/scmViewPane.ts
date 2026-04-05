@@ -24,7 +24,7 @@ import { MenuItemAction, IMenuService, registerAction2, MenuId, IAction2Options,
 import { IAction, ActionRunner, Separator, IActionRunner, toAction } from '../../../../base/common/actions.js';
 import { IActionViewItemProvider } from '../../../../base/browser/ui/actionbar/actionbar.js';
 import { IThemeService, IFileIconTheme } from '../../../../platform/theme/common/themeService.js';
-import { isSCMResource, isSCMResourceGroup, isSCMRepository, isSCMInput, collectContextMenuActions, getActionViewItemProvider, isSCMActionButton, isSCMViewService, isSCMResourceNode, connectPrimaryMenu } from './util.js';
+import { isSCMResource, isSCMResourceGroup, isSCMRepository, isSCMInput, collectContextMenuActions, getActionViewItemProvider, isSCMActionButton, isSCMViewService, isSCMResourceNode, connectPrimaryMenu, getDisplayedRepositories } from './util.js';
 import { WorkbenchCompressibleAsyncDataTree, IOpenEvent } from '../../../../platform/list/browser/listService.js';
 import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
 import { disposableTimeout, Sequencer, Throttler } from '../../../../base/common/async.js';
@@ -75,8 +75,18 @@ import { AccessibilityVerbositySettingId } from '../../accessibility/browser/acc
 import { IAccessibilityService } from '../../../../platform/accessibility/common/accessibility.js';
 import { AccessibilityCommandId } from '../../accessibility/common/accessibilityCommands.js';
 import { SCMInputWidget } from './scmInput.js';
+import { IGitService } from '../../git/common/gitService.js';
+import { IWorktreeBranchContext } from '../../worktreeManager/browser/worktreeManagerTypes.js';
+import { IWorktreeManagerService } from '../../worktreeManager/browser/worktreeManagerService.js';
+import { IHostService } from '../../../services/host/browser/host.js';
+import { IWorkspaceContextService } from '../../../../platform/workspace/common/workspace.js';
 
+const MERGE_CURRENT_WORKTREE_COMMAND_ID = 'workbench.scm.action.mergeCurrentWorktree';
 type TreeElement = ISCMRepository | ISCMInput | ISCMActionButton | ISCMResourceGroup | ISCMResource | IResourceNode<ISCMResource, ISCMResourceGroup>;
+
+function shouldShowRepositories(repositoryCount: number, configurationService: IConfigurationService): boolean {
+	return repositoryCount > 1 || (repositoryCount === 1 && configurationService.getValue<boolean>('scm.alwaysShowRepositories') === true);
+}
 
 function processResourceFilterData(uri: URI, filterData: FuzzyScore | LabelFuzzyScore | undefined): [IMatch[] | undefined, IMatch[] | undefined] {
 	if (!filterData) {
@@ -1357,6 +1367,33 @@ class CollapseAllAction extends ViewAction<SCMViewPane> {
 
 registerAction2(CollapseAllAction);
 
+registerAction2(class extends Action2 {
+	constructor() {
+		super({
+			id: MERGE_CURRENT_WORKTREE_COMMAND_ID,
+			title: { value: localize('mergeCurrentWorktree', "Merge Worktree"), original: 'Merge Worktree' },
+			f1: false,
+		});
+	}
+
+	override async run(accessor: ServicesAccessor, projectRoot?: URI): Promise<void> {
+		if (!projectRoot) {
+			return;
+		}
+
+		const worktreeManagerService = accessor.get(IWorktreeManagerService);
+		const hostService = accessor.get(IHostService);
+		try {
+			const targetRoot = await worktreeManagerService.mergeCurrentWorktreeIntoBranch(projectRoot);
+			await hostService.openWindow([{ folderUri: targetRoot }], { forceReuseWindow: true });
+		} catch (error) {
+			const canonicalRoot = await worktreeManagerService.getCanonicalProjectRoot(projectRoot);
+			await hostService.openWindow([{ folderUri: canonicalRoot }], { forceReuseWindow: true });
+			throw error;
+		}
+	}
+});
+
 export class SCMViewPane extends ViewPane {
 
 	private readonly _onDidLayout: Emitter<void>;
@@ -1441,7 +1478,9 @@ export class SCMViewPane extends ViewPane {
 		@ISCMService private readonly scmService: ISCMService,
 		@ISCMViewService private readonly scmViewService: ISCMViewService,
 		@IStorageService private readonly storageService: IStorageService,
+		@IGitService private readonly gitService: IGitService,
 		@IUriIdentityService private readonly uriIdentityService: IUriIdentityService,
+		@IWorkspaceContextService private readonly workspaceContextService: IWorkspaceContextService,
 		@IKeybindingService keybindingService: IKeybindingService,
 		@IThemeService themeService: IThemeService,
 		@IContextMenuService contextMenuService: IContextMenuService,
@@ -1560,7 +1599,9 @@ export class SCMViewPane extends ViewPane {
 
 					// Add visible repositories
 					this.editorService.onDidActiveEditorChange(this.onDidActiveEditorChange, this, this.visibilityDisposables);
+					this.scmViewService.onDidFocusRepository(() => this.updateChildren(), this, this.visibilityDisposables);
 					this.scmViewService.onDidChangeVisibleRepositories(this.onDidChangeVisibleRepositories, this, this.visibilityDisposables);
+					this.workspaceContextService.onDidChangeWorkspaceFolders(() => this.updateChildren(), this, this.visibilityDisposables);
 					this.onDidChangeVisibleRepositories({ added: this.scmViewService.visibleRepositories, removed: Iterable.empty() });
 
 					// Restore scroll position
@@ -1599,7 +1640,6 @@ export class SCMViewPane extends ViewPane {
 			catch { }
 		});
 		this.actionButtonRenderer = this.instantiationService.createInstance(ActionButtonRenderer);
-
 		this.listLabels = this.instantiationService.createInstance(ResourceLabels, { onDidChangeVisibility: this.onDidChangeBodyVisibility });
 		this.disposables.add(this.listLabels);
 
@@ -1607,7 +1647,7 @@ export class SCMViewPane extends ViewPane {
 		resourceActionRunner.onWillRun(() => this.tree.domFocus(), this, this.disposables);
 		this.disposables.add(resourceActionRunner);
 
-		const treeDataSource = this.instantiationService.createInstance(SCMTreeDataSource, () => this.viewMode);
+		const treeDataSource = this.instantiationService.createInstance(SCMTreeDataSource, () => this.viewMode, () => this.getDisplayedRepositories());
 		this.disposables.add(treeDataSource);
 
 		const compressionEnabled = observableConfigValue('scm.compactFolders', true, this.configurationService);
@@ -1752,6 +1792,8 @@ export class SCMViewPane extends ViewPane {
 	}
 
 	private onDidActiveEditorChange(): void {
+		this.updateChildren();
+
 		if (!this.configurationService.getValue<boolean>('scm.autoReveal')) {
 			return;
 		}
@@ -1771,7 +1813,7 @@ export class SCMViewPane extends ViewPane {
 		this.revealResourceThrottler.queue(
 			() => this.treeOperationSequencer.queue(
 				async () => {
-					for (const repository of this.scmViewService.visibleRepositories) {
+					for (const repository of this.getDisplayedRepositories()) {
 						const item = this.items.get(repository);
 
 						if (!item) {
@@ -1836,6 +1878,19 @@ export class SCMViewPane extends ViewPane {
 			onDidChangeResourceGroups();
 
 			this.items.set(repository, repositoryDisposables);
+
+			if (repository.provider.providerId === 'git' && repository.provider.rootUri) {
+				void this.gitService.openRepository(repository.provider.rootUri).then(gitRepository => {
+					if (!gitRepository || !this.items.has(repository)) {
+						return;
+					}
+
+					repositoryDisposables.add(autorun(reader => {
+						gitRepository.state.read(reader);
+						this.updateChildren(repository);
+					}));
+				});
+			}
 		}
 
 		// Removed repositories
@@ -2000,6 +2055,18 @@ export class SCMViewPane extends ViewPane {
 				}));
 	}
 
+	private getDisplayedRepositories(): readonly ISCMRepository[] {
+		return getDisplayedRepositories(
+			this.scmViewService.visibleRepositories,
+			this.scmViewService.activeRepository.get(),
+			this.scmViewService.focusedRepository,
+			this.editorService.activeEditor,
+			this.scmService,
+			this.workspaceContextService,
+			this.uriIdentityService
+		);
+	}
+
 	private updateIndentStyles(theme: IFileIconTheme): void {
 		this.treeContainer.classList.toggle('list-view-mode', this.viewMode === ViewMode.List);
 		this.treeContainer.classList.toggle('tree-view-mode', this.viewMode === ViewMode.Tree);
@@ -2008,10 +2075,10 @@ export class SCMViewPane extends ViewPane {
 	}
 
 	private updateScmProviderContextKeys(): void {
-		const alwaysShowRepositories = this.configurationService.getValue<boolean>('scm.alwaysShowRepositories');
+		const repositories = this.getDisplayedRepositories();
 
-		if (!alwaysShowRepositories && this.items.size === 1) {
-			const provider = Iterable.first(this.items.keys())!.provider;
+		if (repositories.length === 1) {
+			const provider = repositories[0].provider;
 			this.scmProviderContextKey.set(provider.providerId);
 			this.scmProviderRootUriContextKey.set(provider.rootUri?.toString());
 			this.scmProviderHasRootUriContextKey.set(!!provider.rootUri);
@@ -2023,18 +2090,21 @@ export class SCMViewPane extends ViewPane {
 	}
 
 	private updateRepositoryCollapseAllContextKeys(): void {
-		if (!this.isBodyVisible() || this.items.size === 1) {
+		const repositories = this.getDisplayedRepositories();
+		const showRepositories = shouldShowRepositories(repositories.length, this.configurationService);
+
+		if (!this.isBodyVisible() || !showRepositories) {
 			this.isAnyRepositoryCollapsibleContextKey.set(false);
 			this.areAllRepositoriesCollapsedContextKey.set(false);
 			return;
 		}
 
-		this.isAnyRepositoryCollapsibleContextKey.set(this.scmViewService.visibleRepositories.some(r => this.tree.hasNode(r) && this.tree.isCollapsible(r)));
-		this.areAllRepositoriesCollapsedContextKey.set(this.scmViewService.visibleRepositories.every(r => this.tree.hasNode(r) && (!this.tree.isCollapsible(r) || this.tree.isCollapsed(r))));
+		this.isAnyRepositoryCollapsibleContextKey.set(repositories.some(r => this.tree.hasNode(r) && this.tree.isCollapsible(r)));
+		this.areAllRepositoriesCollapsedContextKey.set(repositories.every(r => this.tree.hasNode(r) && (!this.tree.isCollapsible(r) || this.tree.isCollapsed(r))));
 	}
 
 	collapseAllRepositories(): void {
-		for (const repository of this.scmViewService.visibleRepositories) {
+		for (const repository of this.getDisplayedRepositories()) {
 			if (this.tree.isCollapsible(repository)) {
 				this.tree.collapse(repository);
 			}
@@ -2042,7 +2112,7 @@ export class SCMViewPane extends ViewPane {
 	}
 
 	expandAllRepositories(): void {
-		for (const repository of this.scmViewService.visibleRepositories) {
+		for (const repository of this.getDisplayedRepositories()) {
 			if (this.tree.isCollapsible(repository)) {
 				this.tree.expand(repository);
 			}
@@ -2066,13 +2136,15 @@ export class SCMViewPane extends ViewPane {
 	}
 
 	private async focusInput(delta: number): Promise<void> {
-		if (!this.scmViewService.focusedRepository ||
-			this.scmViewService.visibleRepositories.length === 0) {
+		const repositories = this.getDisplayedRepositories();
+
+		if (repositories.length === 0) {
 			return;
 		}
 
-		let input = this.scmViewService.focusedRepository.input;
-		const repositories = this.scmViewService.visibleRepositories;
+		const focusedRepository = this.scmViewService.focusedRepository;
+		const repository = focusedRepository && repositories.includes(focusedRepository) ? focusedRepository : repositories[0];
+		let input = repository.input;
 
 		// One visible repository and the input is already focused
 		if (repositories.length === 1 && this.inputRenderer.getRenderedInputWidget(input)?.hasFocus() === true) {
@@ -2081,7 +2153,7 @@ export class SCMViewPane extends ViewPane {
 
 		// Multiple visible repositories and the input already focused
 		if (repositories.length > 1 && this.inputRenderer.getRenderedInputWidget(input)?.hasFocus() === true) {
-			const focusedRepositoryIndex = repositories.indexOf(this.scmViewService.focusedRepository);
+			const focusedRepositoryIndex = repositories.indexOf(repository);
 			const newFocusedRepositoryIndex = rot(focusedRepositoryIndex + delta, repositories.length);
 			input = repositories[newFocusedRepositoryIndex].input;
 		}
@@ -2101,13 +2173,16 @@ export class SCMViewPane extends ViewPane {
 	}
 
 	private async focusResourceGroup(delta: number): Promise<void> {
-		if (!this.scmViewService.focusedRepository ||
-			this.scmViewService.visibleRepositories.length === 0) {
+		const repositories = this.getDisplayedRepositories();
+
+		if (repositories.length === 0) {
 			return;
 		}
 
+		const focusedRepository = this.scmViewService.focusedRepository;
+		const repository = focusedRepository && repositories.includes(focusedRepository) ? focusedRepository : repositories[0];
 		const treeHasDomFocus = isActiveElement(this.tree.getHTMLElement());
-		const resourceGroups = this.scmViewService.focusedRepository.provider.groups;
+		const resourceGroups = repository.provider.groups;
 		const focusedResourceGroup = this.tree.getFocus().find(e => isSCMResourceGroup(e));
 		const focusedResourceGroupIndex = treeHasDomFocus && focusedResourceGroup ? resourceGroups.indexOf(focusedResourceGroup) : -1;
 
@@ -2148,7 +2223,8 @@ export class SCMViewPane extends ViewPane {
 	}
 
 	override getActionsContext(): unknown {
-		return this.scmViewService.visibleRepositories.length === 1 ? this.scmViewService.visibleRepositories[0].provider : undefined;
+		const repositories = this.getDisplayedRepositories();
+		return repositories.length === 1 ? repositories[0].provider : undefined;
 	}
 
 	override focus(): void {
@@ -2158,7 +2234,7 @@ export class SCMViewPane extends ViewPane {
 			return new Promise<void>(resolve => {
 				if (this.isExpanded()) {
 					if (this.tree.getFocus().length === 0) {
-						for (const repository of this.scmViewService.visibleRepositories) {
+						for (const repository of this.getDisplayedRepositories()) {
 							const widget = this.inputRenderer.getRenderedInputWidget(repository.input);
 
 							if (widget) {
@@ -2189,44 +2265,52 @@ export class SCMViewPane extends ViewPane {
 class SCMTreeDataSource extends Disposable implements IAsyncDataSource<ISCMViewService, TreeElement> {
 	constructor(
 		private readonly viewMode: () => ViewMode,
+		private readonly getDisplayedRepositories: () => readonly ISCMRepository[],
 		@IConfigurationService private readonly configurationService: IConfigurationService,
-		@ISCMViewService private readonly scmViewService: ISCMViewService
+		@ISCMViewService private readonly scmViewService: ISCMViewService,
+		@IWorktreeManagerService private readonly worktreeManagerService: IWorktreeManagerService,
 	) {
 		super();
 	}
 
 	async getChildren(inputOrElement: ISCMViewService | TreeElement): Promise<Iterable<TreeElement>> {
-		const repositoryCount = this.scmViewService.visibleRepositories.length;
+		const repositories = this.getDisplayedRepositories();
+		const repositoryCount = repositories.length;
 
 		const showActionButton = this.configurationService.getValue<boolean>('scm.showActionButton') === true;
-		const alwaysShowRepositories = this.configurationService.getValue<boolean>('scm.alwaysShowRepositories') === true;
+		const showRepositories = shouldShowRepositories(repositoryCount, this.configurationService);
 
-		if (isSCMViewService(inputOrElement) && (repositoryCount > 1 || alwaysShowRepositories)) {
-			return this.scmViewService.visibleRepositories;
-		} else if ((isSCMViewService(inputOrElement) && repositoryCount === 1 && !alwaysShowRepositories) || isSCMRepository(inputOrElement)) {
+		if (isSCMViewService(inputOrElement) && showRepositories) {
+			return repositories;
+		} else if ((isSCMViewService(inputOrElement) && repositoryCount === 1 && !showRepositories) || isSCMRepository(inputOrElement)) {
 			const children: TreeElement[] = [];
 
-			inputOrElement = isSCMRepository(inputOrElement) ? inputOrElement : this.scmViewService.visibleRepositories[0];
+			inputOrElement = isSCMRepository(inputOrElement) ? inputOrElement : repositories[0];
 			const actionButton = inputOrElement.provider.actionButton.get();
 			const resourceGroups = inputOrElement.provider.groups;
+			const worktreeContext = inputOrElement.provider.providerId === 'git' && inputOrElement.provider.rootUri
+				? await this.worktreeManagerService.getBranchContext(inputOrElement.provider.rootUri)
+				: undefined;
+			const primaryActionButton = this.getActionButton(inputOrElement, actionButton, worktreeContext, resourceGroups);
 
 			// SCM Input
-			if (inputOrElement.input.visible) {
+			if (inputOrElement.input.visible && (!showActionButton || !this.shouldHideInput(primaryActionButton))) {
 				children.push(inputOrElement.input);
 			}
 
 			// Action Button
-			if (showActionButton && actionButton) {
+			if (showActionButton && primaryActionButton) {
 				children.push({
 					type: 'actionButton',
 					repository: inputOrElement,
-					button: actionButton
+					button: primaryActionButton
 				} satisfies ISCMActionButton);
 			}
 
 			// ResourceGroups
+			const hasPrimaryActions = showActionButton && !!primaryActionButton;
 			const hasSomeChanges = resourceGroups.some(group => group.resources.length > 0);
-			if (hasSomeChanges || (repositoryCount === 1 && (!showActionButton || !actionButton))) {
+			if (hasSomeChanges || (repositoryCount === 1 && !hasPrimaryActions)) {
 				children.push(...resourceGroups);
 			}
 
@@ -2257,7 +2341,57 @@ class SCMTreeDataSource extends Disposable implements IAsyncDataSource<ISCMViewS
 		return [];
 	}
 
-	getParent(element: TreeElement): ISCMViewService | TreeElement {
+	private getActionButton(repository: ISCMRepository, defaultActionButton: ISCMActionButtonDescriptor | undefined, worktreeContext: IWorktreeBranchContext | undefined, resourceGroups: readonly ISCMResourceGroup[]): ISCMActionButtonDescriptor | undefined {
+		if (!worktreeContext) {
+			return defaultActionButton;
+		}
+
+		const repositoryHasVisibleChanges = resourceGroups.some(group => group.resources.length > 0);
+
+		if (worktreeContext.isManagedWorktree) {
+			if (repositoryHasVisibleChanges) {
+				return defaultActionButton;
+			}
+
+			return {
+				command: {
+					id: MERGE_CURRENT_WORKTREE_COMMAND_ID,
+					title: localize('scmActionButton.mergeWorktree', "$(git-merge) Merge Worktree"),
+					shortTitle: localize('scmActionButton.mergeWorktree.short', "$(git-merge) Merge"),
+					tooltip: localize('scmActionButton.mergeWorktree.tooltip', "Merge this worktree back into \"{0}\"", worktreeContext.visibleBranch),
+					arguments: [worktreeContext.currentRoot],
+				},
+				enabled: worktreeContext.canMerge,
+			};
+		}
+
+		if (!repositoryHasVisibleChanges && worktreeContext.canPush) {
+			return {
+				command: {
+					id: worktreeContext.hasUpstream ? 'git.push' : 'git.publish',
+					title: worktreeContext.hasUpstream
+						? localize('scmActionButton.push', "$(arrow-up) Push")
+						: localize('scmActionButton.publish', "$(cloud-upload) Publish Branch"),
+					shortTitle: worktreeContext.hasUpstream
+						? localize('scmActionButton.push.short', "$(arrow-up) Push")
+						: localize('scmActionButton.publish.short', "$(cloud-upload) Publish"),
+					tooltip: worktreeContext.hasUpstream
+						? localize('scmActionButton.push.tooltip', "Push \"{0}\"", worktreeContext.visibleBranch)
+						: localize('scmActionButton.publish.tooltip', "Publish \"{0}\"", worktreeContext.visibleBranch),
+					arguments: [worktreeContext.currentRoot],
+				},
+				enabled: true,
+			};
+		}
+
+		return defaultActionButton;
+	}
+
+	private shouldHideInput(actionButton: ISCMActionButtonDescriptor | undefined): boolean {
+		return actionButton?.command.id === MERGE_CURRENT_WORKTREE_COMMAND_ID;
+	}
+
+	getParent(element: TreeElement): ISCMViewService | TreeElement | undefined {
 		if (isSCMResourceNode(element)) {
 			if (element.parent === element.context.resourceTree.root) {
 				return element.context;
@@ -2288,12 +2422,8 @@ class SCMTreeDataSource extends Disposable implements IAsyncDataSource<ISCMViewS
 		} else if (isSCMActionButton(element)) {
 			return element.repository;
 		} else if (isSCMResourceGroup(element)) {
-			const repository = this.scmViewService.visibleRepositories.find(r => r.provider === element.provider);
-			if (!repository) {
-				throw new Error('Invalid element passed to getParent');
-			}
-
-			return repository;
+			return this.getDisplayedRepositories().find(r => r.provider === element.provider)
+				?? this.scmViewService.repositories.find(r => r.provider === element.provider);
 		} else if (isSCMRepository(element)) {
 			return this.scmViewService;
 		} else {
@@ -2303,7 +2433,7 @@ class SCMTreeDataSource extends Disposable implements IAsyncDataSource<ISCMViewS
 
 	hasChildren(inputOrElement: ISCMViewService | TreeElement): boolean {
 		if (isSCMViewService(inputOrElement)) {
-			return this.scmViewService.visibleRepositories.length !== 0;
+			return this.getDisplayedRepositories().length !== 0;
 		} else if (isSCMRepository(inputOrElement)) {
 			return true;
 		} else if (isSCMInput(inputOrElement)) {
