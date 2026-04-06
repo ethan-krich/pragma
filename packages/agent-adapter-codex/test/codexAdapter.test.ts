@@ -20,7 +20,15 @@ import type {
 	AgentStreamEvent,
 } from '@pragma/agent-core';
 import { AgentCommandError } from '@pragma/agent-core';
-import { CodexAdapter, CodexSdkTransport, CodexSignedInBridgeTransport, type CodexTransportDriver } from '../src/index.js';
+import {
+	Adapter,
+	CodexAdapter,
+	CodexSdkTransport,
+	CodexSignedInBridgeTransport,
+	SdkTransport,
+	SignedInBridgeTransport,
+	type CodexTransportDriver,
+} from '../src/index.js';
 
 class MockCodexDriver implements CodexTransportDriver {
 	public readonly sentMessages: AgentSendMessageRequest[] = [];
@@ -90,6 +98,12 @@ function now(): string {
 }
 
 describe('CodexAdapter', () => {
+	it('exposes the standard adapter and transport export names', () => {
+		expect(Adapter).toBe(CodexAdapter);
+		expect(SdkTransport).toBe(CodexSdkTransport);
+		expect(SignedInBridgeTransport).toBe(CodexSignedInBridgeTransport);
+	});
+
 	it('prefers the signed-in bridge transport when available', async () => {
 		const bridgeDriver = new MockCodexDriver([]);
 		const sdkDriver = new MockCodexDriver([]);

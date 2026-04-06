@@ -5,8 +5,11 @@
 
 import type { AgentModelDescriptor, AgentStreamEvent } from '@pragma/agent-core';
 import { AgentCore } from '@pragma/agent-core';
-import { ClaudeCodeAdapter, ClaudeSignedInBridgeTransport } from '@pragma/agent-adapter-claude-code';
-import { CodexAdapter, CodexSignedInBridgeTransport } from '@pragma/agent-adapter-codex';
+
+const adapterPackages = [
+	'@pragma/adapter-claude-code',
+	'@pragma/adapter-codex',
+] as const;
 
 async function logRun(prefix: string, stream: AsyncIterable<AgentStreamEvent>): Promise<void> {
 	for await (const event of stream) {
@@ -64,22 +67,7 @@ function pickDefaultModel(models: readonly AgentModelDescriptor[], adapterId: st
 }
 
 async function main(): Promise<void> {
-	const core = new AgentCore();
-	core.registerAdapter(new ClaudeCodeAdapter({
-		transports: [
-			new ClaudeSignedInBridgeTransport('claude-sdk', {
-				cwd: process.cwd(),
-			}),
-		],
-	}));
-	core.registerAdapter(new CodexAdapter({
-		transports: [
-			new CodexSignedInBridgeTransport('codex-sdk', {
-				cwd: process.cwd(),
-				skipGitRepoCheck: false,
-			}),
-		],
-	}));
+	const core = await AgentCore.fromAdapterPackages(adapterPackages);
 
 	console.log('Registered adapters:', core.listAdapters().map(adapter => adapter.id));
 

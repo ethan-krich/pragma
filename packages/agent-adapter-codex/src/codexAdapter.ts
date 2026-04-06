@@ -22,7 +22,7 @@ import {
 	AgentTerminalCommandRequest,
 	AgentTurnOptions,
 } from '@pragma/agent-core';
-import type { CodexTransport } from './codexTransport.js';
+import { CodexSdkTransport, CodexSignedInBridgeTransport, type CodexSdkTransportOptions, type CodexTransport } from './codexTransport.js';
 
 const CODEX_CAPABILITIES: AgentCapabilities = {
 	supportsImages: true,
@@ -45,8 +45,14 @@ export class CodexAdapter implements AgentAdapter {
 	public readonly displayName = 'Codex';
 	public readonly capabilities = CODEX_CAPABILITIES;
 	private selectedTransport?: CodexTransport;
+	private readonly options: CodexAdapterOptions;
 
-	public constructor(private readonly options: CodexAdapterOptions = {}) { }
+	public constructor(options: CodexAdapterOptions = {}) {
+		this.options = {
+			...options,
+			transports: options.transports ?? createDefaultCodexTransports(),
+		};
+	}
 
 	public getStandardCommandMappings(): Partial<Record<AgentStandardCommandId, string>> {
 		return {
@@ -173,4 +179,15 @@ export class CodexAdapter implements AgentAdapter {
 	private getCommandName(command: string): string {
 		return command.trim().replace(/^\//u, '').split(/\s+/u)[0] ?? '';
 	}
+}
+
+function createDefaultCodexTransports(options: CodexSdkTransportOptions = {}): readonly CodexTransport[] {
+	const sharedOptions = {
+		cwd: options.cwd ?? process.cwd(),
+		...options,
+	};
+	return [
+		new CodexSignedInBridgeTransport('codex-bridge', sharedOptions),
+		new CodexSdkTransport('codex-sdk', sharedOptions),
+	];
 }

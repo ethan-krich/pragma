@@ -20,7 +20,15 @@ import type {
 	AgentStreamEvent,
 } from '@pragma/agent-core';
 import { AgentCommandError } from '@pragma/agent-core';
-import { ClaudeCodeAdapter, ClaudeSdkTransport, ClaudeSignedInBridgeTransport, type ClaudeTransportDriver } from '../src/index.js';
+import {
+	Adapter,
+	ClaudeCodeAdapter,
+	ClaudeSdkTransport,
+	ClaudeSignedInBridgeTransport,
+	SdkTransport,
+	SignedInBridgeTransport,
+	type ClaudeTransportDriver,
+} from '../src/index.js';
 
 class MockClaudeDriver implements ClaudeTransportDriver {
 	public readonly sentMessages: AgentSendMessageRequest[] = [];
@@ -112,6 +120,12 @@ function now(): string {
 }
 
 describe('ClaudeCodeAdapter', () => {
+	it('exposes the standard adapter and transport export names', () => {
+		expect(Adapter).toBe(ClaudeCodeAdapter);
+		expect(SdkTransport).toBe(ClaudeSdkTransport);
+		expect(SignedInBridgeTransport).toBe(ClaudeSignedInBridgeTransport);
+	});
+
 	it('prefers the signed-in bridge transport when available', async () => {
 		const bridgeDriver = new MockClaudeDriver([]);
 		const sdkDriver = new MockClaudeDriver([]);

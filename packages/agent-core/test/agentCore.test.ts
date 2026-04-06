@@ -418,6 +418,143 @@ function createFakeAdapter(id: string): FakeAgentAdapter {
 	);
 }
 
+async function createAdapterPackageFixture(rootDir: string, specifier: string, adapterId: string): Promise<string> {
+	const packageDir = path.join(rootDir, 'node_modules', ...specifier.split('/'));
+	await mkdir(packageDir, { recursive: true });
+	await writeFile(path.join(packageDir, 'package.json'), JSON.stringify({
+		name: specifier,
+		type: 'module',
+		exports: {
+			'.': {
+				import: './index.mjs',
+			},
+		},
+	}, null, 2), 'utf8');
+	await writeFile(path.join(packageDir, 'index.mjs'), createAdapterModuleSource(adapterId), 'utf8');
+	return path.join(packageDir, 'package.json');
+}
+
+function createAdapterModuleSource(adapterId: string): string {
+	return `const emptyStream = {
+	async *[Symbol.asyncIterator]() {}
+};
+
+class Adapter {
+	constructor() {
+		this.id = ${JSON.stringify(adapterId)};
+		this.provider = 'fixture';
+		this.displayName = 'Fixture Adapter';
+		this.capabilities = {
+			supportsImages: false,
+			supportsReasoning: false,
+			supportsTerminalCommands: true,
+			supportsCheckpointRestore: true,
+			supportsEditing: true,
+			supportsPassthroughCommands: true,
+		};
+		this.sessions = new Map();
+	}
+
+	async listModels() {
+		return [{
+			id: ${JSON.stringify(`${adapterId}-default`)},
+			adapterId: this.id,
+			provider: this.provider,
+			label: 'Default',
+			supportsReasoning: false,
+			supportsImages: false,
+			supportsTools: true,
+			availableReasoningEfforts: [],
+			isDefault: true,
+			native: { id: ${JSON.stringify(`${adapterId}-default`)} },
+		}];
+	}
+
+	async listReasoningOptions() { return []; }
+	async listSessions() { return [...this.sessions.values()]; }
+	async getSession(sessionId) { return this.sessions.get(sessionId); }
+
+	async createSession(request = {}) {
+		const session = {
+			id: 'fixture-session',
+			title: request.title ?? 'Fixture Session',
+			createdAt: new Date(0).toISOString(),
+			updatedAt: new Date(0).toISOString(),
+			defaults: request.defaults ?? {},
+		};
+		this.sessions.set(session.id, session);
+		return session;
+	}
+
+	async archiveSession() {}
+	async deleteSession() {}
+	async listChats() { return []; }
+	async getChatTranscript(sessionId, chatId = 'chat-1') { return { sessionId, chatId, messages: [] }; }
+	async getSessionDefaults(sessionId) { return this.sessions.get(sessionId)?.defaults ?? {}; }
+
+	async updateSessionDefaults(sessionId, defaults) {
+		const session = this.sessions.get(sessionId);
+		const nextDefaults = { ...(session?.defaults ?? {}), ...defaults };
+		if (session) {
+			this.sessions.set(sessionId, { ...session, defaults: nextDefaults });
+		}
+		return nextDefaults;
+	}
+
+	async sendMessage(sessionId) {
+		return {
+			runId: 'fixture-run',
+			stream: emptyStream,
+			result: Promise.resolve({
+				id: 'fixture-run',
+				sessionId,
+				chatId: 'chat-1',
+				adapterId: this.id,
+				status: 'completed',
+				outputKind: 'text',
+				filesChanged: [],
+				questionsAsked: [],
+				terminalCommands: [],
+				completedAt: new Date(0).toISOString(),
+			}),
+		};
+	}
+
+	async executeCommand(sessionId) { return this.sendMessage(sessionId); }
+	async submitCommandInput() {}
+	async executeTerminalCommand(sessionId) { return this.sendMessage(sessionId); }
+	async interrupt() {}
+
+	async createCheckpoint(sessionId, chatId = 'chat-1') {
+		return {
+			id: 'fixture-checkpoint',
+			sessionId,
+			chatId,
+			createdAt: new Date(0).toISOString(),
+			transcript: { sessionId, chatId, messages: [] },
+		};
+	}
+
+	async listCheckpoints() { return []; }
+
+	async revertToCheckpoint(sessionId, checkpointId) {
+		return {
+			id: checkpointId,
+			sessionId,
+			chatId: 'chat-1',
+			createdAt: new Date(0).toISOString(),
+			transcript: { sessionId, chatId: 'chat-1', messages: [] },
+		};
+	}
+
+	async truncateConversation() {}
+}
+
+export { Adapter };
+export default Adapter;
+`;
+}
+
 describe('AgentCore', () => {
 	it('registers adapters and rejects duplicates', () => {
 		const core = new AgentCore();
@@ -623,5 +760,32 @@ describe('AgentCore', () => {
 		await expect(core.sendMessage(session.id, 'open @missing.ts', {
 			metadata: { cwd: path.join(process.cwd(), 'tmp', 'missing-mentions') },
 		})).rejects.toThrowError(AgentValidationError);
+	});
+
+	it('loads adapters from package.json paths', async () => {
+		const tempDir = path.join(process.cwd(), 'tmp', 'agent-core-package-loader');
+		await rm(tempDir, { recursive: true, force: true });
+		const packageJsonPath = await createAdapterPackageFixture(tempDir, '@fixture/path-adapter', 'path-adapter');
+
+		try {
+			const core = await AgentCore.fromAdapterPackages([packageJsonPath]);
+			expect(core.listAdapters().map(adapter => adapter.id)).toEqual(['path-adapter']);
+		} finally {
+			await rm(tempDir, { recursive: true, force: true });
+		}
+	});
+
+	it('resolves built-in adapter shorthand via @pragma/adapter-* references', async () => {
+		const tempDir = path.join(process.cwd(), 'tmp', 'agent-core-builtin-loader');
+		await rm(tempDir, { recursive: true, force: true });
+		await createAdapterPackageFixture(tempDir, '@pragma/agent-adapter-fixture', 'builtin-fixture');
+
+		try {
+			const core = new AgentCore();
+			await core.registerAdapterPackages(['@pragma/adapter-fixture'], { cwd: tempDir });
+			expect(core.listAdapters().map(adapter => adapter.id)).toEqual(['builtin-fixture']);
+		} finally {
+			await rm(tempDir, { recursive: true, force: true });
+		}
 	});
 });

@@ -368,3 +368,18 @@ export interface AgentAdapter {
 	revertToCheckpoint(sessionId: string, checkpointId: string): Promise<AgentAdapterCheckpoint>;
 	truncateConversation(sessionId: string, chatId: string, messageId: string): Promise<void>;
 }
+
+export type AgentAdapterPackageReference = string;
+
+export interface AgentAdapterPackageLoadOptions {
+	readonly cwd?: string;
+}
+
+export interface AgentAdapterConstructor {
+	new(options?: unknown): AgentAdapter;
+}
+
+export interface AgentAdapterModule {
+	readonly default?: AgentAdapterConstructor;
+	readonly Adapter?: AgentAdapterConstructor;
+}

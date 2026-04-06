@@ -4,10 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 
 export { AgentCore } from './agentCore.js';
+export { loadAdapterFromPackage, loadAdaptersFromPackages } from './adapterLoader.js';
 export { AgentCapabilityError, AgentCommandError, AgentCoreError, AgentNotFoundError, AgentValidationError } from './errors.js';
 export type {
 	AgentAdapter,
+	AgentAdapterConstructor,
 	AgentAdapterCheckpoint,
+	AgentAdapterModule,
+	AgentAdapterPackageLoadOptions,
+	AgentAdapterPackageReference,
 	AgentAdapterRun,
 	AgentAdapterSessionSummary,
 	AgentAttachment,

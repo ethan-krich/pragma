@@ -22,7 +22,7 @@ import {
 	AgentTerminalCommandRequest,
 	AgentTurnOptions,
 } from '@pragma/agent-core';
-import type { ClaudeTransport } from './claudeTransport.js';
+import { ClaudeSdkTransport, ClaudeSignedInBridgeTransport, type ClaudeSdkTransportOptions, type ClaudeTransport } from './claudeTransport.js';
 
 const CLAUDE_CAPABILITIES: AgentCapabilities = {
 	supportsImages: true,
@@ -56,8 +56,14 @@ export class ClaudeCodeAdapter implements AgentAdapter {
 	public readonly displayName = 'Claude Code';
 	public readonly capabilities = CLAUDE_CAPABILITIES;
 	private selectedTransport?: ClaudeTransport;
+	private readonly options: ClaudeCodeAdapterOptions;
 
-	public constructor(private readonly options: ClaudeCodeAdapterOptions = {}) { }
+	public constructor(options: ClaudeCodeAdapterOptions = {}) {
+		this.options = {
+			...options,
+			transports: options.transports ?? createDefaultClaudeCodeTransports(),
+		};
+	}
 
 	public getStandardCommandMappings(): Partial<Record<AgentStandardCommandId, string>> {
 		return {
@@ -186,4 +192,15 @@ export class ClaudeCodeAdapter implements AgentAdapter {
 	private getCommandName(command: string): string {
 		return command.trim().replace(/^\//u, '').split(/\s+/u)[0] ?? '';
 	}
+}
+
+function createDefaultClaudeCodeTransports(options: ClaudeSdkTransportOptions = {}): readonly ClaudeTransport[] {
+	const sharedOptions = {
+		cwd: options.cwd ?? process.cwd(),
+		...options,
+	};
+	return [
+		new ClaudeSignedInBridgeTransport('claude-bridge', sharedOptions),
+		new ClaudeSdkTransport('claude-sdk', sharedOptions),
+	];
 }

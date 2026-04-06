@@ -8,6 +8,8 @@ import path from 'node:path';
 import {
 	AgentAdapter,
 	AgentAdapterCheckpoint,
+	AgentAdapterPackageLoadOptions,
+	AgentAdapterPackageReference,
 	AgentAdapterRun,
 	AgentAdapterSessionSummary,
 	AgentAttachment,
@@ -27,6 +29,7 @@ import {
 	AgentTurnOptions,
 } from './types.js';
 import { AgentCapabilityError, AgentCommandError, AgentNotFoundError, AgentValidationError } from './errors.js';
+import { loadAdaptersFromPackages } from './adapterLoader.js';
 
 class AgentCapabilityRegistry {
 	public constructor(private readonly adapters: Map<string, AgentAdapter>) { }
@@ -169,6 +172,26 @@ export class AgentCore {
 			throw new AgentValidationError(`Adapter "${adapter.id}" is already registered.`);
 		}
 		this.adapters.set(adapter.id, adapter);
+	}
+
+	public async registerAdapterPackages(
+		references: readonly AgentAdapterPackageReference[],
+		options?: AgentAdapterPackageLoadOptions,
+	): Promise<readonly AgentAdapter[]> {
+		const adapters = await loadAdaptersFromPackages(references, options);
+		for (const adapter of adapters) {
+			this.registerAdapter(adapter);
+		}
+		return adapters;
+	}
+
+	public static async fromAdapterPackages(
+		references: readonly AgentAdapterPackageReference[],
+		options?: AgentAdapterPackageLoadOptions,
+	): Promise<AgentCore> {
+		const core = new AgentCore();
+		await core.registerAdapterPackages(references, options);
+		return core;
 	}
 
 	public getAdapter(adapterId: string): AgentAdapter {
