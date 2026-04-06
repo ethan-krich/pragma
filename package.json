@@ -8,8 +8,16 @@
   "main": "./out/main.js",
   "type": "module",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "test": "echo Please run any of the test scripts from the scripts folder.",
+    "agents:build": "tsdown --config tsdown.packages.config.ts",
+    "agents:test": "npm run test -w @pragma/agent-core && npm run test -w @pragma/agent-adapter-claude-code && npm run test -w @pragma/agent-adapter-codex",
+    "agents:typecheck": "npm run typecheck -w @pragma/agent-core && npm run typecheck -w @pragma/agent-adapter-claude-code && npm run typecheck -w @pragma/agent-adapter-codex",
+    "agents:check": "npm run agents:typecheck && npm run agents:build && npm run agents:test",
+    "agents:demo": "npm run agents:build && node --experimental-strip-types scripts/agent-packages-demo.mts",
     "test-browser": "npx playwright install && node test/unit/browser/index.js",
     "test-browser-no-install": "node test/unit/browser/index.js",
     "test-node": "mocha test/unit/node/index.js --delay --ui=tdd --timeout=5000 --exit",
@@ -136,6 +144,8 @@
     "yazl": "^2.4.3"
   },
   "devDependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.92",
+    "@openai/codex-sdk": "^0.118.0",
     "@playwright/cli": "^0.1.1",
     "@playwright/test": "^1.56.1",
     "@stylistic/eslint-plugin-ts": "^2.8.0",
@@ -227,11 +237,13 @@
     "source-map": "0.6.1",
     "source-map-support": "^0.3.2",
     "tar": "^7.5.9",
+    "tsdown": "^0.21.7",
     "tsec": "0.2.7",
     "tslib": "^2.6.3",
     "typescript": "^6.0.0-dev.20260306",
     "typescript-eslint": "^8.45.0",
     "util": "^0.12.4",
+    "vitest": "^3.2.4",
     "xml2js": "^0.5.0",
     "yaserver": "^0.4.0"
   },
